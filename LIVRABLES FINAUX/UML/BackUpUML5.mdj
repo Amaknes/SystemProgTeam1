@@ -414,7 +414,7 @@
 											"fillColor": "#ffadad",
 											"font": "Arial;13;0",
 											"left": -448,
-											"top": 160,
+											"top": 144,
 											"height": 13
 										},
 										{
@@ -426,7 +426,7 @@
 											"fillColor": "#ffadad",
 											"font": "Arial;13;1",
 											"left": 45,
-											"top": 126,
+											"top": 118,
 											"width": 1511,
 											"height": 13,
 											"text": "Controller"
@@ -441,7 +441,7 @@
 											"fillColor": "#ffadad",
 											"font": "Arial;13;0",
 											"left": -448,
-											"top": 160,
+											"top": 144,
 											"width": 73.67724609375,
 											"height": 13,
 											"text": "(from Model)"
@@ -456,7 +456,7 @@
 											"fillColor": "#ffadad",
 											"font": "Arial;13;0",
 											"left": -448,
-											"top": 160,
+											"top": 144,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
@@ -464,7 +464,7 @@
 									"fillColor": "#ffadad",
 									"font": "Arial;13;0",
 									"left": 40,
-									"top": 119,
+									"top": 111,
 									"width": 1521,
 									"height": 25,
 									"stereotypeLabel": {
@@ -485,7 +485,7 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 40,
-							"top": 104,
+							"top": 96,
 							"width": 1521,
 							"height": 1408,
 							"nameCompartment": {
@@ -1324,7 +1324,7 @@
 											"top": 998,
 											"width": 280.73779296875,
 											"height": 13,
-											"text": "-MaîtreHôtelInstance: MaîtreHôtelInterface",
+											"text": "-MaîtreHôtelInstance: MaîtreHôtel",
 											"horizontalAlignment": 0
 										}
 									],
@@ -2044,7 +2044,7 @@
 											"top": 1164,
 											"width": 331.322265625,
 											"height": 13,
-											"text": "-ListeHeadWaiter: list<InterfaceHeadWaiter>",
+											"text": "-ListeHeadWaiter: list<IdHeadWaiter>",
 											"horizontalAlignment": 0
 										}
 									],
@@ -5150,7 +5150,7 @@
 											"top": 945,
 											"width": 186.05615234375,
 											"height": 13,
-											"text": "+AddObservater(o: Observer)",
+											"text": "+AddObserver(o: Observer)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -23051,7 +23051,7 @@
 									"name": "MaîtreHôtelInstance",
 									"visibility": "private",
 									"type": {
-										"$ref": "AAAAAAFndLuh7LQ8hTw="
+										"$ref": "AAAAAAFndEnmSookfIg="
 									}
 								}
 							],
@@ -23161,7 +23161,7 @@
 									},
 									"name": "ListeHeadWaiter",
 									"visibility": "private",
-									"type": "list<InterfaceHeadWaiter>"
+									"type": "list<IdHeadWaiter>"
 								}
 							],
 							"operations": [
@@ -24596,7 +24596,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFneEw+OFKlZ7g="
 									},
-									"name": "AddObservater",
+									"name": "AddObserver",
 									"parameters": [
 										{
 											"_type": "UMLParameter",
