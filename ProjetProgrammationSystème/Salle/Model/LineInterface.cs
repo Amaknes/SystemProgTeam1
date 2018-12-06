@@ -10,6 +10,7 @@ namespace Salle.Model
     {
 
         int IdLine { get; set; }
+        List<TableInterface> ListTable { get; set; }
 
     }
 }

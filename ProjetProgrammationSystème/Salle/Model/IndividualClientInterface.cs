@@ -8,5 +8,10 @@ namespace Salle.Model
 {
     interface IndividualClientInterface
     {
+        int TimeSpend { get; set; }
+        int Taste { get; set; }
+        int Choice { get; set; }
+        bool WaiterRequest { get; set; }
+
     }
 }

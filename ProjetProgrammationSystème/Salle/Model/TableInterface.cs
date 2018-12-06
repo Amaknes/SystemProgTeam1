@@ -8,5 +8,8 @@ namespace Salle.Model
 {
     interface TableInterface
     {
+        int IdTable { set; get; }
+        int NbPlace { set; get; }
+        ClientsInterface Clients { set; get; }
     }
 }
