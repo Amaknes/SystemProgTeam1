@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    interface HallInterface
+    public interface HallInterface
     {
 
         List<SquareInterface> SquareList { get; set; }

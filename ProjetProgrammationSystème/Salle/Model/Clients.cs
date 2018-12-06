@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    class Clients : ClientsInterface
+    public class Clients : ClientsInterface
     {
         private int _IdClients;
         public int IdClients

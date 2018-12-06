@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    class Hall : HallInterface
+    public class Hall : HallInterface
     {
         private static HallInterface HallInstance;
 
@@ -31,7 +31,7 @@ namespace Salle.Model
             SquareList  = newSquareList;
         }
 
-        public HallInterface hallInstance()
+        public static HallInterface hallInstance()
         {
             if(HallInstance == null)
             {

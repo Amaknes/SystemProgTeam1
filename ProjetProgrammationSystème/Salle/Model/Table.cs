@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    class Table
+    public class Table
     {
 
     }

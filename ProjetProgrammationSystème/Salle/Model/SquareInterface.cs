@@ -7,7 +7,7 @@ using Salle.Controller;
 
 namespace Salle.Model
 {
-    interface SquareInterface
+    public interface SquareInterface
     {
 
         int idSquare { get; set; }

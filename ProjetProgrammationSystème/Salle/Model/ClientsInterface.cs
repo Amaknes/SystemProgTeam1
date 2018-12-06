@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    interface ClientsInterface
+    public interface ClientsInterface
     {
         int IdClients { get; set; }
         bool Order { get; set; }

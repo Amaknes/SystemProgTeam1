@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    class FactoryClients : Factory
+    public class FactoryClients : Factory
     {
         public override IndividualClientInterface CreateClientInterface()
         {
