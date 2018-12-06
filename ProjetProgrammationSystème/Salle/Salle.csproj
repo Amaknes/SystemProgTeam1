@@ -58,19 +58,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\HallOfCommisWaiterInterface.cs" />
+    <Compile Include="Controller\HeadWaiterInterface.cs" />
+    <Compile Include="Controller\StaffInterface.cs" />
+    <Compile Include="Controller\IObservable.cs" />
+    <Compile Include="Controller\IObserver.cs" />
     <Compile Include="Controller\MaîtreHôtel.cs" />
     <Compile Include="Controller\CommisWaiter.cs" />
     <Compile Include="Controller\HeadWaiter.cs" />
+    <Compile Include="Controller\MaîtreHôtelInterface.cs" />
     <Compile Include="Controller\Staff.cs" />
     <Compile Include="Controller\Waiter.cs" />
+    <Compile Include="Controller\WaiterInterface.cs" />
+    <Compile Include="Model\ClientsInterface1.cs" />
     <Compile Include="Model\Factory.cs" />
     <Compile Include="Model\Clients.cs" />
     <Compile Include="Model\FactoryClients.cs" />
     <Compile Include="Model\Hall.cs" />
+    <Compile Include="Model\HallInterface.cs" />
     <Compile Include="Model\IndividualClient.cs" />
+    <Compile Include="Model\IndividualClientInterface.cs" />
     <Compile Include="Model\Line.cs" />
+    <Compile Include="Model\LineInterface.cs" />
     <Compile Include="Model\Square.cs" />
+    <Compile Include="Model\SquareInterface.cs" />
     <Compile Include="Model\Table.cs" />
+    <Compile Include="Model\TableInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
