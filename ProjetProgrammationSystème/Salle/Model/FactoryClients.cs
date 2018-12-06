@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    class FactoryClients
+    class FactoryClients : Factory
     {
+        public override IndividualClientInterface CreateClientInterface()
+        {
+            return (IndividualClientInterface) new Clients();
+        }
     }
 }

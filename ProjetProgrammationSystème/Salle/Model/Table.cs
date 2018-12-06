@@ -8,5 +8,6 @@ namespace Salle.Model
 {
     class Table
     {
+
     }
 }

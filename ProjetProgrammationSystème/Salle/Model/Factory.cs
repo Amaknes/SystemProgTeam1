@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    class Factory
+    abstract class Factory
     {
+        public abstract IndividualClientInterface CreateClientInterface();
     }
 }

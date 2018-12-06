@@ -8,7 +8,7 @@ namespace Salle.Model
 {
     class Hall : HallInterface
     {
-        private static Hall HallInstance;
+        private static HallInterface HallInstance;
 
         private List<SquareInterface> _SquareList;
         public List<SquareInterface> SquareList
@@ -31,11 +31,11 @@ namespace Salle.Model
             SquareList  = newSquareList;
         }
 
-        public Hall hallInstance()
+        public HallInterface hallInstance()
         {
             if(HallInstance == null)
             {
-                HallInstance = new Hall();
+                HallInstance = (HallInterface) new Hall();
             }
 
             return HallInstance;
