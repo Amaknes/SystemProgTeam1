@@ -14,6 +14,6 @@ namespace TestUnitairesProjetSystème.TestCuisine.TestControllerCuisine
             Staff TestStaff2 = Staff.StaffInstance();
             Assert.AreSame(TestStaff1, TestStaff2);
         }
-
+   
     }
 }

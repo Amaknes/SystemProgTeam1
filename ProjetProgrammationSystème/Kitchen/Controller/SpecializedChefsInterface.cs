@@ -6,9 +6,21 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
+
     interface SpecializedChefsInterface
     {
         string Type();
-    }
 
+
+    int UseOven();
+
+    int UseHotPlate();
+    
+
+    int GiveOrders();
+    
+    
+    
+    
+    }
 }
