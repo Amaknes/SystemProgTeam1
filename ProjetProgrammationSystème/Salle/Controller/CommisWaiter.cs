@@ -6,7 +6,25 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    class CommisWaiter
+    class CommisWaiter : HallOfCommisWaiterInterface 
     {
+        private CommisWaiter CommisWaiterInstance;
+
+        public CommisWaiter commisWaiterInstance()
+        {
+            if (CommisWaiterInstance == null)
+            { 
+            CommisWaiterInstance = new CommisWaiter();
+            }
+
+            return CommisWaiterInstance;
+        }
+
+        private CommisWaiter()
+        {
+             
+        }
+
+
     }
 }

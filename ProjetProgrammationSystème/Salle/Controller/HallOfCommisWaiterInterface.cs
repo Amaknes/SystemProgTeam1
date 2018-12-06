@@ -8,5 +8,9 @@ namespace Salle.Controller
 {
     interface HallOfCommisWaiterInterface
     {
+
+        int ServeBreadDrainks(int idTable);
+        int VerifyClients();
+
     }
 }
