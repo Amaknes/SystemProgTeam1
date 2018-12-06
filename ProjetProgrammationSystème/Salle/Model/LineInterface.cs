@@ -8,5 +8,8 @@ namespace Salle.Model
 {
     interface LineInterface
     {
+
+        int IdLine { get; set; }
+
     }
 }

@@ -8,5 +8,8 @@ namespace Salle.Model
 {
     interface HallInterface
     {
+
+        List<SquareInterface> SquareList { get; set; }
+
     }
 }

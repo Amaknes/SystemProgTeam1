@@ -6,13 +6,29 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    class Hall
+    class Hall : HallInterface
     {
         private static Hall HallInstance;
 
-        private Hall()
+        private List<SquareInterface> _SquareList;
+        public List<SquareInterface> SquareList
         {
 
+            get { return this._SquareList; }
+
+            set { this._SquareList = value; }
+
+        }
+
+
+        private Hall()
+        {
+            List<SquareInterface> newSquareList = new List<SquareInterface>();
+
+            newSquareList.Add((SquareInterface)new Square());
+            newSquareList.Add((SquareInterface)new Square());
+
+            SquareList  = newSquareList;
         }
 
         public Hall hallInstance()
