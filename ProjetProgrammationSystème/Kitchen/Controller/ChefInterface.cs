@@ -8,10 +8,21 @@ namespace Kitchen.Controller
 {
     interface ChefInterface
     {
+        List<SpecializedChefsInterface> SpecializedChefsList { get; set; }
 
+        public void GetOrder()
+        {
 
+        }
 
+        public void Sort()
+        {
 
+        }
 
+        public void Dispatch()
+        {
+
+        }
     }
 }
