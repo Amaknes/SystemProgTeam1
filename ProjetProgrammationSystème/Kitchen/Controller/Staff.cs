@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    public class Staff
+    public class Staff:StaffInterface
     {
         private static Staff _StaffInstance;
+        private int _schedule;
+
+        public int schedule 
 
         public static Staff StaffInstance()
         {
