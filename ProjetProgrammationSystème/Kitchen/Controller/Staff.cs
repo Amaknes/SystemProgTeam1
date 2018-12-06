@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class Staff
+    public class Staff
     {
+        private static Staff _StaffInstance;
+
+        public static Staff StaffInstance()
+        {
+            if (_StaffInstance == null)
+            {
+                _StaffInstance = new Staff();
+                return _StaffInstance;
+            }
+            else return _StaffInstance;
+        }
     }
 }
