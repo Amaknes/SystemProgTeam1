@@ -10,6 +10,7 @@ namespace Salle
     {
         static void Main(string[] args)
         {
+            //foo
         }
     }
 }
