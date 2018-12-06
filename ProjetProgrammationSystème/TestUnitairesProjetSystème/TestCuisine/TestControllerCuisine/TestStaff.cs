@@ -1,4 +1,5 @@
 ﻿using System;
+using Kitchen.Controller;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestUnitairesProjetSystème.TestCuisine.TestControllerCuisine

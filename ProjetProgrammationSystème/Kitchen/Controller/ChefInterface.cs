@@ -10,19 +10,10 @@ namespace Kitchen.Controller
     {
         List<SpecializedChefsInterface> SpecializedChefsList { get; set; }
 
-        public void GetOrder()
-        {
+        void GetOrder();
+    
+        void Sort();
 
-        }
-
-        public void Sort()
-        {
-
-        }
-
-        public void Dispatch()
-        {
-
-        }
+        void Dispatch();
     }
 }
