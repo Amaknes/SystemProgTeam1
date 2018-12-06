@@ -63,6 +63,14 @@
     <Compile Include="Controller\HeadWaiter.cs" />
     <Compile Include="Controller\Staff.cs" />
     <Compile Include="Controller\Waiter.cs" />
+    <Compile Include="Model\Factory.cs" />
+    <Compile Include="Model\Clients.cs" />
+    <Compile Include="Model\FactoryClients.cs" />
+    <Compile Include="Model\Hall.cs" />
+    <Compile Include="Model\IndividualClient.cs" />
+    <Compile Include="Model\Line.cs" />
+    <Compile Include="Model\Square.cs" />
+    <Compile Include="Model\Table.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,7 +78,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
