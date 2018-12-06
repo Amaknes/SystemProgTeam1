@@ -8,5 +8,7 @@ namespace Kitchen.Controller
 {
     interface SpecializedChefsInterface
     {
+        string Type();
     }
+
 }

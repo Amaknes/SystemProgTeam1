@@ -20,7 +20,7 @@ namespace Kitchen.Controller
 
         private Chef()
         {
-            List<SpecializedChefsInterface> newspecializedChefsList = new List<SpecializedChefsInterface>();
+            List<SpecializedChefsInterface> newSpecializedChefsList = new List<SpecializedChefsInterface>();
 
             newSpecializedChefsList.Add((SpecializedChefsInterface)new SpecializedChefs());
             newSpecializedChefsList.Add((SpecializedChefsInterface)new SpecializedChefs());

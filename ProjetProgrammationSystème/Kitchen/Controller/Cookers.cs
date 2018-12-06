@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class Cookers
+    class Cookers : SpecializedChefsInterface
     {
+        public string Type()
+        {
+            return "Cookers";
+        }
     }
 }

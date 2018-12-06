@@ -8,5 +8,12 @@ namespace Kitchen.Controller
 {
     class SpecializedChefs
     {
+            public SpecializedChefsInterface Strategy { get; set; }
+
+            public void CallType()
+            {
+                Console.WriteLine(Strategy.Type());
+            }
+        
     }
 }
