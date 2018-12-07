@@ -15,7 +15,10 @@ namespace Kitchen.Socket
             get { return _OrderTable; }
             set { _OrderTable = value; }
         }
-        public int[,] FinishedOrder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int[,] FinishedOrder {
+            get { return _FinishedOrder; }
+            set { _FinishedOrder = value; }
+        }
 
         public void DeliverOrder(int foo, int fooo)
         {
