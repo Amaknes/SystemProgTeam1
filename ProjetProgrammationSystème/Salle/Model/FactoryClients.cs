@@ -8,9 +8,14 @@ namespace Salle.Model
 {
     public class FactoryClients : Factory
     {
-        public override IndividualClientInterface CreateIndividualClientInterface()
+        public override ClientsInterface CreateClientsInterface(int idClients, bool Order, bool Booking, int ClientsNumber)
         {
-            return (IndividualClientInterface) new IndividualClient();
+            return (ClientsInterface)new Clients(idClients, Order, Booking, ClientsNumber);
+        }
+
+        public override IndividualClientInterface CreateIndividualClientInterface(int Taste, int TimeSpend, int Choice, bool WaiterRequest)
+        {
+            return (IndividualClientInterface) new IndividualClient(Taste, TimeSpend, Choice, WaiterRequest);
         }
     }
 }

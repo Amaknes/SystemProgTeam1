@@ -8,8 +8,22 @@ namespace Salle.Model
 {
     public class Line : LineInterface
     {
-        public int IdLine { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<TableInterface> ListTable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private int _IdLine;
+        public int IdLine {
+            get => this._IdLine;
+            set {
+                if(value > 0)
+                {
+                    this._IdLine = value;
+                }
+            }
+        }
+
+        private List<TableInterface> _ListTable;
+        public List<TableInterface> ListTable {
+            get => this._ListTable;
+            set => this._ListTable = value;
+        }
 
         public Line(int idLine)
         {

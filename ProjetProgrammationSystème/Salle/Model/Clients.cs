@@ -12,7 +12,13 @@ namespace Salle.Model
         public int IdClients
         {
             get => this._IdClients;
-            set => this._IdClients = value;
+            set
+            {
+                if (value > 0)
+                {
+                    this._IdClients = value;
+                }
+            }
         }
 
         private bool _Order;
@@ -33,7 +39,13 @@ namespace Salle.Model
         public int ClientsNumber
         {
             get => this._ClientsNumber;
-            set => this._ClientsNumber = value;
+            set
+            {
+                if (value > 0)
+                {
+                    this._ClientsNumber = value;
+                }
+            }
         }
 
         private List<IndividualClientInterface> _ClientsList;
@@ -46,13 +58,19 @@ namespace Salle.Model
         private int _Bill;
         public int Bill {
             get => this._Bill;
-            set => this._Bill = value;
+            set
+            {
+                if (value >= 0)
+                {
+                    this._Bill = value;
+                }
+            }
         }
 
 
-        public Clients()
+        public Clients(int idClients, bool Order, bool Booking, int ClientsNumber)
         {
-            this.ClientsList.Add(new FactoryClients().CreateClientInterface());
+            this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(0,0,0,false));
             //temporaire
         }
 

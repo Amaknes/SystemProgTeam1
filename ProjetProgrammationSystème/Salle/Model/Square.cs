@@ -12,7 +12,13 @@ namespace Salle.Model
         private int _idSquare;
         public int IdSquare {
             get => this._idSquare;
-            set => this._idSquare = value;
+            set
+            {
+                if (value > 0)
+                {
+                    this._idSquare = value;
+                }
+            }
         }
 
         private List<LineInterface> _LineList;
@@ -40,7 +46,12 @@ namespace Salle.Model
         public Square(int idSquare)
         {
             this.IdSquare = idSquare;
-            if(idSquare == 1)
+            initialiseSquare(idSquare);
+        }
+
+        private void initialiseSquare(int idSquare)
+        {
+            if (idSquare == 1)
             {
                 this.headWaiter = new HeadWaiter(1);
                 this.LineList.Add(new Line(1));

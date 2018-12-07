@@ -14,9 +14,15 @@ namespace Salle.Model
         public List<SquareInterface> SquareList
         {
 
-            get { return this._SquareList; }
+            get
+            {
+                return this._SquareList;
+            }
 
-            set { this._SquareList = value; }
+            set
+            {
+                this._SquareList = value;
+            }
 
         }
 
@@ -25,8 +31,8 @@ namespace Salle.Model
         {
             List<SquareInterface> newSquareList = new List<SquareInterface>();
 
-            newSquareList.Add((SquareInterface)new Square());
-            newSquareList.Add((SquareInterface)new Square());
+            newSquareList.Add((SquareInterface)new Square(1));
+            newSquareList.Add((SquareInterface)new Square(2));
 
             SquareList  = newSquareList;
         }
