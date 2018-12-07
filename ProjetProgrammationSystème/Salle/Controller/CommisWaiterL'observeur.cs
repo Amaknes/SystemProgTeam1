@@ -21,7 +21,7 @@ namespace Salle.Controller
             return CommisWaiterInstance;
         }
 
-        public int ServeBreadDrainks(int idTable)
+        public int ServeBreadDrinks(int idTable)
         {
             throw new NotImplementedException();
         }
@@ -29,6 +29,14 @@ namespace Salle.Controller
         public int VerifyClients()
         {
             throw new NotImplementedException();
+        }
+
+        public int VerifyWaiter()
+        {
+            if (Busy = true)
+            {
+
+            }
         }
 
         private CommisWaiter()
