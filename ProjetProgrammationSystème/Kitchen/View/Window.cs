@@ -8,5 +8,11 @@ namespace Kitchen.View
 {
     class Window
     {
+        
+
+
+        public void window();
+
+        public void UpdateMap(char DisplayMap);
     }
 }
