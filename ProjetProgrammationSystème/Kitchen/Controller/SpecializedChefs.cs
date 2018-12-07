@@ -6,9 +6,22 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class SpecializedChefs
+    class SpecializedChefs : SpecializedChefsInterface
     {
-            public SpecializedChefsInterface Strategy { get; set; }
+        public int time;
+        public int Ordre;
+        public int idCommisChef;
+
+
+        private List<CommisChefInterface> _CommisChefList;
+        public List<CommisChefInterface> CommisChefList
+        {
+            get { return this._CommisChefList; }
+            set { this._CommisChefList = value; }
+        }
+
+
+        public SpecializedChefsInterface Strategy { get; set; }
 
             public void CallType()
             {

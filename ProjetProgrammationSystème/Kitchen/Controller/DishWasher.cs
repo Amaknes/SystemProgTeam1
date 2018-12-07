@@ -8,5 +8,6 @@ namespace Kitchen.Controller
 {
     class DishWasher
     {
+        bool Dirty;
     }
 }

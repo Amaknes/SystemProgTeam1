@@ -9,18 +9,23 @@ namespace Kitchen.Controller
 
     interface SpecializedChefsInterface
     {
-        string Type();
+
+    List<CommisChefInterface> CommisChefsList { get; set; }
+
+    string Type();
 
 
     int UseOven();
 
     int UseHotPlate();
     
-
+        
     int GiveOrders();
-    
-    
-    
-    
+
+
+    int Preparation();
+
+
+
     }
 }

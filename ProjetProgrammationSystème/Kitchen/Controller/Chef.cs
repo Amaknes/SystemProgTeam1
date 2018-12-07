@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class Chef
+    class Chef 
     {
         private static Chef ChefInstance;
 
