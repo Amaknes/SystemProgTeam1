@@ -26,19 +26,6 @@ namespace Salle.Controller
             throw new NotImplementedException();
         }
 
-        public int VerifyClients()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int VerifyWaiter()
-        {
-            if (Busy = true)
-            {
-
-            }
-        }
-
         private CommisWaiter()
         {
              

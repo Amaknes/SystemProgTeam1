@@ -9,7 +9,6 @@ namespace Salle.Controller
     interface CommisWaiterInterface
     {
         int ServeBreadDrinks(int idTable);
-        int VerifyClients();
-        int VerifyWaiter();
+
     }
 }
