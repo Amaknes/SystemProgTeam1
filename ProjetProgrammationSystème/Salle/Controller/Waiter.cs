@@ -19,9 +19,9 @@ namespace Salle.Controller
             }
         }
 
-        private int _IdBusy;
+        private bool _Busy;
         public bool Busy {
-            get => this._IdBusy;
+            get => this._Busy;
             set => this._Busy = value;
         }
 
@@ -40,7 +40,7 @@ namespace Salle.Controller
         {
             if (Busy == true)
             {
-               CommisWaiter.CommisWaiterInstance.Update(); //ne pas oublier de changer le 1 en vrai idTable
+               CommisWaiter.commisWaiterInstance().Update(1); //ne pas oublier de changer le 1 en vrai idTable
             }
         }
 

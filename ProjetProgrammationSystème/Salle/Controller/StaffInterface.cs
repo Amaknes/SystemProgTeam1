@@ -1,4 +1,4 @@
-﻿ffusing System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +8,10 @@ namespace Salle.Controller
 {
     interface StaffInterface
     {
+        int Schedule
+        {
+            get;
+            set;
+        }
     }
 }
