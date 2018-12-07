@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    class HeadWaiter
+    public class HeadWaiter
     {
+        private int IdHeadWaiter;
+
+        public HeadWaiter(int idHeadWaiter)
+        {
+            this.IdHeadWaiter = idHeadWaiter;
+        }
     }
 }

@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    interface IndividualClientInterface
+    public interface IndividualClientInterface
     {
+        int TimeSpend { get; set; }
+        int Taste { get; set; }
+        int Choice { get; set; }
+        bool WaiterRequest { get; set; }
+
     }
 }

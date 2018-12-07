@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    class Factory
+    public abstract class Factory
     {
+        public abstract IndividualClientInterface CreateIndividualClientInterface(int TimeSpend, int Taste, int Choice, bool WaiterRequest);
+        public abstract ClientsInterface CreateClientsInterface(int idClients, bool Order, bool Booking, int ClientsNumber);
     }
 }
