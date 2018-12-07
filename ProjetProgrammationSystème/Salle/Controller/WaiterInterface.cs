@@ -20,5 +20,11 @@ namespace Salle.Controller
             get;
             set;
         }
+
+        bool StateType 
+        {
+            get;
+            set;
+        }   
     }
 }
