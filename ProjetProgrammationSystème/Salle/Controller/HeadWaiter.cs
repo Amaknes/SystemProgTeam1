@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    class HeadWaiter : HeadWaiterInterface
+    public class HeadWaiter : HeadWaiterInterface
     {
         public int IdHeadWaiter {
             get => throw new NotImplementedException();
@@ -46,6 +46,12 @@ namespace Salle.Controller
         public void SitClient(int IdTable)
         {
             throw new NotImplementedException();
+        }
+
+        public HeadWaiter(int idHeadWaiter)
+        {
+            this.IdHeadWaiter = idHeadWaiter;
+            this.Busy = false;
         }
     }
 }

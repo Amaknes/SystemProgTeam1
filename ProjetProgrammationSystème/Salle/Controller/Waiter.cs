@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    class Waiter : WaiterInterface, IObservable
+    public class Waiter : WaiterInterface, IObservable
     {
         public int IdWaiter {
             get => throw new NotImplementedException();
@@ -36,10 +36,10 @@ namespace Salle.Controller
         {
             throw new NotImplementedException();
         }
-
-        public int Update(o Observable)
+        public Waiter(int idWaiter)
         {
-            throw new NotImplementedException();
+            this.IdWaiter = idWaiter;
+            this.Busy = false;
         }
     }
 }

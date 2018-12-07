@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    class MaîtreHôtel : MaîtreHôtelInterface
+    public class MaîtreHôtel : MaîtreHôtelInterface
     {
         
         private static MaîtreHôtel MaîtreHôtelInstance;
