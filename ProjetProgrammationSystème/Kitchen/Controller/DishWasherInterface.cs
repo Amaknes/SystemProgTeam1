@@ -8,5 +8,33 @@ namespace Kitchen.Controller
 {
     interface DishWasherInterface
     {
+
+
+        void GetCutlery();
+
+        void GetDirtyUstensil();
+
+        void GetLaundry();
+
+        void HandWashing();
+
+        void StockLaundry(bool Dirty);
+
+        void StockCutlery(bool Dirty);
+
+        void LaunchWashingMachine();
+
+        void LaunchDishWasher();
+
+        void TidyUstensils();
+
+
+
+
+
+
+
+
+
     }
 }

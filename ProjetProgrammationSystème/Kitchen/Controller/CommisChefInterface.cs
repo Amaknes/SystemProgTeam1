@@ -8,5 +8,24 @@ namespace Kitchen.Controller
 {
     interface CommisChefInterface
     {
+
+
+        int SearchIngredients(int ingredients);
+
+
+        int GiveIngredients();
+
+        int PeelVegetables(int IdVegetables);
+
+        int SendDishes();
+
+
+
+
+
+
+
+
+
     }
 }
