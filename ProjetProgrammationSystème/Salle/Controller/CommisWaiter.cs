@@ -27,7 +27,7 @@ namespace Salle.Controller
             return 0;
         }
     
-        public void update()
+        public void Update()
         {
             ServeBreadDrinks();
         }
