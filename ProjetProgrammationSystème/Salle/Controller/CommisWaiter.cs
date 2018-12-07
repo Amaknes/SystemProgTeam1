@@ -9,32 +9,38 @@ namespace Salle.Controller
     class CommisWaiter : CommisWaiterInterface, IObserver
     {
         private static CommisWaiter CommisWaiterInstance;
-        public List<IObservable> ListObservable = new List<IObservable>();
+        public List<IObservable> ListObservable;
+
+
 
         public static CommisWaiter commisWaiterInstance()
         {
             if (CommisWaiterInstance == null)
             { 
-            CommisWaiterInstance = new CommisWaiter();
+                CommisWaiterInstance = new CommisWaiter();
             }
 
             return CommisWaiterInstance;
         }
 
-        public void ServeBreadDrinks(int idTable)
-        {
-            //donner du pain et ou à boire aux clients qui le demandent
-            return 0;
-        }
-    
-        public void update()
-        {
-            ServeBreadDrinks();
-        }
+
 
         private CommisWaiter()
         {
-            Waiter.Busy = new Waiter.NotifiyObserver();           
+            this.ListObservable = new List<IObservable>();
+            //Waiter.Busy = new Waiter.NotifiyObserver();
+        }
+
+
+        public void ServeBreadDrinks(int idTable)
+        {
+            //donner du pain et ou à boire aux clients qui le demandent
+        }
+    
+        public void Update()
+        {
+            ServeBreadDrinks(1);
+            //Temporaire changer id
         }
 
     }

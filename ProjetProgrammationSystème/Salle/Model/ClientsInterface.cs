@@ -19,6 +19,6 @@ namespace Salle.Model
         int[] ChoiceOrder();
         int Payment();
         void AlertCommisWaiter();
-
+        void Eat();
     }
 }

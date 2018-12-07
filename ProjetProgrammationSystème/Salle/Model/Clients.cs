@@ -71,7 +71,7 @@ namespace Salle.Model
 
 
 
-        public Clients(int idClients, bool Order, bool Booking, int ClientsNumber)
+        public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber)
         {
             this.IdClients = IdClients;
             this.Order = Order;
@@ -100,6 +100,11 @@ namespace Salle.Model
         }
 
         public int Payment()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Eat()
         {
             throw new NotImplementedException();
         }

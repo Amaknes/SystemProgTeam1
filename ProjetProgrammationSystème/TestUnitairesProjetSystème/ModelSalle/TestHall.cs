@@ -34,5 +34,6 @@ namespace TestUnitairesProjetSystème.ModelSalle
             testHall1.SquareList = SquareList;
             Assert.AreEqual(testHall1.SquareList, SquareList);
         }
+
     }
 }

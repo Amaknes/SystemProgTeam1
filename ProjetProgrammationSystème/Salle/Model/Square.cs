@@ -43,28 +43,37 @@ namespace Salle.Model
         }
 
 
-        public Square(int idSquare, List<HeadWaiterInterface> headWaiterList)
+        public Square(int idSquare)
         {
             this.IdSquare = idSquare;
             LineList = new List<LineInterface>();
-            initialiseSquare(idSquare, headWaiterList);
+            WaiterList = new List<WaiterInterface>();
+
+            initialiseSquare(idSquare);
+
+            CommisWaiter.commisWaiterInstance().ListObservable.Add((Waiter)WaiterList[0]);
+            CommisWaiter.commisWaiterInstance().ListObservable.Add((Waiter)WaiterList[1]);
         }
 
-        private void initialiseSquare(int idSquare, List<HeadWaiterInterface> headWaiterList)
+        private void initialiseSquare(int idSquare)
         {
             if (idSquare == 1)
             {
-                this.headWaiter = headWaiterList[0];
+                this.headWaiter = MaîtreHôtel.maîtreHôtelInstance().ListHeadWaiter[0];
+
                 this.LineList.Add(new Line(1));
                 this.LineList.Add(new Line(2));
+
                 this.WaiterList.Add((WaiterInterface)new Waiter(1));
                 this.WaiterList.Add((WaiterInterface)new Waiter(2));
             }
             else
             {
-                this.headWaiter = headWaiterList[1];
+                this.headWaiter = MaîtreHôtel.maîtreHôtelInstance().ListHeadWaiter[1];
+
                 this.LineList.Add(new Line(3));
                 this.LineList.Add(new Line(4));
+
                 this.WaiterList.Add((WaiterInterface)new Waiter(3));
                 this.WaiterList.Add((WaiterInterface)new Waiter(4));
             }

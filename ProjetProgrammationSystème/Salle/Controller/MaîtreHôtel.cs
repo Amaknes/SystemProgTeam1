@@ -21,11 +21,11 @@ namespace Salle.Controller
             set => this._ListClientsInterface = value;
         }
 
-        private List<HeadWaiterInterface> _ListHeadWaiter;
+        private static List<HeadWaiterInterface> _ListHeadWaiter;
         public List<HeadWaiterInterface> ListHeadWaiter
         {
-            get => this._ListHeadWaiter;
-            set => this._ListHeadWaiter = value;
+            get => _ListHeadWaiter;
+            set => _ListHeadWaiter = value;
         }
 
 
@@ -53,6 +53,8 @@ namespace Salle.Controller
                 new HeadWaiter(1),
                 new HeadWaiter(2)
             };
+
+            ListHeadWaiter = newListHeadWaiter;
         }
 
 
