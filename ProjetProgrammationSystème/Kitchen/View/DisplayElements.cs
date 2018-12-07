@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Salle.Controller
+namespace Kitchen.View
 {
-    class CommisWaiter
+    class DisplayElements
     {
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Salle.Model
+namespace Kitchen.View
 {
-    interface ClientsInterface1
+    class Window
     {
     }
 }

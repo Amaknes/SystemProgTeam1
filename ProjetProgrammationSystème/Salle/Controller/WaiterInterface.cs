@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    interface WaiterInterface
+    public interface WaiterInterface
     {
+
+       int IdWaiter
+        {
+            get;
+            set;
+        }
+
+        bool Busy
+        {
+            get;
+            set;
+        }
     }
 }

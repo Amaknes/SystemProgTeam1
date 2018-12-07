@@ -8,5 +8,15 @@ namespace Salle.Controller
 {
     interface IObservable
     {
+        int StateType
+        {
+            get;
+            set;
+        }
+
+        int NotifyObserver();
+        bool SuppObserver();
+        int AddObserver();
+
     }
 }

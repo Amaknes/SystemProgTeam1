@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    interface LineInterface
+    public interface LineInterface
     {
+
+        int IdLine { get; set; }
+        List<TableInterface> ListTable { get; set; }
+
     }
 }

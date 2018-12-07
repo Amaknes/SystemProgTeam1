@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    interface IObserver
+    public interface IObserver
     {
+        void Update();
     }
 }
