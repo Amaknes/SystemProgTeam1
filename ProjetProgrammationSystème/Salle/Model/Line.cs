@@ -28,6 +28,8 @@ namespace Salle.Model
         public Line(int idLine)
         {
             this.IdLine = idLine;
+            ListTable = new List<TableInterface>();
+
             initialiseTable(idLine);
         }
 

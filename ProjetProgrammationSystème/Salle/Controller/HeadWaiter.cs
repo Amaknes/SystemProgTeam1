@@ -8,14 +8,22 @@ namespace Salle.Controller
 {
     public class HeadWaiter : HeadWaiterInterface
     {
+        private int _IdHeadWaiter;
         public int IdHeadWaiter {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => this._IdHeadWaiter;
+            set
+            {
+                if(value > 0)
+                {
+                    this._IdHeadWaiter = value;
+                }
+            }
         }
 
+        private bool _Busy;
         public bool Busy {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => this._Busy;
+            set => this._Busy = value;
         }
 
         public void DistributeCards(int IdTable)

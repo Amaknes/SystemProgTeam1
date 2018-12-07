@@ -46,6 +46,7 @@ namespace Salle.Model
         public Square(int idSquare, List<HeadWaiterInterface> headWaiterList)
         {
             this.IdSquare = idSquare;
+            LineList = new List<LineInterface>();
             initialiseSquare(idSquare, headWaiterList);
         }
 

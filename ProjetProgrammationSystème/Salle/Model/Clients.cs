@@ -77,6 +77,8 @@ namespace Salle.Model
             this.Order = Order;
             this.Booking = Booking;
 
+            this.ClientsList = new List<IndividualClientInterface>();
+
             for(int i = 0; i < ClientsNumber; i++)
             {
                 this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(0, 0, 0, false));

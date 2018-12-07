@@ -23,7 +23,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestGetListSquare()
         {
             HallInterface testHall1 = Hall.hallInstance();
-            Assert.Equals(testHall1.SquareList.Count, 2);
+            Assert.AreEqual(testHall1.SquareList.Count, 2);
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             HallInterface testHall1 = Hall.hallInstance();
             List<SquareInterface> SquareList = new List<SquareInterface>();
             testHall1.SquareList = SquareList;
-            Assert.Equals(testHall1.SquareList, SquareList);
+            Assert.AreEqual(testHall1.SquareList, SquareList);
         }
     }
 }

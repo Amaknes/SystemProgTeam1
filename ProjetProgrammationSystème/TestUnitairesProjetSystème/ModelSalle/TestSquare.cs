@@ -19,7 +19,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             };
 
             Square testSquare1 = new Square(1,newListHeadWaiter);
-            Assert.Equals(testSquare1.IdSquare, 1);
+            Assert.AreEqual(testSquare1.IdSquare, 1);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
 
             Square testSquare1 = new Square(1,newListHeadWaiter);
             testSquare1.IdSquare = 2;
-            Assert.Equals(testSquare1.IdSquare, 2);
+            Assert.AreEqual(testSquare1.IdSquare, 2);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             };
 
             Square testSquare1 = new Square(1,newListHeadWaiter);
-            Assert.Equals(testSquare1.headWaiter, null);
+            Assert.AreEqual(testSquare1.headWaiter, null);
             //
         }
 
@@ -62,7 +62,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             Square testSquare1 = new Square(1,newListHeadWaiter);
             HeadWaiter headWaiterTest = new HeadWaiter(2);
             testSquare1.headWaiter = (HeadWaiterInterface)headWaiterTest;
-            Assert.Equals(testSquare1.headWaiter, headWaiterTest);
+            Assert.AreEqual(testSquare1.headWaiter, headWaiterTest);
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             };
 
             Square testSquare1 = new Square(1,newListHeadWaiter);
-            Assert.Equals(testSquare1.LineList.Count, 2);
+            Assert.AreEqual(testSquare1.LineList.Count, 2);
         }
 
         [TestMethod]
@@ -90,7 +90,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             Square testSquare1 = new Square(1,newListHeadWaiter);
             List<LineInterface> LineList = new List<LineInterface>();
             testSquare1.LineList = LineList;
-            Assert.Equals(testSquare1.LineList, LineList);
+            Assert.AreEqual(testSquare1.LineList, LineList);
         }
 
         [TestMethod]
@@ -103,7 +103,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             };
 
             Square testSquare1 = new Square(1,newListHeadWaiter);
-            Assert.Equals(testSquare1.WaiterList.Count, 2);
+            Assert.AreEqual(testSquare1.WaiterList.Count, 2);
         }
 
         [TestMethod]
@@ -118,7 +118,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             Square testSquare1 = new Square(1,newListHeadWaiter);
             List<WaiterInterface> WaiterList = new List<WaiterInterface>();
             testSquare1.WaiterList = WaiterList;
-            Assert.Equals(testSquare1.WaiterList, WaiterList);
+            Assert.AreEqual(testSquare1.WaiterList, WaiterList);
         }
     }
 }
