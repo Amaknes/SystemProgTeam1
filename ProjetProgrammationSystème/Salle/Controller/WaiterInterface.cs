@@ -8,5 +8,17 @@ namespace Salle.Controller
 {
     public interface WaiterInterface
     {
+
+       int IdWaiter
+        {
+            get;
+            set;
+        }
+
+        bool Busy
+        {
+            get;
+            set;
+        }
     }
 }
