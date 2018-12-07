@@ -82,7 +82,7 @@ namespace Salle.Controller
             }
             else
             {
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(700);
                 repHeadWaiter = GetHeadWaiterDisposable();
             }
 
