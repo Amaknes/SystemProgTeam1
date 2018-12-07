@@ -9,6 +9,7 @@ namespace Salle.Controller
     class CommisWaiter : CommisWaiterInterface 
     {
         private static CommisWaiter CommisWaiterInstance;
+        public List<IObservable> ListObservable = new List<IObservable>();
 
         public static CommisWaiter commisWaiterInstance()
         {

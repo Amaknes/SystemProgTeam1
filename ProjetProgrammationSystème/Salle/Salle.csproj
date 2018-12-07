@@ -64,7 +64,7 @@
     <Compile Include="Controller\IObservable.cs" />
     <Compile Include="Controller\IObserver.cs" />
     <Compile Include="Controller\MaîtreHôtel.cs" />
-    <Compile Include="Controller\CommisWaiter.cs" />
+    <Compile Include="Controller\CommisWaiterL%27observeur.cs" />
     <Compile Include="Controller\HeadWaiter.cs" />
     <Compile Include="Controller\MaîtreHôtelInterface.cs" />
     <Compile Include="Controller\Staff.cs" />
