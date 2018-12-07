@@ -15,7 +15,7 @@ namespace Kitchen.View
         }
 
 
-        public void displayElements();
+//        public void displayElements();
 
 
 

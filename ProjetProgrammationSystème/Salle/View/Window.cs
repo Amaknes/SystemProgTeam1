@@ -11,8 +11,8 @@ namespace Kitchen.View
 
 
 
-        public void window();
+//        public void window();
 
-        public void UpdateMap(char DisplayMap);
+//        public void UpdateMap(char DisplayMap);
     }
 }
