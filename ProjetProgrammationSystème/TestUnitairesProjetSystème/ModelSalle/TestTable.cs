@@ -34,7 +34,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Table testTable1 = new Table(1, 6);
 
-            Clients clientsAssert = new Clients();
+            Clients clientsAssert = new Clients(1, false, false, 1);
             testTable1.Clients = clientsAssert;
 
             Assert.Equals(testTable1.Clients, clientsAssert);

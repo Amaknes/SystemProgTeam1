@@ -70,7 +70,14 @@ namespace Salle.Model
 
         public Clients(int idClients, bool Order, bool Booking, int ClientsNumber)
         {
-            this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(0,0,0,false));
+            this.IdClients = IdClients;
+            this.Order = Order;
+            this.Booking = Booking;
+
+            for(int i = 0; i < ClientsNumber; i++)
+            {
+                this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(0, 0, 0, false));
+            }
             //temporaire
         }
 

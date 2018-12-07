@@ -2,13 +2,13 @@
 using Salle.Model;
 using System.Collections.Generic;
 
-namespace TestUnitairesProjetSystème.ModelSalle.testHall
+namespace TestUnitairesProjetSystème.ModelSalle
 {
     /// <summary>
     /// Description résumée pour UnitTest1
     /// </summary>
     [TestClass]
-    public class UnitTest1
+    public class TestHall
     {
         [TestMethod]
         public void TestSingletonHall()

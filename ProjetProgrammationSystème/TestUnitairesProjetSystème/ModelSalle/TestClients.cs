@@ -14,7 +14,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetIdClients()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1,false,false,1);
             Assert.Equals(testClients1.IdClients, 1);
 
         }
@@ -22,7 +22,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestSetIdClients()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.IdClients = 2;
             Assert.Equals(testClients1.IdClients, 2);
 
@@ -31,7 +31,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetOrder()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             Assert.Equals(testClients1.Order, false);
 
         }
@@ -39,7 +39,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestSetOrder()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.Order = true;
             Assert.Equals(testClients1.Order, true);
 
@@ -48,7 +48,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetBooking()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             Assert.Equals(testClients1.Booking, false);
 
         }
@@ -56,7 +56,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestSetBooking()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.Order = true;
             Assert.Equals(testClients1.Booking, true);
 
@@ -65,12 +65,12 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetClientsNumber()
         {
-            Clients testClients1 = new Clients();
-            testClients1.ClientsList.Add(new IndividualClient());
+            Clients testClients1 = new Clients(0, false, false, 0);
+            testClients1.ClientsList.Add(new IndividualClient(1,1,1,false));
             Assert.Equals(testClients1.ClientsNumber, 1);
 
-            testClients1.ClientsList.Add(new IndividualClient());
-            testClients1.ClientsList.Add(new IndividualClient());
+            testClients1.ClientsList.Add(new IndividualClient(1, 1, 1, false));
+            testClients1.ClientsList.Add(new IndividualClient(1, 1, 1, false));
             Assert.Equals(testClients1.ClientsNumber, 3);
 
         }
@@ -78,7 +78,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestSetClientsNumber()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.ClientsNumber = 5;
             Assert.Equals(testClients1.ClientsNumber, 5);
 
@@ -87,7 +87,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetBill()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             Assert.Equals(testClients1.Bill, 0);
 
         }
@@ -95,7 +95,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestSetBill()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.Bill = 50;
             Assert.Equals(testClients1.Bill, 50);
 
@@ -104,7 +104,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetClientsList()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             Assert.Equals(testClients1.ClientsList, null);
             //
         }
@@ -112,10 +112,10 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestSetClientsList()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
 
             List<IndividualClientInterface> list = new List<IndividualClientInterface>();
-            list.Add(new IndividualClient());
+            list.Add(new IndividualClient(1,1,1,false));
             testClients1.ClientsList = list;
             Assert.Equals(testClients1.ClientsList, list);
 
@@ -127,30 +127,30 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestHelloMaîtreHôtel()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
 
         }
 
         [TestMethod]
         public void TestEat()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
 
         }
 
         [TestMethod]
         public void TestPayment()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
 
         }
 
         [TestMethod]
         public void TestChoiceOrder()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
             List<IndividualClientInterface> list = new List<IndividualClientInterface>();
-            list.Add(new IndividualClient());
+            list.Add(new IndividualClient(1, 1, 1, false));
             testClients1.ClientsList = list;
 
             Assert.Equals(testClients1.ChoiceOrder(), new int[1,5,2,4]);
@@ -161,7 +161,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestAlertCommisWaiter()
         {
-            Clients testClients1 = new Clients();
+            Clients testClients1 = new Clients(1, false, false, 1);
 
         }
     }
