@@ -15,7 +15,7 @@ namespace Salle.Model
         List<IndividualClientInterface> ClientsList { get; set; }
         int Bill { get; set; }
 
-        void HelloMaîtreHôtel(ClientsInterface Clients);
+
         int[] ChoiceOrder();
         int Payment();
         void AlertCommisWaiter();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Salle.Controller;
 
 namespace Salle.Model
 {
@@ -68,6 +69,8 @@ namespace Salle.Model
         }
 
 
+
+
         public Clients(int idClients, bool Order, bool Booking, int ClientsNumber)
         {
             this.IdClients = IdClients;
@@ -82,17 +85,14 @@ namespace Salle.Model
         }
 
 
+
+
         public void AlertCommisWaiter()
         {
             throw new NotImplementedException();
         }
 
         public int[] ChoiceOrder()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void HelloMaîtreHôtel(ClientsInterface Clients)
         {
             throw new NotImplementedException();
         }

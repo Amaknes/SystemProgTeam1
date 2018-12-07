@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,8 +32,8 @@ namespace Salle.Model
         {
             List<SquareInterface> newSquareList = new List<SquareInterface>();
 
-            newSquareList.Add((SquareInterface)new Square(1));
-            newSquareList.Add((SquareInterface)new Square(2));
+            newSquareList.Add((SquareInterface)new Square(1, MaîtreHôtel.maîtreHôtelInstance().ListHeadWaiter));
+            newSquareList.Add((SquareInterface)new Square(2, MaîtreHôtel.maîtreHôtelInstance().ListHeadWaiter));
 
             SquareList  = newSquareList;
         }

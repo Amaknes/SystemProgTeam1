@@ -12,14 +12,26 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetIdSquare()
         {
-            Square testSquare1 = new Square(1);
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+
+            Square testSquare1 = new Square(1,newListHeadWaiter);
             Assert.Equals(testSquare1.IdSquare, 1);
         }
 
         [TestMethod]
         public void TestSetIdSquare()
         {
-            Square testSquare1 = new Square(1);
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+
+            Square testSquare1 = new Square(1,newListHeadWaiter);
             testSquare1.IdSquare = 2;
             Assert.Equals(testSquare1.IdSquare, 2);
         }
@@ -27,7 +39,13 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetHeadWaiter()
         {
-            Square testSquare1 = new Square(1);
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+
+            Square testSquare1 = new Square(1,newListHeadWaiter);
             Assert.Equals(testSquare1.headWaiter, null);
             //
         }
@@ -35,7 +53,13 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestSetHeadWaiter()
         {
-            Square testSquare1 = new Square(1);
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+
+            Square testSquare1 = new Square(1,newListHeadWaiter);
             HeadWaiter headWaiterTest = new HeadWaiter(2);
             testSquare1.headWaiter = (HeadWaiterInterface)headWaiterTest;
             Assert.Equals(testSquare1.headWaiter, headWaiterTest);
@@ -44,14 +68,26 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetListLine()
         {
-            Square testSquare1 = new Square(1);
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+
+            Square testSquare1 = new Square(1,newListHeadWaiter);
             Assert.Equals(testSquare1.LineList.Count, 2);
         }
 
         [TestMethod]
         public void TestSetListLine()
         {
-            Square testSquare1 = new Square(1);
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+
+            Square testSquare1 = new Square(1,newListHeadWaiter);
             List<LineInterface> LineList = new List<LineInterface>();
             testSquare1.LineList = LineList;
             Assert.Equals(testSquare1.LineList, LineList);
@@ -60,14 +96,26 @@ namespace TestUnitairesProjetSystème.ModelSalle
         [TestMethod]
         public void TestGetListWaiter()
         {
-            Square testSquare1 = new Square(1);
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+
+            Square testSquare1 = new Square(1,newListHeadWaiter);
             Assert.Equals(testSquare1.WaiterList.Count, 2);
         }
 
         [TestMethod]
         public void TestSetListWaiter()
         {
-            Square testSquare1 = new Square(1);
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+
+            Square testSquare1 = new Square(1,newListHeadWaiter);
             List<WaiterInterface> WaiterList = new List<WaiterInterface>();
             testSquare1.WaiterList = WaiterList;
             Assert.Equals(testSquare1.WaiterList, WaiterList);

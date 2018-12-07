@@ -43,17 +43,17 @@ namespace Salle.Model
         }
 
 
-        public Square(int idSquare)
+        public Square(int idSquare, List<HeadWaiterInterface> headWaiterList)
         {
             this.IdSquare = idSquare;
-            initialiseSquare(idSquare);
+            initialiseSquare(idSquare, headWaiterList);
         }
 
-        private void initialiseSquare(int idSquare)
+        private void initialiseSquare(int idSquare, List<HeadWaiterInterface> headWaiterList)
         {
             if (idSquare == 1)
             {
-                this.headWaiter = new HeadWaiter(1);
+                this.headWaiter = headWaiterList[0];
                 this.LineList.Add(new Line(1));
                 this.LineList.Add(new Line(2));
                 this.WaiterList.Add((WaiterInterface)new Waiter(1));
@@ -61,7 +61,7 @@ namespace Salle.Model
             }
             else
             {
-                this.headWaiter = new HeadWaiter(2);
+                this.headWaiter = headWaiterList[1];
                 this.LineList.Add(new Line(3));
                 this.LineList.Add(new Line(4));
                 this.WaiterList.Add((WaiterInterface)new Waiter(3));

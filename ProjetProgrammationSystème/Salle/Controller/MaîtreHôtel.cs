@@ -2,40 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Salle.Model;
 
 namespace Salle.Controller
 {
     public class MaîtreHôtel : MaîtreHôtelInterface
     {
-        
+
+        private static Semaphore _semOccuper;
         private static MaîtreHôtel MaîtreHôtelInstance;
 
-        private int[] _ListHeadWaiter;
-        public int[] ListHeadWaiter {
+        private List<ClientsInterface> _ListClientsInterface;
+        public List<ClientsInterface> ListClientsInterfaces
+        {
+            get => this._ListClientsInterface;
+            set => this._ListClientsInterface = value;
+        }
+
+        private List<HeadWaiterInterface> _ListHeadWaiter;
+        public List<HeadWaiterInterface> ListHeadWaiter
+        {
             get => this._ListHeadWaiter;
             set => this._ListHeadWaiter = value;
         }
 
-        public void AssignTable(int IdTable)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void CallHeadWaiter(int IdHeadWaiter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void getHeadWaiterDisposable(int[] getListeHeadWaiter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HeadWaiterInterface GetHeadWaiterDisposable()
-        {
-            throw new NotImplementedException();
-        }
 
         public static MaîtreHôtel maîtreHôtelInstance()
         {
@@ -46,8 +39,63 @@ namespace Salle.Controller
             }
 
             return MaîtreHôtelInstance;
-        } 
+        }
+
+        private MaîtreHôtel()
+        {
+            _semOccuper = new Semaphore(0,1);
+
+            List<ClientsInterface> newListClient = new List<ClientsInterface>();
+            this.ListClientsInterfaces = (List<ClientsInterface>) newListClient;
+
+            List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
+            {
+                new HeadWaiter(1),
+                new HeadWaiter(2)
+            };
+        }
 
 
+
+        public void AssignTable(ClientsInterface clients)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CallHeadWaiter(int idTable)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HeadWaiterInterface GetHeadWaiterDisposable()
+        {
+            HeadWaiterInterface repHeadWaiter = null;
+
+            if (!ListHeadWaiter[0].Busy)
+            {
+                repHeadWaiter = ListHeadWaiter[0];
+            }else if (!ListHeadWaiter[0].Busy)
+            {
+                repHeadWaiter = ListHeadWaiter[1];
+            }
+            else
+            {
+                System.Threading.Thread.Sleep(1000);
+                repHeadWaiter = GetHeadWaiterDisposable();
+            }
+
+            return repHeadWaiter;
+        }
+
+        public void ClientsReception()
+        {
+            
+            if(this.ListClientsInterfaces.Count > 0)
+            {
+                ClientsInterface premierGroupe = this.ListClientsInterfaces[0];
+                AssignTable(premierGroupe);
+                this.ListClientsInterfaces.Remove(premierGroupe);
+            }
+        }
     }
 }
