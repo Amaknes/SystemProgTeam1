@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    class CommisWaiter : HallOfCommisWaiterInterface 
+    class CommisWaiter : CommisWaiterInterface 
     {
-        private CommisWaiter CommisWaiterInstance;
+        private static CommisWaiter CommisWaiterInstance;
 
-        public CommisWaiter commisWaiterInstance()
+        public static CommisWaiter commisWaiterInstance()
         {
             if (CommisWaiterInstance == null)
             { 
@@ -18,6 +18,16 @@ namespace Salle.Controller
             }
 
             return CommisWaiterInstance;
+        }
+
+        public int ServeBreadDrainks(int idTable)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int VerifyClients()
+        {
+            throw new NotImplementedException();
         }
 
         private CommisWaiter()

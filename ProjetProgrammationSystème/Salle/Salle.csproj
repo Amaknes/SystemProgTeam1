@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\HallOfCommisWaiterInterface.cs" />
+    <Compile Include="Controller\CommisWaiterInterface.cs" />
     <Compile Include="Controller\HeadWaiterInterface.cs" />
     <Compile Include="Controller\StaffInterface.cs" />
     <Compile Include="Controller\IObservable.cs" />

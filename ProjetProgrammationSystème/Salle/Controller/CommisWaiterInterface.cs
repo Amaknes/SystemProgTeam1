@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    interface HallOfCommisWaiterInterface
+    interface CommisWaiterInterface
     {
-
         int ServeBreadDrainks(int idTable);
         int VerifyClients();
-
     }
 }

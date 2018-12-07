@@ -20,8 +20,5 @@ namespace Salle.Controller
             get;
             set;
         }
-
-
-
     }
 }

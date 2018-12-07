@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    interface IObservable
+    interface IObservable : IObserver
     {
+        int StateType
+        {
+            get;
+            set;
+        }
+
+        int NotifyObserver();
+        bool SuppObserver();
+        int AddObserver();
+
     }
 }

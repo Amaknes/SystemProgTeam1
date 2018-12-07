@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    class Waiter : WaiterInterface
+    class Waiter : WaiterInterface, IObservable
     {
     }
 }
