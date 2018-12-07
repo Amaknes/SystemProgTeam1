@@ -14,9 +14,9 @@ namespace Salle.Controller
             set;
         }
 
-        int NotifyObserver();
+        void NotifyObserver();
         bool SuppObserver();
-        int AddObserver();
+        void AddObserver();
 
     }
 }

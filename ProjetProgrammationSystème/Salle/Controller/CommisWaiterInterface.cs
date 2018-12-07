@@ -8,7 +8,7 @@ namespace Salle.Controller
 {
     interface CommisWaiterInterface
     {
-        int ServeBreadDrinks(int idTable);
+        void ServeBreadDrinks(int idTable);
 
     }
 }

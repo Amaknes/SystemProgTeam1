@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    class CommisWaiter : CommisWaiterInterface 
+    class CommisWaiter : CommisWaiterInterface, IObserver
     {
         private static CommisWaiter CommisWaiterInstance;
         public List<IObservable> ListObservable = new List<IObservable>();
@@ -21,16 +21,21 @@ namespace Salle.Controller
             return CommisWaiterInstance;
         }
 
-        public int ServeBreadDrinks(int idTable)
+        public void ServeBreadDrinks(int idTable)
         {
-            throw new NotImplementedException();
+            //donner du pain et ou à boire aux clients qui le demandent
+            return 0;
+        }
+    
+        public void update()
+        {
+            ServeBreadDrinks();
         }
 
         private CommisWaiter()
         {
-             
+            Waiter.Busy = new Waiter.NotifiyObserver();           
         }
-
 
     }
 }

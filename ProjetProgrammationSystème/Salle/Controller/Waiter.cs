@@ -8,28 +8,40 @@ namespace Salle.Controller
 {
     public class Waiter : WaiterInterface, IObservable
     {
+        private int _IdWaiter;
         public int IdWaiter {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => this._IdWaiter;
+            set
+            {
+                if(value > 0){
+                    this._IdWaiter = value;
+                }
+            }
         }
+
+        private int _IdBusy;
         public bool Busy {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => this._IdBusy;
+            set => this._Busy = value;
         }
 
-        public int StateType {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+        private bool _StateType;
+        public bool StateType {
+            get => this._StateType;
+            set => this._StateType = value;
         }
 
-        public int AddObserver()
+        public void AddObserver()
         {
             throw new NotImplementedException();
         }
 
-        public int NotifyObserver()
+        public void NotifyObserver()
         {
-            throw new NotImplementedException();
+            if (Busy == true)
+            {
+               CommisWaiter.CommisWaiterInstance.Update(); //ne pas oublier de changer le 1 en vrai idTable
+            }
         }
 
         public bool SuppObserver()
