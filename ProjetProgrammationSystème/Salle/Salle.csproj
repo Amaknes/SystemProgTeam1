@@ -70,7 +70,7 @@
     <Compile Include="Controller\Staff.cs" />
     <Compile Include="Controller\Waiter.cs" />
     <Compile Include="Controller\WaiterInterface.cs" />
-    <Compile Include="Model\ClientsInterface1.cs" />
+    <Compile Include="Model\ClientsInterface.cs" />
     <Compile Include="Model\Factory.cs" />
     <Compile Include="Model\Clients.cs" />
     <Compile Include="Model\FactoryClients.cs" />
