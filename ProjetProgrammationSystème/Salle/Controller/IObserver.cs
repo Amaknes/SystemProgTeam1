@@ -8,5 +8,6 @@ namespace Salle.Controller
 {
     public interface IObserver
     {
+        int Update(o Observable);
     }
 }

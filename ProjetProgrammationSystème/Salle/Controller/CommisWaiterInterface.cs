@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    public class CommisWaiter
+    interface CommisWaiterInterface
     {
+        int ServeBreadDrinks(int idTable);
+
     }
 }
