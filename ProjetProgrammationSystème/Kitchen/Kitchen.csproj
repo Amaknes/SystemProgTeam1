@@ -54,6 +54,8 @@
     <Compile Include="Controller\Staff.cs" />
     <Compile Include="Controller\StaffInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Socket\InterfaceOrderDesk.cs" />
+    <Compile Include="Socket\OrderDesk.cs" />
     <Compile Include="View\DisplayElements.cs" />
     <Compile Include="View\Elements.cs" />
     <Compile Include="View\Movable.cs" />
