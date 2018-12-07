@@ -6,9 +6,26 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
+
     interface SpecializedChefsInterface
     {
-        string Type();
-    }
 
+    List<CommisChefInterface> CommisChefsList { get; set; }
+
+    string TypeTestStrategy();
+
+
+    int UseOven(int time);
+
+    int UseHotPlate(int time);
+    
+        
+    int GiveOrders(int Order, int idCommisChef);
+
+
+    int Preparation();
+
+
+
+    }
 }
