@@ -8,6 +8,6 @@ namespace Salle.Model
 {
     public abstract class Factory
     {
-        public abstract IndividualClientInterface CreateClientInterface();
+        public abstract IndividualClientInterface CreateIndividualClientInterface();
     }
 }

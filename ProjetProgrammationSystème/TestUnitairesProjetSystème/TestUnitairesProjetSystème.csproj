@@ -51,6 +51,10 @@
   <ItemGroup>
     <Compile Include="ModelSalle\TestIndividualClient.cs" />
     <Compile Include="ModelSalle\TestHall.cs" />
+    <Compile Include="ModelSalle\TestClients.cs" />
+    <Compile Include="ModelSalle\TestTable.cs" />
+    <Compile Include="ModelSalle\TestLine.cs" />
+    <Compile Include="ModelSalle\TestSquare.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

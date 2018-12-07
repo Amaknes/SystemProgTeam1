@@ -10,9 +10,9 @@ namespace Salle.Model
     public interface SquareInterface
     {
 
-        int idSquare { get; set; }
+        int IdSquare { get; set; }
         List<LineInterface> LineList { get; set; }
-        HeadWaiterInterface HeadWaiter { get; set; }
+        HeadWaiterInterface headWaiter { get; set; }
         List<WaiterInterface> WaiterList { get; set; }
 
     }
