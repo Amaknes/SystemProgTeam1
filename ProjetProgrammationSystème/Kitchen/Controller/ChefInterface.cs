@@ -14,6 +14,6 @@ namespace Kitchen.Controller
     
         void Sort();
 
-        void Dispatch();
+        void Dispatch(int Order, int IdSpecializedChefs);
     }
 }

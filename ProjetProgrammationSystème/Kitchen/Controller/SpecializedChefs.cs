@@ -8,9 +8,23 @@ namespace Kitchen.Controller
 {
     class SpecializedChefs : SpecializedChefsInterface
     {
-        public int time;
-        public int Ordre;
-        public int idCommisChef;
+        public int time
+        {
+            get;
+            set;
+        }
+
+        public int Order
+        {
+            get;
+            set;
+        }
+
+        public int idCommisChef
+        {
+            get;
+            set;
+        }
 
 
         private List<CommisChefInterface> _CommisChefList;
@@ -25,7 +39,7 @@ namespace Kitchen.Controller
 
             public void CallType()
             {
-                Console.WriteLine(Strategy.Type());
+                Console.WriteLine(Strategy.TypeTestStrategy());
             }
         
     }

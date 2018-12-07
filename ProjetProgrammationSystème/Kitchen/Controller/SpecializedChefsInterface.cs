@@ -12,15 +12,15 @@ namespace Kitchen.Controller
 
     List<CommisChefInterface> CommisChefsList { get; set; }
 
-    string Type();
+    string TypeTestStrategy();
 
 
-    int UseOven();
+    int UseOven(int time);
 
-    int UseHotPlate();
+    int UseHotPlate(int time);
     
         
-    int GiveOrders();
+    int GiveOrders(int Order, int idCommisChef);
 
 
     int Preparation();
