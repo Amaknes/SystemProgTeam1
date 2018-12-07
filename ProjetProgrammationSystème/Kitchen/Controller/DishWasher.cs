@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class DishWasher : DishWasherInterface
+    class DishWasher //: DishWasherInterface
     {
         bool Dirty
         {

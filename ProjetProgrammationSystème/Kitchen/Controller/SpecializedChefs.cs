@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class SpecializedChefs : SpecializedChefsInterface
+    class SpecializedChefs //: SpecializedChefsInterface
     {
         public int time
         {

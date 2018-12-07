@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class CommisChef : CommisChefInterface
+    class CommisChef //: CommisChefInterface
     {
         public int IdCommisChef
         {
