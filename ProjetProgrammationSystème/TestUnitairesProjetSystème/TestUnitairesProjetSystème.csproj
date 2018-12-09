@@ -55,6 +55,7 @@
     <Compile Include="ModelSalle\TestTable.cs" />
     <Compile Include="ModelSalle\TestLine.cs" />
     <Compile Include="ModelSalle\TestSquare.cs" />
+    <Compile Include="TestCuisine\TestControllerCuisine\TestStaff.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

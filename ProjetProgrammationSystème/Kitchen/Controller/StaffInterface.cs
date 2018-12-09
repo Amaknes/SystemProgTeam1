@@ -8,5 +8,10 @@ namespace Kitchen.Controller
 {
     interface StaffInterface
     {
+        int Schedule
+        {
+            get;
+            set;
+        }
     }
 }

@@ -8,5 +8,9 @@ namespace Kitchen.Controller
 {
     class Cookers
     {
+        public string Type()
+        {
+            return "Cookers";
+        }
     }
 }

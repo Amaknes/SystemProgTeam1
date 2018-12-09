@@ -8,5 +8,11 @@ namespace Kitchen.View
 {
     interface Elements
     {
+
+        
+
+
+
+
     }
 }

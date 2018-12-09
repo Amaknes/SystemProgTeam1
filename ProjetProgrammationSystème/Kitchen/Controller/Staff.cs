@@ -6,7 +6,25 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class Staff
+    public class Staff : StaffInterface
     {
+        private static Staff _StaffInstance;
+        private int _schedule;
+
+        public int Schedule {
+            get { return _schedule; }
+            set { _schedule = value; }
+        }
+
+
+        public static Staff StaffInstance()
+        {
+            if (_StaffInstance == null)
+            {
+                _StaffInstance = new Staff();
+                return _StaffInstance;
+            }
+            else return _StaffInstance;
+        }
     }
 }

@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class DishWasher
+    class DishWasher //: DishWasherInterface
     {
+        bool Dirty
+        {
+            get;
+            set;
+        }
     }
 }
