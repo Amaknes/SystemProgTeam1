@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kitchen.Socket;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,17 +38,20 @@ namespace Kitchen.Controller
             return ChefInstance;
         }
 
-        public void GetOrder()
+        public List<int> GetNewOrders()
         {
-            throw new NotImplementedException();
+           return OrderDesk.getInstance().OrderTable;
         }
 
         public void Sort()
         {
-            throw new NotImplementedException();
+            foreach(int order in this.GetNewOrders())
+            {
+                Dispatch(order);
+            }
         }
 
-        public void Dispatch(int Order, int IdSpecializedChefs)
+        public void Dispatch(int Order)
         {
             throw new NotImplementedException();
         }
