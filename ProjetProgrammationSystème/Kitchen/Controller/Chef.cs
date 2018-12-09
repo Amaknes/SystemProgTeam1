@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class Chef 
+    class Chef : ChefInterface
     {
         private static Chef ChefInstance;
 
@@ -37,5 +37,19 @@ namespace Kitchen.Controller
             return ChefInstance;
         }
 
+        public void GetOrder()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Sort()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispatch(int Order, int IdSpecializedChefs)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

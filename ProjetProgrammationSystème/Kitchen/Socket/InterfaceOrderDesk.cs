@@ -8,8 +8,8 @@ namespace Kitchen.Socket
 {
     interface InterfaceOrderDesk
     {
-        int[,] OrderTable { get; set; }
-        int[,] FinishedOrder { get; set; }
-        void DeliverOrder(int foo, int fooo);
+        List<int> OrderTable { get; set; }
+        List<int> FinishedOrder { get; set; }
+        void DeliverOrder(int OrderDone);
     }
 }

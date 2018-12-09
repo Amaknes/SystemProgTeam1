@@ -8,19 +8,19 @@ namespace Kitchen.Socket
 {
     class OrderDesk : InterfaceOrderDesk
     {
-        int[,] _OrderTable;
-        int[,] _FinishedOrder;
+        List<int> _OrderTable;
+        List<int> _FinishedOrder;
 
-        public int[,] OrderTable {
+        public List<int> OrderTable {
             get { return _OrderTable; }
             set { _OrderTable = value; }
         }
-        public int[,] FinishedOrder {
+        public List<int> FinishedOrder {
             get { return _FinishedOrder; }
             set { _FinishedOrder = value; }
         }
 
-        public void DeliverOrder(int foo, int fooo)
+        public void DeliverOrder(int OrderDone)
         {
             throw new NotImplementedException();
         }
