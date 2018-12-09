@@ -15,7 +15,7 @@ namespace Salle.Model
             get => this._IdClients;
             set
             {
-                if (value > 0)
+                if (value >= 0)
                 {
                     this._IdClients = value;
                 }
@@ -73,15 +73,30 @@ namespace Salle.Model
 
         public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber)
         {
+
+            Console.WriteLine(IdClients);
+
             this.IdClients = IdClients;
             this.Order = Order;
             this.Booking = Booking;
 
             this.ClientsList = new List<IndividualClientInterface>();
 
-            for(int i = 0; i < ClientsNumber; i++)
+            Random rnd = new Random();
+            bool WaiterRequest;
+
+            for (int i = 0; i < ClientsNumber; i++)
             {
-                this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(0, 0, 0, false));
+                if(rnd.Next(2) == 0)
+                {
+                    WaiterRequest = false;
+                }
+                else
+                {
+                    WaiterRequest = true;
+                }
+
+                this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(rnd.Next(5), rnd.Next(30,121), rnd.Next(5), WaiterRequest));
             }
             //temporaire
         }

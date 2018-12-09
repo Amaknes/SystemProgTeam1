@@ -10,21 +10,16 @@ namespace Salle.Controller
 {
     public interface MaîtreHôtelInterface
     {
-        List<HeadWaiterInterface> ListHeadWaiter
-        {
-            get;
-            set;
-        }
+        List<HeadWaiterInterface> ListHeadWaiter{ get; set; }
 
-        List<ClientsInterface> ListClientsInterfaces
-        {
-            get;
-            set;
-        }
+        List<ClientsInterface> ListClients { get; set; }
+        
+        List<SquareInterface> ListSquare { get; set; }
 
         void AssignTable(ClientsInterface clients);
         void CallHeadWaiter(int idTable);
         HeadWaiterInterface GetHeadWaiterDisposable();
         void ClientsReception();
+        int VerifTables(int idSquare, int idLine, ClientsInterface groupe);
     }
 }

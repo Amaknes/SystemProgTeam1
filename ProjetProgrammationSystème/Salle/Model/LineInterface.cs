@@ -10,6 +10,7 @@ namespace Salle.Model
     {
 
         int IdLine { get; set; }
+        int NbClients { get; set; }
         List<TableInterface> ListTable { get; set; }
 
     }

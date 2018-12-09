@@ -36,7 +36,9 @@ namespace Salle.Model
             newSquareList.Add((SquareInterface)new Square(1));
             newSquareList.Add((SquareInterface)new Square(2));
 
+            MaîtreHôtel MHotel = MaîtreHôtel.maîtreHôtelInstance();
             SquareList  = newSquareList;
+            MHotel.ListSquare = (List < SquareInterface >) newSquareList;
         }
 
         public static HallInterface hallInstance()
@@ -47,6 +49,42 @@ namespace Salle.Model
             }
 
             return HallInstance;
+        }
+
+        public TableInterface FindTableById(int IdTable)
+        {
+            TableInterface res = null;
+            if(IdTable < 8)
+            {
+                res = VerifTableById(0, 0, IdTable);
+            }else if(IdTable < 18)
+            {
+                res = VerifTableById(0, 1, IdTable);
+            }else if(IdTable < 26)
+            {
+                res = VerifTableById(1, 0, IdTable);
+            }
+            else if(IdTable < 33)
+            {
+                res = VerifTableById(1, 1, IdTable);   
+            }
+
+            return res;
+        }
+
+        public TableInterface VerifTableById(int idSquare, int idLine, int idTable)
+        {
+            TableInterface res = null;
+            int i = 0;
+            while (i < SquareList[idSquare].LineList[idLine].ListTable.Count)
+            {
+                if (idTable == SquareList[idSquare].LineList[idLine].ListTable[i].IdTable)
+                {
+                    res = SquareList[idSquare].LineList[idLine].ListTable[i];
+                }
+            }
+
+            return res;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Salle.Model
             get => this._Taste;
             set
             {
-                if(value > 0)
+                if(value >= 0)
                 {
                     this._Taste = value;
                 }
@@ -37,7 +37,7 @@ namespace Salle.Model
             get => this._Choice;
             set
             {
-                if(value > 0)
+                if(value >= 0)
                 {
                     this._Choice = value;
                 }
@@ -53,6 +53,9 @@ namespace Salle.Model
 
         public IndividualClient(int Taste, int TimeSpend, int Choice, bool WaiterRequest)
         {
+
+            //Console.WriteLine("Taste: {0}, TimeSpend: {1}, Choice: {2}, WaiterRequest: {3}", Taste, TimeSpend, Choice, WaiterRequest);
+
             this.TimeSpend = TimeSpend;
             this.Taste = Taste;
             this.Choice = Choice;

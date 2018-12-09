@@ -9,12 +9,27 @@ namespace Salle.Model
     public class Line : LineInterface
     {
         private int _IdLine;
-        public int IdLine {
+        public int IdLine
+        {
             get => this._IdLine;
-            set {
-                if(value > 0)
+            set
+            {
+                if (value > 0)
                 {
                     this._IdLine = value;
+                }
+            }
+        }
+
+        private int _NbClients;
+        public int NbClients
+        {
+            get => this._NbClients;
+            set
+            {
+                if (value >= 0)
+                {
+                    this._NbClients = value;
                 }
             }
         }
@@ -28,7 +43,8 @@ namespace Salle.Model
         public Line(int idLine)
         {
             this.IdLine = idLine;
-            ListTable = new List<TableInterface>();
+            this.NbClients = 0;
+            this.ListTable = new List<TableInterface>();
 
             initialiseTable(idLine);
         }

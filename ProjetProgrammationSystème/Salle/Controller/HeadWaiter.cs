@@ -53,7 +53,7 @@ namespace Salle.Controller
 
         public void SitClient(int IdTable)
         {
-            throw new NotImplementedException();
+
         }
 
         public HeadWaiter(int idHeadWaiter)

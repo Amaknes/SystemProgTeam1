@@ -11,5 +11,7 @@ namespace Salle.Model
 
         List<SquareInterface> SquareList { get; set; }
 
+        TableInterface FindTableById(int IdTable);
+        TableInterface VerifTableById(int idSquare, int idLine, int idTable);
     }
 }

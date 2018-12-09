@@ -10,13 +10,27 @@ namespace Salle.Model
     public class Square : SquareInterface
     {
         private int _idSquare;
-        public int IdSquare {
+        public int IdSquare
+        {
             get => this._idSquare;
             set
             {
                 if (value > 0)
                 {
                     this._idSquare = value;
+                }
+            }
+        }
+
+        private int _NbClients;
+        public int NbClients
+        {
+            get => this._NbClients;
+            set
+            {
+                if (value >= 0)
+                {
+                    this._NbClients = value;
                 }
             }
         }
@@ -46,6 +60,8 @@ namespace Salle.Model
         public Square(int idSquare)
         {
             this.IdSquare = idSquare;
+            this.NbClients = 0;
+
             LineList = new List<LineInterface>();
             WaiterList = new List<WaiterInterface>();
 
@@ -65,11 +81,11 @@ namespace Salle.Model
                 this.LineList.Add(new Line(2));
 
                 this.WaiterList.Add((WaiterInterface)new Waiter(1));
-                this.WaiterList.Add((WaiterInterface)new Waiter(2));
+                this.WaiterList.Add((WaiterInterface)new Waiter(2)); 
             }
             else
             {
-                this.headWaiter = MaîtreHôtel.maîtreHôtelInstance().ListHeadWaiter[1];
+               this.headWaiter = MaîtreHôtel.maîtreHôtelInstance().ListHeadWaiter[1];
 
                 this.LineList.Add(new Line(3));
                 this.LineList.Add(new Line(4));
