@@ -54,7 +54,7 @@ namespace Salle.Controller
         public void SitClient(int IdTable)
         {
             this.Busy = true;
-
+            System.Threading.Thread.Sleep(1200);
             this.Busy = false;
         }
 

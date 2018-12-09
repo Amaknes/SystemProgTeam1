@@ -37,11 +37,37 @@ namespace Salle.Model
             set => this._Clients = value;
         }
 
+        private int _Bread;
+        public int Bread {
+            get => this._Bread;
+            set
+            {
+                if(value >= 0 && value <= 2)
+                {
+                    this._Bread = value;
+                }
+            }
+        }
+
+        private int _Drinks;
+        public int Drinks {
+            get => this._Drinks;
+            set
+            {
+                if (value >= 0 && value <= 2)
+                {
+                    this._Drinks = value;
+                }
+            }
+        }
+
         public Table(int idTable, int nbPlace)
         {
             IdTable = idTable;
             NbPlace = nbPlace;
             Clients = null;
+            Bread = 0;
+            Drinks = 0;
         }
     }
 }

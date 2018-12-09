@@ -14,11 +14,12 @@ namespace Salle.Model
         int ClientsNumber { get; set; }
         List<IndividualClientInterface> ClientsList { get; set; }
         int Bill { get; set; }
+        int idTable { get; set; }
 
-
+        void WaitForNextDishe(int NbDishe);
         int[] ChoiceOrder();
-        int Payment();
-        void AlertCommisWaiter();
+        void Payment();
         void Eat();
+        void leave();
     }
 }

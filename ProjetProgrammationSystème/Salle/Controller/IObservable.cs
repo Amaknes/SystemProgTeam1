@@ -8,15 +8,21 @@ namespace Salle.Controller
 {
     interface IObservable
     {
+        List<IObserver> Observers
+        {
+            get;
+            set;
+        }
+
         int StateType
         {
             get;
             set;
         }
 
-        void NotifyObserver();
-        bool SuppObserver();
-        void AddObserver();
+        void NotifyObserver(int idTable);
+        bool SuppObserver(IObserver Obs);
+        void AddObserver(IObserver Obs);
 
     }
 }

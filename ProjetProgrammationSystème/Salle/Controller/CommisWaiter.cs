@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,7 @@ namespace Salle.Controller
     class CommisWaiter : CommisWaiterInterface, IObserver
     {
         private static CommisWaiter CommisWaiterInstance;
-        public List<IObservable> ListObservable;
-
-
-
+        
         public static CommisWaiter commisWaiterInstance()
         {
             if (CommisWaiterInstance == null)
@@ -27,20 +25,28 @@ namespace Salle.Controller
 
         private CommisWaiter()
         {
-            this.ListObservable = new List<IObservable>();
-            //Waiter.Busy = new Waiter.NotifiyObserver();
+
         }
 
 
         public void ServeBreadDrinks(int idTable)
         {
-            //donner du pain et ou à boire aux clients qui le demandent
+            Table table = (Table)Hall.hallInstance().FindTableById(idTable);
+            if (table.Clients.ClientsNumber > 6)
+            {
+                table.Bread = 2;
+                table.Drinks = 2;
+            }
+            else
+            {
+                table.Bread = 2;
+                table.Drinks = 2;
+            }
         }
     
-        public void Update()
+        public void Update(int idTable)
         {
-            ServeBreadDrinks(1);
-            //Temporaire changer id
+            ServeBreadDrinks(idTable);
         }
 
     }

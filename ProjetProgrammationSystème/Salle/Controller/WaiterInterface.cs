@@ -21,10 +21,9 @@ namespace Salle.Controller
             set;
         }
 
-        bool StateType 
-        {
-            get;
-            set;
-        }   
+        void CleanTable(int idTable);
+        void getCommand(int idTable);
+        void Serve(int idTable);
+        void ServeBreadDrinks(int idTable);
     }
 }

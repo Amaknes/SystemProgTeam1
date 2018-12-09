@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,34 +26,106 @@ namespace Salle.Controller
             set => this._Busy = value;
         }
 
-        private bool _StateType;
-        public bool StateType {
+        private int _StateType;
+        public int StateType {
             get => this._StateType;
             set => this._StateType = value;
         }
-        int IObservable.StateType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void AddObserver()
-        {
-            throw new NotImplementedException();
+        
+        private List<IObserver> _Observers;
+        public List<IObserver> Observers {
+            get => this._Observers;
+            set => this._Observers = value;
         }
 
-        public void NotifyObserver()
-        {
-            if (Busy == true)
-            {
-               CommisWaiter.commisWaiterInstance().Update(); //ne pas oublier de changer le 1 en vrai idTable
-            }
-        }
 
-        public bool SuppObserver()
-        {
-            throw new NotImplementedException();
-        }
+
         public Waiter(int idWaiter)
         {
             this.IdWaiter = idWaiter;
             this.Busy = false;
+            this.StateType = 0;
+            this.Observers =  new List<IObserver>();
+        }
+
+
+
+        public void AddObserver(IObserver Obs)
+        {
+            this.Observers.Add(Obs);
+        }
+
+        public bool SuppObserver(IObserver Obs)
+        {
+            return this.Observers.Remove(Obs);
+        }
+
+        public void NotifyObserver(int idTable)
+        {
+            foreach(IObserver o in Observers)
+            {
+                o.Update(idTable);
+            }
+        }
+
+
+
+        public void CleanTable(int idTable)
+        {
+            if (Busy)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        public void getCommand(int idTable)
+        {
+            if (Busy)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        public void Serve(int idTable)
+        {
+            if (Busy)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        public void ServeBreadDrinks(int idTable)
+        {
+            if (Busy)
+            {
+                NotifyObserver(idTable);
+            }
+            else
+            {
+                Table table = (Table)Hall.hallInstance().FindTableById(idTable);
+                if(table.Clients.ClientsNumber > 6)
+                {
+                    table.Bread = 2;
+                    table.Drinks = 2;
+                }
+                else
+                {
+                    table.Bread = 2;
+                    table.Drinks = 2;
+                }
+            }
         }
     }
 }

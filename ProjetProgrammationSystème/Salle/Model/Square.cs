@@ -66,9 +66,6 @@ namespace Salle.Model
             WaiterList = new List<WaiterInterface>();
 
             initialiseSquare(idSquare);
-
-            CommisWaiter.commisWaiterInstance().ListObservable.Add((Waiter)WaiterList[0]);
-            CommisWaiter.commisWaiterInstance().ListObservable.Add((Waiter)WaiterList[1]);
         }
 
         private void initialiseSquare(int idSquare)

@@ -9,10 +9,15 @@ using Salle.Model;
 namespace Salle.Controller
 {
     public class MaîtreHôtel : MaîtreHôtelInterface
-    {
-
-        private static Semaphore _semOccuper;
+    { 
         private static MaîtreHôtel MaîtreHôtelInstance;
+
+        private bool _Busy;
+        public bool Busy
+        {
+            get => this._Busy;
+            set => this._Busy = value;
+        }
 
         private List<ClientsInterface> _ListClients;
         public List<ClientsInterface> ListClients
@@ -50,7 +55,7 @@ namespace Salle.Controller
 
         private MaîtreHôtel()
         {
-            _semOccuper = new Semaphore(0,1);
+            Busy = false;
 
             List<ClientsInterface> newListClient = new List<ClientsInterface>();
             this.ListClients = (List<ClientsInterface>) newListClient;
@@ -188,6 +193,7 @@ namespace Salle.Controller
                 ListSquare[idSquare].NbClients += groupe.ClientsNumber;
                 ListSquare[idSquare].LineList[idLine].NbClients += groupe.ClientsNumber;
                 ListSquare[idSquare].LineList[idLine].ListTable[res - countMal].Clients = groupe;
+                groupe.idTable = res;
             }
             return res;
         }
@@ -197,7 +203,9 @@ namespace Salle.Controller
             HeadWaiter HWaiter = (HeadWaiter) GetHeadWaiterDisposable();
             Console.WriteLine("Headwaiter disponible : {0}", HWaiter.IdHeadWaiter);
             //Hwaiter vient voir le maître d'hôtel
-            HWaiter.SitClient(idTable);
+            
+            Thread threadHWaiter = new Thread(() => HWaiter.SitClient(idTable));
+            threadHWaiter.Start();
         }
 
         public HeadWaiterInterface GetHeadWaiterDisposable()
@@ -222,12 +230,24 @@ namespace Salle.Controller
 
         public void ClientsReception()
         {
+            Busy = true;
+
             if(this.ListClients.Count > 0)
             {
                 ClientsInterface premierGroupe = this.ListClients[0];
                 AssignTable(premierGroupe);
                 this.ListClients.Remove(premierGroupe);
             }
+
+            Busy = false;
+        }
+
+        public void GetMoney(int Bill, ClientsInterface groupe)
+        {
+            Busy = true;
+            Thread.Sleep(340);
+            groupe.leave();
+            Busy = false;
         }
     }
 }

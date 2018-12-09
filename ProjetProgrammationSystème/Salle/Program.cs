@@ -63,7 +63,7 @@ namespace Salle
 
 
                 //Création random de clients
-                MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, rnd.Next(11)));
+                MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, rnd.Next(1, 11)));
 
                Thread.Sleep(1500);
                IdClients++;
