@@ -42,7 +42,7 @@ namespace Salle.Model
             get => this._ClientsNumber;
             set
             {
-                if (value > 0)
+                if (value >= 0)
                 {
                     this._ClientsNumber = value;
                 }
@@ -79,6 +79,7 @@ namespace Salle.Model
             this.IdClients = IdClients;
             this.Order = Order;
             this.Booking = Booking;
+            this.ClientsNumber = ClientsNumber;
 
             this.ClientsList = new List<IndividualClientInterface>();
 

@@ -53,7 +53,9 @@ namespace Salle.Controller
 
         public void SitClient(int IdTable)
         {
+            this.Busy = true;
 
+            this.Busy = false;
         }
 
         public HeadWaiter(int idHeadWaiter)

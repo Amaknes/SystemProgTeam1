@@ -13,7 +13,7 @@ namespace Salle.Model
             get => this._IdTable;
             set
             {
-                if (value > 0) {
+                if (value >= 0) {
                     this._IdTable = value;
                 }
             }

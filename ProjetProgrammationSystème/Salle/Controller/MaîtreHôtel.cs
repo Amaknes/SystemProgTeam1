@@ -143,7 +143,7 @@ namespace Salle.Controller
 
             if(idTable >= 0)
             {
-                Console.WriteLine("IdTable : {0}", idTable);
+                Console.WriteLine("IdTable : {0}, nbClients {1}", idTable, groupe.ClientsNumber);
                 CallHeadWaiter(idTable);
             }
         }
@@ -152,18 +152,28 @@ namespace Salle.Controller
         {
             int res = -1;
             int i = 0;
-
+            int countMal = 0;
             while (i < ListSquare[idSquare].LineList[idLine].ListTable.Count)
             {
+                if(res >= 7 && res < 17)
+                {
+                    countMal = 7;
+                }else if(res >= 17 && res < 25)
+                {
+                    countMal = 17;
+                }else if(res >= 25 && res < 32)
+                {
+                    countMal = 25;
+                }
+
                 if (ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace >= groupe.ClientsNumber && ListSquare[idSquare].LineList[idLine].ListTable[i].Clients == null)
                 {
 
-                    if (res != -1)
+                    if (res == -1)
                     {
                         res = ListSquare[idSquare].LineList[idLine].ListTable[i].IdTable;
                     }
-
-                    if (ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace < ListSquare[idSquare].LineList[idLine].ListTable[res].NbPlace)
+                    else if (res != -1 && ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace < ListSquare[idSquare].LineList[idLine].ListTable[res-countMal].NbPlace)
                     {
                         res = ListSquare[idSquare].LineList[idLine].ListTable[i].IdTable;
                     }
@@ -177,7 +187,7 @@ namespace Salle.Controller
             {
                 ListSquare[idSquare].NbClients += groupe.ClientsNumber;
                 ListSquare[idSquare].LineList[idLine].NbClients += groupe.ClientsNumber;
-                ListSquare[idSquare].LineList[idLine].ListTable[res].Clients = groupe;
+                ListSquare[idSquare].LineList[idLine].ListTable[res - countMal].Clients = groupe;
             }
             return res;
         }
@@ -185,6 +195,7 @@ namespace Salle.Controller
         public void CallHeadWaiter(int idTable)
         {
             HeadWaiter HWaiter = (HeadWaiter) GetHeadWaiterDisposable();
+            Console.WriteLine("Headwaiter disponible : {0}", HWaiter.IdHeadWaiter);
             //Hwaiter vient voir le maître d'hôtel
             HWaiter.SitClient(idTable);
         }
@@ -196,13 +207,13 @@ namespace Salle.Controller
             if (!ListHeadWaiter[0].Busy)
             {
                 repHeadWaiter = ListHeadWaiter[0];
-            }else if (!ListHeadWaiter[0].Busy)
+            }else if (!ListHeadWaiter[1].Busy)
             {
                 repHeadWaiter = ListHeadWaiter[1];
             }
             else
             {
-                System.Threading.Thread.Sleep(700);
+                System.Threading.Thread.Sleep(300);
                 repHeadWaiter = GetHeadWaiterDisposable();
             }
 
@@ -214,7 +225,7 @@ namespace Salle.Controller
             if(this.ListClients.Count > 0)
             {
                 ClientsInterface premierGroupe = this.ListClients[0];
-                //AssignTable(premierGroupe);
+                AssignTable(premierGroupe);
                 this.ListClients.Remove(premierGroupe);
             }
         }
