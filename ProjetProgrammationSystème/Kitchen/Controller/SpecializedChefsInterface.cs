@@ -12,9 +12,6 @@ namespace Kitchen.Controller
 
     List<CommisChefInterface> CommisChefsList { get; set; }
 
-    string TypeTestStrategy();
-
-
     int UseOven(int time);
 
     int UseHotPlate(int time);

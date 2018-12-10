@@ -6,41 +6,60 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class SpecializedChefs //: SpecializedChefsInterface
+    class SpecializedChefs : SpecializedChefsInterface
     {
+        private int Time;
+        private int order;
+        
+
         public int time
         {
-            get;
-            set;
+            get {return this.Time;}
+            set { this.Time = value;}
         }
 
-        public int Order
+        public int Order { get => order; set => order = value; }
+
+        /*public int idCommisChef
         {
             get;
             set;
-        }
-
-        public int idCommisChef
-        {
-            get;
-            set;
-        }
-
-
-        private List<CommisChefInterface> _CommisChefList;
-        public List<CommisChefInterface> CommisChefList
-        {
-            get { return this._CommisChefList; }
-            set { this._CommisChefList = value; }
-        }
-
-
-        public SpecializedChefsInterface Strategy { get; set; }
-
-            public void CallType()
-            {
-                Console.WriteLine(Strategy.TypeTestStrategy());
-            }
+        }*/
         
+
+        private static List<CommisChefInterface> _CommisChefList;
+        public static List<CommisChefInterface> CommisChefList
+        {
+            get { return _CommisChefList;}
+            set { _CommisChefList = value;}
+        }
+
+
+        public List<CommisChefInterface> CommisChefsList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void CallType()
+            {
+                Console.WriteLine();
+            }
+
+        public int UseOven(int time)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UseHotPlate(int time)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GiveOrders(int Order, int idCommisChef)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Preparation()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,18 +18,38 @@ namespace Kitchen.Controller
             set { this._SpecializedChefsList = value; }
         }
 
+        public bool DefineStrategy()
+        {
+            //Check if list is odd or even
+            if (Chef.chefInstance().SpecializedChefsList.Count() % 2 == 0)
+            {
+                return true;
+            }
+            else return false;
+
+        }
+
+        public void AddSpecializedChef()
+        {
+            if (this.DefineStrategy())
+            {
+                SpecializedChefsList.Add((SpecializedChefsInterface)new Pastry());
+
+            }else
+            {
+                SpecializedChefsList.Add((SpecializedChefsInterface)new Cookers());
+            }
+        }
 
         private Chef()
         {
-            List<SpecializedChefsInterface> newSpecializedChefsList = new List<SpecializedChefsInterface>();
+            List<SpecializedChefsInterface> SpecializedChefsList = new List<SpecializedChefsInterface>();
+            this.AddSpecializedChef();
+            this.AddSpecializedChef();
 
-            newSpecializedChefsList.Add((SpecializedChefsInterface)new SpecializedChefs());
-            newSpecializedChefsList.Add((SpecializedChefsInterface)new SpecializedChefs());
-
-            SpecializedChefsList = newSpecializedChefsList;
         }
 
-        public Chef chefInstance()
+        public static Chef chefInstance()
         {
             if(ChefInstance == null)
             {
