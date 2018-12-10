@@ -47,9 +47,9 @@ namespace Kitchen.Controller
             }
         }
 
-        public int GiveIngredients()
+        public void GiveIngredients()
         {
-            throw new NotImplementedException();
+            //bouge jusq'au chef pour lui donner les ingrédients
         }
 
         public int PeelVegetables(int IdVegetables)

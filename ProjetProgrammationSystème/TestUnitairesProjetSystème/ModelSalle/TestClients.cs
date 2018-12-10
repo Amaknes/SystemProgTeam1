@@ -129,7 +129,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             Clients testClients1 = new Clients(1, false, false, 1);
 
 
-            Assert.AreEqual(testClients1.ChoiceOrder(), null);
+            Assert.AreEqual(testClients1.ChoiceOrder(false), null);
         }
 
         [TestMethod]
@@ -137,7 +137,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Clients testClients1 = new Clients(1, false, false, 1);
 
-            Assert.AreEqual(testClients1.ChoiceOrder(), null);
+            Assert.AreEqual(testClients1.ChoiceOrder(false), null);
         }
 
         [TestMethod]
@@ -148,7 +148,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             list.Add(new IndividualClient(1, 1, 1, false));
             testClients1.ClientsList = list;
 
-            Assert.AreEqual(testClients1.ChoiceOrder(), new int[1,5,2,4]);
+            Assert.AreEqual(testClients1.ChoiceOrder(false), new int[1,5,2,4]);
             //
 
         }
@@ -158,7 +158,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Clients testClients1 = new Clients(1, false, false, 1);
 
-            Assert.AreEqual(testClients1.ChoiceOrder(), null);
+            Assert.AreEqual(testClients1.ChoiceOrder(false), null);
         }
     }
 }

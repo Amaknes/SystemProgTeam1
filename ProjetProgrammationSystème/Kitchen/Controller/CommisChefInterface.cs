@@ -13,7 +13,7 @@ namespace Kitchen.Controller
         int SearchIngredients(int ingredients);
 
 
-        int GiveIngredients();
+        void GiveIngredients();
 
         int PeelVegetables(int IdVegetables);
 

@@ -77,6 +77,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\OrderInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Controller\Chef.cs" />
     <Compile Include="Controller\ChefInterface.cs" />
@@ -98,8 +100,6 @@
     <Compile Include="View\Movable.cs" />
     <Compile Include="View\Window.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
