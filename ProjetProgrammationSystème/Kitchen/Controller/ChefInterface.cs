@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    interface ChefInterface
+    public interface ChefInterface
     {
         List<SpecializedChefsInterface> SpecializedChefsList { get; set; }
 

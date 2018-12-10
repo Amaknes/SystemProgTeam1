@@ -106,16 +106,23 @@ namespace Salle.Model
             }
         }
 
+        private long _TimeOfArrival;
+        public long TimeOfArrival
+        {
+            get => this._TimeOfArrival;
+            set => this._TimeOfArrival = value;
+        }
+
+
         public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber)
         {
-
-            Console.WriteLine(IdClients);
 
             this.IdClients = IdClients;
             this.Order = Order;
             this.Booking = Booking;
             this.ClientsNumber = ClientsNumber;
             this.CurrentDishe = 0;
+            
 
             this.Observers = new List<IObserver>();
             AddObserver(CommisWaiter.commisWaiterInstance());
@@ -227,6 +234,7 @@ namespace Salle.Model
 
         public void Eat()
         {
+            this.TimeOfArrival = DateTime.Now.Ticks;
             Console.WriteLine("Clients Starts to eat");
             WaitForNextDishe(0);
 
@@ -254,6 +262,7 @@ namespace Salle.Model
             int Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
             int Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
             bool request = false;
+            int WaitTime = 300;
 
             foreach (IndividualClient Cl in ClientsList)
             {
@@ -261,11 +270,21 @@ namespace Salle.Model
                 {
                     request = true;
                 }
+                if(Cl.TimeSpend < WaitTime)
+                {
+                    WaitTime = Cl.TimeSpend;
+                }
             }
-            Console.WriteLine("Request : {0}", request);
 
+            Console.WriteLine("Request : {0}, WaitTime : {1} ", request, WaitTime);
+            
             while (CurrentDishe == NbDishe)
             {
+                if ((DateTime.Now.Ticks - TimeOfArrival) >= (WaitTime * (1000  * 10000)))
+                {
+                    leave();
+                }
+
                 if (rnd.Next(80) < 2)
                 {
                     if (Bread <= 0 && request)
@@ -302,6 +321,7 @@ namespace Salle.Model
 
         public void leave()
         {
+            Console.WriteLine("Client is leaving");
             //detruire le client
         }
     }

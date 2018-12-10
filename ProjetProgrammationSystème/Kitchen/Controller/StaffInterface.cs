@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    interface StaffInterface
+    public interface StaffInterface
     {
         int Schedule
         {

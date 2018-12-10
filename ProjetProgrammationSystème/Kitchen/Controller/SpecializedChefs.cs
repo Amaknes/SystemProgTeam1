@@ -6,41 +6,90 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class SpecializedChefs //: SpecializedChefsInterface
+    public class SpecializedChefs : SpecializedChefsInterface
     {
+        private int _time;
         public int time
         {
-            get;
-            set;
+            get => this._time;
+            set
+            {
+                if (value >= 0)
+                {
+                    this._time = value;
+                }
+            }
         }
 
+        private int _Order;
         public int Order
         {
-            get;
-            set;
+            get => this._Order;
+            set
+            {
+                if (value >= 0)
+                {
+                    this._Order = value;
+                }
+            }
         }
 
+        private int _idCommisChef;
         public int idCommisChef
         {
-            get;
-            set;
-        }
-
-
-        private List<CommisChefInterface> _CommisChefList;
-        public List<CommisChefInterface> CommisChefList
-        {
-            get { return this._CommisChefList; }
-            set { this._CommisChefList = value; }
-        }
-
-
-        public SpecializedChefsInterface Strategy { get; set; }
-
-            public void CallType()
+            get => this._idCommisChef;
+            set
             {
-                Console.WriteLine(Strategy.TypeTestStrategy());
+                if (value >= 0)
+                {
+                    this._idCommisChef = value;
+                }
             }
-        
+        }
+
+
+        private List<CommisChefInterface> _CommisChefsList;
+        public List<CommisChefInterface> CommisChefsList
+        {
+            get { return this._CommisChefsList; }
+            set { this._CommisChefsList = value; }
+        }
+
+        private SpecializedChefsInterface _Strategy;
+        public SpecializedChefsInterface Strategy {
+            get => this._Strategy;
+            set => this._Strategy = value;
+        }
+
+
+        public void CallType()
+        {
+            Console.WriteLine(Strategy.TypeTestStrategy());
+        }
+
+        public string TypeTestStrategy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UseOven(int time)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UseHotPlate(int time)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GiveOrders(int Order, int idCommisChef)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Preparation()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

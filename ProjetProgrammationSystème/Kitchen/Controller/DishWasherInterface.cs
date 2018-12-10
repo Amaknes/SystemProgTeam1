@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    interface DishWasherInterface
+    public interface DishWasherInterface
     {
 
 

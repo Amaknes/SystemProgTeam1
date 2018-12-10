@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    class Chef 
+    public class Chef : ChefInterface
     {
         private static Chef ChefInstance;
 
         private List<SpecializedChefsInterface> _SpecializedChefsList;
         public List<SpecializedChefsInterface> SpecializedChefsList
         {
-            get { return this._SpecializedChefsList; }
-            set { this._SpecializedChefsList = value; }
+            get => this._SpecializedChefsList; 
+            set => this._SpecializedChefsList = value;
         }
 
 
@@ -37,5 +37,21 @@ namespace Kitchen.Controller
             return ChefInstance;
         }
 
+
+
+        public void GetOrder()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Sort()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispatch(int Order, int IdSpecializedChefs)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

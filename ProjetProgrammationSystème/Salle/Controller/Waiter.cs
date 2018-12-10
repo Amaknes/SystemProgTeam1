@@ -72,44 +72,23 @@ namespace Salle.Controller
 
         public void CleanTable(int idTable)
         {
-            if (Busy)
-            {
-
-            }
-            else
-            {
-                Console.WriteLine("Waiter Cleans");
-                Busy = true;
-                Hall.hallInstance().FindTableById(idTable).Cutlery = false;
-                //take cutlery to the Dishes desk
-                Busy = false;
-            }
+            Console.WriteLine("Waiter Cleans");
+            Busy = true;
+            Hall.hallInstance().FindTableById(idTable).Cutlery = false;
+            //take cutlery to the Dishes desk
+            Busy = false;
         }
 
         public void getCommand(int idTable)
         {
-            if (Busy)
-            {
-
-            }
-            else
-            {
-                Busy = true;
-                Busy = false;
-            }
+            Busy = true;
+            Busy = false;
         }
 
         public void Serve(int idTable)
         {
-            if (Busy)
-            {
-
-            }
-            else
-            {
-                Busy = true;
-                Busy = false;
-            }
+            Busy = true;
+            Busy = false;
         }
 
         public void ServeBreadDrinks(int idTable)
