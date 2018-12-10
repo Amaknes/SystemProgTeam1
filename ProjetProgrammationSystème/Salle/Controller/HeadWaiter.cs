@@ -54,7 +54,7 @@ namespace Salle.Controller
             this.IdHeadWaiter = idHeadWaiter;
             this.IdSquare = idHeadWaiter;
             this.Busy = false;
-            this.orderDesk = new OrderDesk();
+            this.orderDesk = OrderDesk.orderDeskInstance();
         }
 
 

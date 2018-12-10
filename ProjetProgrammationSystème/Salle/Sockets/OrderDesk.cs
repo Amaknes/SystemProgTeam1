@@ -11,6 +11,8 @@ namespace Salle.Sockets
 {
     public class OrderDesk: InterfaceOrderDesk
     {
+        private static OrderDesk OrderDeskInstance;
+
         private byte[] _bytes;
         public byte[] bytes
         {
@@ -25,7 +27,17 @@ namespace Salle.Sockets
             set => this._s = value;
         }
 
-        public OrderDesk()
+
+        public static OrderDesk orderDeskInstance()
+        {
+            if(OrderDeskInstance == null)
+            {
+                OrderDeskInstance = new OrderDesk();
+            }
+            return OrderDeskInstance;
+        }
+
+        private OrderDesk()
         {
 
             bytes = new byte[1024];
@@ -45,9 +57,13 @@ namespace Salle.Sockets
             }
             catch (Exception e)
             {
-
+                Console.WriteLine(e);
             }
         }
+
+
+
+
         
         public void SendData(OrderInterface ord)
         {
@@ -78,12 +94,39 @@ namespace Salle.Sockets
                 // Sends data to a connected Socket. 
                 int bytesSend = s.Send(msg);
 
-                //ReceiveDataFromServer();
+                ReceiveDataFromServer();
 
             }
             catch (Exception exc)
             {
+                Console.WriteLine(exc);
+            }
+        }
 
+        private void ReceiveDataFromServer()
+        {
+            try
+            {
+                // Receives data from a bound Socket. 
+                int bytesRec = s.Receive(bytes);
+
+                // Converts byte array to string 
+                String theMessageToReceive = Encoding.Unicode.GetString(bytes, 0, bytesRec);
+
+                // Continues to read the data till data isn't available 
+                while (s.Available > 0)
+                {
+                    bytesRec = s.Receive(bytes);
+                    theMessageToReceive += Encoding.Unicode.GetString(bytes, 0, bytesRec);
+                }
+
+                Console.WriteLine(theMessageToReceive);
+                
+
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
             }
         }
     }

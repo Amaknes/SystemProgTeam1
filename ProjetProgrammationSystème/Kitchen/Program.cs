@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kitchen.Controller;
+using Kitchen.Sockets;
 
 namespace Kitchen
 {
@@ -11,14 +12,16 @@ namespace Kitchen
     {
         static void Main(string[] args)
         {
-            DishWasher dish = new DishWasher();
+            OrderDesk test = new OrderDesk();
+            /*DishWasher dish = new DishWasher();
 
             List<bool> test = new List<bool>();
             for (int i = 0; i < 15; i++)
             {
                 test.Add(true);
             }
-            dish.StockLaundry(true, test);
+            dish.StockLaundry(true, test);*/
+            Console.Read();
         }
 
     }
