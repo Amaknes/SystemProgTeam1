@@ -94,7 +94,7 @@ namespace Salle.Controller
             threadWaiterServeBreadDrinks.Start();
 
             //HeadWaiter give Order to the CommandDesk
-            orderDesk.SendData(Order);
+            //orderDesk.SendData(Order);
             this.Busy = false;
         }
 

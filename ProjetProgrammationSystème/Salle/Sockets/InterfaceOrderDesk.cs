@@ -12,7 +12,6 @@ namespace Salle.Sockets
     {
         Socket s { get; set; }
         byte[] bytes { get; set; }
-
-        void SendData(OrderInterface ord);
+        
     }
 }

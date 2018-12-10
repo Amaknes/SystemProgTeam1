@@ -5,12 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Kitchen.Sockets
 {
     class OrderDesk : InterfaceOrderDesk
     {
+        private Thread _thEcoute;
         private static OrderDesk OrderDeskInstance;
 
         private byte[] _bytes;
@@ -28,25 +30,6 @@ namespace Kitchen.Sockets
         }
 
 
-
-        /*int[,] _OrderTable;
-        int[,] _FinishedOrder;
-
-        public int[,] OrderTable {
-            get { return _OrderTable; }
-            set { _OrderTable = value; }
-        }
-
-
-        public int[,] FinishedOrder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-
-        public void DeliverOrder(int foo, int fooo)
-        {
-            throw new NotImplementedException();
-        }*/
-
-
         public static OrderDesk orderDeskInstance()
         {
             if (OrderDeskInstance == null)
@@ -57,30 +40,39 @@ namespace Kitchen.Sockets
         }
 
 
-        public OrderDesk()
+        private OrderDesk()
         {
-
-            bytes = new byte[1024];
-            try
-            {
-                SocketPermission permission = new SocketPermission(NetworkAccess.Accept, TransportType.Tcp, "", SocketPermission.AllPorts);
-
-                permission.Demand();
-                IPHostEntry ipHost = Dns.GetHostEntry("");
-                IPAddress ipAddr = ipHost.AddressList[0];
-                IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 4510);
-
-                this.s = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
-                s.NoDelay = false;
-                s.Connect(ipEndPoint);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            _thEcoute = new Thread(new ThreadStart(Ecouter));
+            _thEcoute.Start();
         }
 
+
+
+
+        private void Ecouter()
+        {
+            Console.WriteLine("Préparation à l'écoute...");
+
+            //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
+            UdpClient serveur = new UdpClient(5035);
+
+            //Création d'une boucle infinie qui aura pour tâche d'écouter.
+            while (true)
+            {
+                //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
+                IPEndPoint client = null;
+                Console.WriteLine("ÉCOUTE...");
+
+                //On écoute jusqu'à recevoir un message.
+                byte[] data = serveur.Receive(ref client);
+                Console.WriteLine("Données reçues en provenance de {0}:{1}.", client.Address, client.Port);
+
+                //Décryptage et affichage du message.
+                string message = Encoding.Default.GetString(data);
+                Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
+            }
+
+        }
 
 
 

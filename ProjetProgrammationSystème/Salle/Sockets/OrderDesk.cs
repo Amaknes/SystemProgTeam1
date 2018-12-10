@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Salle.Sockets
@@ -12,6 +13,8 @@ namespace Salle.Sockets
     public class OrderDesk: InterfaceOrderDesk
     {
         private static OrderDesk OrderDeskInstance;
+        private Thread _thEcoute;
+       
 
         private byte[] _bytes;
         public byte[] bytes
@@ -39,33 +42,35 @@ namespace Salle.Sockets
 
         private OrderDesk()
         {
+            bool continuer = true;
 
-            bytes = new byte[1024];
-            try
+            while (continuer)
             {
-                SocketPermission permission = new SocketPermission(NetworkAccess.Accept, TransportType.Tcp, "", SocketPermission.AllPorts);
+                Console.Write("\nEntrez un message : ");
+                string message = Console.ReadLine();
 
-                permission.Demand();
-                IPHostEntry ipHost = Dns.GetHostEntry("");
-                IPAddress ipAddr = ipHost.AddressList[0];
-                IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 4510);
+                //Sérialisation du message en tableau de bytes.
+                byte[] msg = Encoding.Default.GetBytes(message);
 
-                this.s = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                UdpClient udpClient = new UdpClient();
 
-                s.NoDelay = false;
-                s.Connect(ipEndPoint);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                //La méthode Send envoie un message UDP.
+                udpClient.Send(msg, msg.Length, "127.0.0.1", 5035);
+
+                udpClient.Close();
+
+                Console.Write("\nContinuer ? (O/N)");
+                continuer = (Console.ReadKey().Key == ConsoleKey.O);
             }
         }
 
 
-
+        
+    }
+}
 
         
-        public void SendData(OrderInterface ord)
+        /*public void SendData(OrderInterface ord)
         {
             try
             {
@@ -101,33 +106,4 @@ namespace Salle.Sockets
             {
                 Console.WriteLine(exc);
             }
-        }
-
-        private void ReceiveDataFromServer()
-        {
-            try
-            {
-                // Receives data from a bound Socket. 
-                int bytesRec = s.Receive(bytes);
-
-                // Converts byte array to string 
-                String theMessageToReceive = Encoding.Unicode.GetString(bytes, 0, bytesRec);
-
-                // Continues to read the data till data isn't available 
-                while (s.Available > 0)
-                {
-                    bytesRec = s.Receive(bytes);
-                    theMessageToReceive += Encoding.Unicode.GetString(bytes, 0, bytesRec);
-                }
-
-                Console.WriteLine(theMessageToReceive);
-                
-
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc);
-            }
-        }
-    }
-}
+        }*/  

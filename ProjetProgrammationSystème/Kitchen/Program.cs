@@ -12,7 +12,7 @@ namespace Kitchen
     {
         static void Main(string[] args)
         {
-            OrderDesk test = new OrderDesk();
+            OrderDesk test = OrderDesk.orderDeskInstance();
             /*DishWasher dish = new DishWasher();
 
             List<bool> test = new List<bool>();
