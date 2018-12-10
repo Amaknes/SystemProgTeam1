@@ -31,6 +31,7 @@ namespace Salle.Controller
 
         public void ServeBreadDrinks(int idTable)
         {
+            Console.WriteLine("Commis Serving Drinks and Bread");
             Table table = (Table)Hall.hallInstance().FindTableById(idTable);
             if (table.Clients.ClientsNumber > 6)
             {
@@ -39,8 +40,8 @@ namespace Salle.Controller
             }
             else
             {
-                table.Bread = 2;
-                table.Drinks = 2;
+                table.Bread = 1;
+                table.Drinks = 1;
             }
         }
     

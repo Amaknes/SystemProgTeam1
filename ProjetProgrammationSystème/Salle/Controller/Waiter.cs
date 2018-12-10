@@ -127,9 +127,10 @@ namespace Salle.Controller
                 }
                 else
                 {
-                    table.Bread = 2;
-                    table.Drinks = 2;
+                    table.Bread = 1;
+                    table.Drinks = 1;
                 }
+                table.Clients.Eat();
                 Busy = false;
             }
         }

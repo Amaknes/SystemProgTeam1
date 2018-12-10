@@ -115,7 +115,10 @@ namespace Salle.Model
             this.Order = Order;
             this.Booking = Booking;
             this.ClientsNumber = ClientsNumber;
+            this.CurrentDishe = 0;
 
+            this.Observers = new List<IObserver>();
+            AddObserver(CommisWaiter.commisWaiterInstance());
             this.ClientsList = new List<IndividualClientInterface>();
 
             Random rnd = new Random();
@@ -220,18 +223,19 @@ namespace Salle.Model
 
         public void Eat()
         {
+            Console.WriteLine("Clients Starts to eat");
             WaitForNextDishe(0);
 
             Thread.Sleep(15000);
+
+            WaitForNextDishe(1);
+
+            Thread.Sleep(25000);
 
             if (Order)
             {
                 MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
             }
-
-            WaitForNextDishe(1);
-
-            Thread.Sleep(25000);
 
             WaitForNextDishe(2);
 
@@ -254,31 +258,37 @@ namespace Salle.Model
                     request = true;
                 }
             }
-
+            Console.WriteLine("Request : {0}", request);
 
             while (CurrentDishe == NbDishe)
             {
-                if (rnd.Next(50) < 2)
+                if (rnd.Next(80) < 2)
                 {
                     if (Bread <= 0 && request)
                     {
                         NotifyObserver(this.idTable);
+                        Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
+                        Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
                     }
                     else
                     {
                         Bread -= 1;
+                        Console.WriteLine("Eats Bread : {0}", Bread);
                     }
                 }
 
-                if (rnd.Next(50) < 2)
+                if (rnd.Next(80) < 2)
                 {
                     if (Drinks <= 0 && request)
                     {
                         NotifyObserver(this.idTable);
+                        Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
+                        Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
                     }
                     else
                     {
                         Drinks -= 1;
+                        Console.WriteLine(".....Drinking : {0}", Drinks);
                     }
                 }
 

@@ -38,8 +38,7 @@ namespace Salle
             bool Order;
             bool Book;
 
-            while (true)
-            {
+            //while (true) {
 
                 FactoryClients factClients = new FactoryClients();
 
@@ -67,7 +66,7 @@ namespace Salle
 
                Thread.Sleep(1500);
                IdClients++;
-            }
+            //}
         }
 
         static void AccueilMaitreHotel()
