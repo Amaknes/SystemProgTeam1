@@ -65,10 +65,12 @@ namespace Kitchen.Controller
             this.ListCutlery = new List<bool>();
             this.ListLaundry = new List<bool>();
             this.ListUstensile = new List<bool>();
+            this.ListWashMachine = new List<bool>();
+            this.ListDishWasher = new List<bool>();
             this.Timer = DateTime.Now.Ticks;
 
 
-            Thread threadDishWashingMachine = new Thread(() => LaunchDishWasher());
+            Thread threadDishWashingMachine = new Thread(() => TimingDishWasher());
             threadDishWashingMachine.Start();
         }
 
@@ -95,36 +97,31 @@ namespace Kitchen.Controller
                 Thread.Sleep(1000);
                 //ranger ListDIshwasher dans le socket
                 Thread.Sleep(1000);
-
-                LaunchDishWasher();
             }
+        }
+
+        public void TimingDishWasher()
+        {
+            while ((DateTime.Now.Ticks - Timer < 10000) && (this.ListCutlery.Count > 0))
+            {
+                Thread.Sleep(500);
+            }
+            Thread threadDishWashingMachine = new Thread(() => LaunchDishWasher());
+            threadDishWashingMachine.Start();
         }
 
         public void LaunchDishWasher()
         {
-            while (DateTime.Now.Ticks - Timer < 10000)
+            this.Timer = DateTime.Now.Ticks;
+            Console.WriteLine("The DishWasher is launching the DishWashing Machine");
+            foreach (bool Ctl in ListCutlery)
             {
-                Thread.Sleep(500);
+                ListCutlery.Remove(Ctl);
+                ListDishWasher.Add(true);
             }
+            Thread.Sleep(8000);
 
-            if(this.ListCutlery.Count > 0)
-            {
-                this.Timer = DateTime.Now.Ticks;
-                Console.WriteLine("The DishWasher is launching the DishWashing Machine");
-                foreach (bool Ctl in ListCutlery)
-                {
-                    ListCutlery.Remove(Ctl);
-                    ListDishWasher.Add(true);
-                }
-                Thread.Sleep(8000);
-
-                StockCutlery(false, this.ListDishWasher);
-
-            }
-            else
-            {
-                LaunchDishWasher();
-            }
+            StockCutlery(false, this.ListDishWasher);
         }
 
 
@@ -138,17 +135,16 @@ namespace Kitchen.Controller
         public void LaunchWashingMachine()
         {
             Console.WriteLine("The DishWasher is launching the Washing Machine");
-
-            foreach(bool Ldn in ListLaundry)
+            for(int i = 0; i < ListLaundry.Count; i++)
             {
-                ListLaundry.Remove(Ldn);
+                this.ListLaundry.RemoveAt(i);
                 ListWashMachine.Add(true);
             }
 
             Thread.Sleep(15000);
             StockLaundry(false, this.ListLaundry);
         }
-
+        
         public void StockLaundry(bool Dirty, List<bool> Laundry)
         {
             if (Dirty)

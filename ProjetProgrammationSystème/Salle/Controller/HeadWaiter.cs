@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Salle.Sockets;
 
 namespace Salle.Controller
 {
@@ -41,12 +42,19 @@ namespace Salle.Controller
             }
         }
 
+        private OrderDesk _orderDesk;
+        public OrderDesk orderDesk
+        {
+            get => this._orderDesk;
+            set => this._orderDesk = value;
+        }
 
         public HeadWaiter(int idHeadWaiter)
         {
             this.IdHeadWaiter = idHeadWaiter;
             this.IdSquare = idHeadWaiter;
             this.Busy = false;
+            this.orderDesk = new OrderDesk();
         }
 
 
@@ -76,7 +84,7 @@ namespace Salle.Controller
         public OrderInterface getOrder(int IdTable, bool SecondOrder)
         {
             Console.WriteLine("Headwaiter taking order");
-
+            
             return (Order)Hall.hallInstance().FindTableById(IdTable).Clients.ChoiceOrder(SecondOrder);
         }
 
@@ -86,6 +94,7 @@ namespace Salle.Controller
             threadWaiterServeBreadDrinks.Start();
 
             //HeadWaiter give Order to the CommandDesk
+            orderDesk.SendData(Order);
             this.Busy = false;
         }
 

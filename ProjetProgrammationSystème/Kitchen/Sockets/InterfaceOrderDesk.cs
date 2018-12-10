@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kitchen.Socket
+namespace Kitchen.Sockets
 {
     interface InterfaceOrderDesk
     {

@@ -174,6 +174,7 @@ namespace Salle.Model
         {
             Console.WriteLine("Client Choosing......");
             Order resOrder = new Order(idTable);
+            Random rnd = new Random();
 
             int plat = -1;
 
@@ -181,14 +182,14 @@ namespace Salle.Model
             {
                 if (!SecondOrder)
                 {
-                    plat = IndCl.ChooseEntry();
+                    plat = IndCl.ChooseEntry(rnd);
                     if(plat != -1)
                     {
                         resOrder.ListEntries.Add(plat);
                         plat = -1;
                     }
 
-                    plat = IndCl.ChoosePlat();
+                    plat = IndCl.ChoosePlat(rnd);
                     if (plat != -1)
                     {
                         resOrder.ListPlats.Add(plat);
@@ -198,7 +199,7 @@ namespace Salle.Model
 
                 if (!Order || (Order && SecondOrder))
                 {
-                    plat = IndCl.ChooseDessert();
+                    plat = IndCl.ChooseDessert(rnd);
                     if (plat != -1)
                     {
                         resOrder.ListDesserts.Add(plat);

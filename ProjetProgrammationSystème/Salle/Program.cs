@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Salle.Model;
 using Salle.Controller;
+using Salle.Sockets;
 
 namespace Salle
 {
@@ -25,8 +26,7 @@ namespace Salle
             ThreadStart jobAccueilMaitreHotel = new ThreadStart(AccueilMaitreHotel);
             Thread threadAccueilMaitreHotel = new Thread(jobAccueilMaitreHotel);
             threadAccueilMaitreHotel.Start();
-            
-           
+
 
             Console.Read();
         }

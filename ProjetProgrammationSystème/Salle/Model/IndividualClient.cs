@@ -62,14 +62,13 @@ namespace Salle.Model
             this.WaiterRequest = WaiterRequest;
         }
 
-        public int ChooseEntry()
+        public int ChooseEntry(Random rnd)
         {
             int idEntry = -1;
             int pass = 0;
 
             if(Choice < 2 || Choice > 3)
             {
-                Random rnd = new Random();
                 if(Taste == 0)
                 {
                     pass = rnd.Next(11);
@@ -90,20 +89,18 @@ namespace Salle.Model
             return idEntry;
         }
 
-        public int ChoosePlat()
+        public int ChoosePlat(Random rnd)
         {
-            Random rnd = new Random();
             return rnd.Next(11);
         }
 
-        public int ChooseDessert()
+        public int ChooseDessert(Random rnd)
         {
             int idDessert = -1;
             int pass = 0;
 
             if(Choice > 2)
             {
-                Random rnd = new Random();
                 if (Taste == 1)
                 {
                     pass = rnd.Next(11);

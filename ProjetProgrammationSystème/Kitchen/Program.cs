@@ -14,12 +14,12 @@ namespace Kitchen
             DishWasher dish = new DishWasher();
 
             List<bool> test = new List<bool>();
-            for(int i = 0; i< 15; i++)
+            for (int i = 0; i < 15; i++)
             {
                 test.Add(true);
             }
             dish.StockLaundry(true, test);
         }
-            
+
     }
 }
