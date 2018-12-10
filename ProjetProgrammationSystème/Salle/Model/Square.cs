@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Salle.Controller;
 
@@ -90,6 +91,27 @@ namespace Salle.Model
                 this.WaiterList.Add((WaiterInterface)new Waiter(3));
                 this.WaiterList.Add((WaiterInterface)new Waiter(4));
             }
+        }
+
+        public WaiterInterface GetFreeWaiter()
+        {
+            WaiterInterface Waiter = null;
+            while(Waiter == null)
+            {
+                if (!WaiterList[0].Busy)
+                {
+                    Waiter = WaiterList[0];
+                }
+                else if (!WaiterList[1].Busy)
+                {
+                    Waiter = WaiterList[1];
+                }
+                else
+                {
+                    Thread.Sleep(30);
+                }
+            }
+            return Waiter;
         }
     }
 }

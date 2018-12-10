@@ -205,13 +205,17 @@ namespace Salle.Model
 
         public void Payment()
         {
+            Console.WriteLine("Clients Pay");
+            Thread threadWaiterCleaning = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().CleanTable(idTable));
+            threadWaiterCleaning.Start();
+
             MaîtreHôtel MH = MaîtreHôtel.maîtreHôtelInstance();
             bool paid = false;
             while (!paid)
             {
                 if (MH.Busy)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(70);
                 }
                 else
                 {

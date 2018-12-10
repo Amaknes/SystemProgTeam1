@@ -13,6 +13,7 @@ namespace Salle.Model
         ClientsInterface Clients { set; get; }
         int Bread { set; get; }
         int Drinks { set; get; }
+        bool Cutlery { set; get; }
 
     }
 }

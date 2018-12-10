@@ -78,7 +78,10 @@ namespace Salle.Controller
             }
             else
             {
+                Console.WriteLine("Waiter Cleans");
                 Busy = true;
+                Hall.hallInstance().FindTableById(idTable).Cutlery = false;
+                //take cutlery to the Dishes desk
                 Busy = false;
             }
         }

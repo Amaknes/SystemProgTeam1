@@ -51,6 +51,17 @@ namespace Salle.Model
             return HallInstance;
         }
 
+        public SquareInterface FindSquareByTableId(int IdTable)
+        {
+            SquareInterface res = SquareList[1];
+            if (IdTable >= 17)
+            {
+                res = SquareList[2];
+            }
+
+            return res;
+        }
+
         public TableInterface FindTableById(int IdTable)
         {
             TableInterface res = null;

@@ -61,6 +61,13 @@ namespace Salle.Model
             }
         }
 
+        private bool _Cutlery;
+        public bool Cutlery
+        {
+            get => this._Cutlery;
+            set => this._Cutlery = value;
+        }
+
         public Table(int idTable, int nbPlace)
         {
             IdTable = idTable;
@@ -68,6 +75,7 @@ namespace Salle.Model
             Clients = null;
             Bread = 0;
             Drinks = 0;
+            Cutlery = true;
         }
     }
 }

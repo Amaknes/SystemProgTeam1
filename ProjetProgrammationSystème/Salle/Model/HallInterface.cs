@@ -13,5 +13,6 @@ namespace Salle.Model
 
         TableInterface FindTableById(int IdTable);
         TableInterface VerifTableById(int idSquare, int idLine, int idTable);
+        SquareInterface FindSquareByTableId(int IdTable);
     }
 }
