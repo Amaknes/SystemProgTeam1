@@ -22,12 +22,12 @@ namespace Salle.Controller
         }
 
         int Position(int IdSquare);
-        int getOrder(int IdTable);
-        void GiveOrder(int Order);
-        void SitClient(int IdTable);
-        void DistributeCards(int IdTable);
+        OrderInterface getOrder(int IdTable, bool SecondOrder);
+        void GiveOrder(OrderInterface Order);
+        void SitClient(int IdTable, int nbClients);
+        void DistributeCards(int IdTable, int nbClients);
         void DrowUpTable(int IdTable);
-
+        void WaitOrder(int IdTable, int nbClients);
 
 
     }

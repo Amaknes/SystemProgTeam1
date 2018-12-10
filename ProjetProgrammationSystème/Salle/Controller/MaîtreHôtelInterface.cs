@@ -16,7 +16,7 @@ namespace Salle.Controller
         bool Busy { get; set; }
 
         void AssignTable(ClientsInterface clients);
-        void CallHeadWaiter(int idTable);
+        void CallHeadWaiter(int idTable, int nbClients);
         HeadWaiterInterface GetHeadWaiterDisposable();
         void ClientsReception();
         int VerifTables(int idSquare, int idLine, ClientsInterface groupe);

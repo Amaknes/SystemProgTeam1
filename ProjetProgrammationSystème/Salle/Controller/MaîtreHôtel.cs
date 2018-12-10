@@ -149,7 +149,7 @@ namespace Salle.Controller
             if(idTable >= 0)
             {
                 Console.WriteLine("IdTable : {0}, nbClients {1}", idTable, groupe.ClientsNumber);
-                CallHeadWaiter(idTable);
+                CallHeadWaiter(idTable,groupe.ClientsNumber);
             }
         }
 
@@ -198,13 +198,13 @@ namespace Salle.Controller
             return res;
         }
 
-        public void CallHeadWaiter(int idTable)
+        public void CallHeadWaiter(int idTable, int nbClients)
         {
             HeadWaiter HWaiter = (HeadWaiter) GetHeadWaiterDisposable();
             Console.WriteLine("Headwaiter disponible : {0}", HWaiter.IdHeadWaiter);
             //Hwaiter vient voir le maître d'hôtel
             
-            Thread threadHWaiter = new Thread(() => HWaiter.SitClient(idTable));
+            Thread threadHWaiter = new Thread(() => HWaiter.SitClient(idTable, nbClients));
             threadHWaiter.Start();
         }
 
@@ -245,9 +245,15 @@ namespace Salle.Controller
         public void GetMoney(int Bill, ClientsInterface groupe)
         {
             Busy = true;
-            Thread.Sleep(340);
+            Thread.Sleep(200);
             groupe.leave();
             Busy = false;
+        }
+
+        public void SecondOrderFromClient(int IdTable)
+        {
+            HeadWaiter HWaiter = (HeadWaiter)GetHeadWaiterDisposable();
+            HWaiter.GiveOrder(HWaiter.getOrder(IdTable,true));
         }
     }
 }

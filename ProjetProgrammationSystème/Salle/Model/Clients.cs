@@ -160,9 +160,44 @@ namespace Salle.Model
 
         
 
-        public int[] ChoiceOrder()
+        public OrderInterface ChoiceOrder(bool SecondOrder)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Client Choosing......");
+            Order resOrder = new Order(idTable);
+
+            int plat = -1;
+
+            foreach(IndividualClient IndCl in ClientsList)
+            {
+                if (!SecondOrder)
+                {
+                    plat = IndCl.ChooseEntry();
+                    if(plat != -1)
+                    {
+                        resOrder.ListEntries.Add(plat);
+                        plat = -1;
+                    }
+
+                    plat = IndCl.ChoosePlat();
+                    if (plat != -1)
+                    {
+                        resOrder.ListPlats.Add(plat);
+                        plat = -1;
+                    }
+                }
+
+                if (!Order || (Order && SecondOrder))
+                {
+                    plat = IndCl.ChooseDessert();
+                    if (plat != -1)
+                    {
+                        resOrder.ListDesserts.Add(plat);
+                        plat = -1;
+                    }
+                }
+            }
+
+            return resOrder;
         }
 
         public void Payment()
@@ -188,6 +223,11 @@ namespace Salle.Model
             WaitForNextDishe(0);
 
             Thread.Sleep(15000);
+
+            if (Order)
+            {
+                MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
+            }
 
             WaitForNextDishe(1);
 

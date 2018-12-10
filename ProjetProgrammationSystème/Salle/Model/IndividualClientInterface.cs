@@ -13,5 +13,8 @@ namespace Salle.Model
         int Choice { get; set; }
         bool WaiterRequest { get; set; }
 
+        int ChooseEntry();
+        int ChoosePlat();
+        int ChooseDessert();
     }
 }

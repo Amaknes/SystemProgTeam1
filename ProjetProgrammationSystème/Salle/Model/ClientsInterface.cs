@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Salle.Model
         int idTable { get; set; }
 
         void WaitForNextDishe(int NbDishe);
-        int[] ChoiceOrder();
+        OrderInterface ChoiceOrder(bool SecondOrder);
         void Payment();
         void Eat();
         void leave();

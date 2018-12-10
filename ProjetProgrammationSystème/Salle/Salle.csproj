@@ -80,6 +80,8 @@
     <Compile Include="Model\IndividualClientInterface.cs" />
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\LineInterface.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\OrderInterface.cs" />
     <Compile Include="Model\Square.cs" />
     <Compile Include="Model\SquareInterface.cs" />
     <Compile Include="Model\Table.cs" />

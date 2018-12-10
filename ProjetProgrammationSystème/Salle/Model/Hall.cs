@@ -54,17 +54,17 @@ namespace Salle.Model
         public TableInterface FindTableById(int IdTable)
         {
             TableInterface res = null;
-            if(IdTable < 8)
+            if(IdTable < 7)
             {
                 res = VerifTableById(0, 0, IdTable);
-            }else if(IdTable < 18)
+            }else if(IdTable < 17)
             {
                 res = VerifTableById(0, 1, IdTable);
-            }else if(IdTable < 26)
+            }else if(IdTable < 25)
             {
                 res = VerifTableById(1, 0, IdTable);
             }
-            else if(IdTable < 33)
+            else if(IdTable < 32)
             {
                 res = VerifTableById(1, 1, IdTable);   
             }
@@ -82,6 +82,7 @@ namespace Salle.Model
                 {
                     res = SquareList[idSquare].LineList[idLine].ListTable[i];
                 }
+                i++;
             }
 
             return res;

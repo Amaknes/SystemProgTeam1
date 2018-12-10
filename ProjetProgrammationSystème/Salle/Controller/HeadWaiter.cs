@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Salle.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Salle.Controller
@@ -26,9 +28,22 @@ namespace Salle.Controller
             set => this._Busy = value;
         }
 
-        public void DistributeCards(int IdTable)
+
+
+        public HeadWaiter(int idHeadWaiter)
         {
-            throw new NotImplementedException();
+            this.IdHeadWaiter = idHeadWaiter;
+            this.Busy = false;
+        }
+
+
+
+        public void DistributeCards(int IdTable,int nbClients)
+        {
+            //va chercher les cartes et les donnes aux clients (VIEW)
+
+            Thread threadWaitForCommand = new Thread(() => WaitOrder(IdTable, nbClients));
+            threadWaitForCommand.Start();
         }
 
         public void DrowUpTable(int IdTable)
@@ -36,14 +51,26 @@ namespace Salle.Controller
             throw new NotImplementedException();
         }
 
-        public int getOrder(int IdTable)
+        public void WaitOrder(int IdTable, int nbClients)
         {
-            throw new NotImplementedException();
+            Thread.Sleep(nbClients * 300);
+            while (this.Busy) { Thread.Sleep(70);}
+
+            this.Busy = true;
+            GiveOrder(getOrder(IdTable,false));
         }
 
-        public void GiveOrder(int Order)
+        public OrderInterface getOrder(int IdTable, bool SecondOrder)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Headwaiter taking order");
+
+            return (Order)Hall.hallInstance().FindTableById(IdTable).Clients.ChoiceOrder(SecondOrder);
+        }
+
+        public void GiveOrder(OrderInterface Order)
+        {
+            //HeadWaiter give Order to the CommandDesk
+            this.Busy = false;
         }
 
         public int Position(int IdSquare)
@@ -51,16 +78,11 @@ namespace Salle.Controller
             throw new NotImplementedException();
         }
 
-        public void SitClient(int IdTable)
+        public void SitClient(int IdTable, int nbClients)
         {
             this.Busy = true;
-            System.Threading.Thread.Sleep(1200);
-            this.Busy = false;
-        }
-
-        public HeadWaiter(int idHeadWaiter)
-        {
-            this.IdHeadWaiter = idHeadWaiter;
+            //Move the client to the table
+            DistributeCards(IdTable, nbClients);
             this.Busy = false;
         }
     }
