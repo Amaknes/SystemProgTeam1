@@ -28,11 +28,24 @@ namespace Salle.Controller
             set => this._Busy = value;
         }
 
+        private int _IdSquare;
+        public int IdSquare
+        {
+            get => this._IdSquare;
+            set
+            {
+                if(value > 0)
+                {
+                    this._IdSquare = value;
+                }
+            }
+        }
 
 
         public HeadWaiter(int idHeadWaiter)
         {
             this.IdHeadWaiter = idHeadWaiter;
+            this.IdSquare = idHeadWaiter;
             this.Busy = false;
         }
 
@@ -69,8 +82,36 @@ namespace Salle.Controller
 
         public void GiveOrder(OrderInterface Order)
         {
+            Thread threadWaiterServeBreadDrinks = new Thread(() => OrderWaiters(Order.IdTable));
+            threadWaiterServeBreadDrinks.Start();
+
             //HeadWaiter give Order to the CommandDesk
             this.Busy = false;
+        }
+
+        public void OrderWaiters(int IdTable)
+        {
+            bool served = false;
+            Square sqr = (Square)Hall.hallInstance().SquareList[IdSquare];
+
+            while (!served)
+            { 
+                if (!sqr.WaiterList[0].Busy)
+                {
+                    sqr.WaiterList[0].ServeBreadDrinks(IdTable);
+                    served = true;
+                }
+                else if(!sqr.WaiterList[1].Busy)
+                {
+                    sqr.WaiterList[1].ServeBreadDrinks(IdTable);
+                    served = true;
+                }
+                else
+                {
+                    Thread.Sleep(70);
+                }
+                    
+            }
         }
 
         public int Position(int IdSquare)

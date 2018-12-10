@@ -78,7 +78,8 @@ namespace Salle.Controller
             }
             else
             {
-
+                Busy = true;
+                Busy = false;
             }
         }
 
@@ -90,7 +91,8 @@ namespace Salle.Controller
             }
             else
             {
-
+                Busy = true;
+                Busy = false;
             }
         }
 
@@ -102,7 +104,8 @@ namespace Salle.Controller
             }
             else
             {
-
+                Busy = true;
+                Busy = false;
             }
         }
 
@@ -114,6 +117,8 @@ namespace Salle.Controller
             }
             else
             {
+                Busy = true;
+                Console.WriteLine("Waiter giving Bread and Drinks");
                 Table table = (Table)Hall.hallInstance().FindTableById(idTable);
                 if(table.Clients.ClientsNumber > 6)
                 {
@@ -125,6 +130,7 @@ namespace Salle.Controller
                     table.Bread = 2;
                     table.Drinks = 2;
                 }
+                Busy = false;
             }
         }
     }

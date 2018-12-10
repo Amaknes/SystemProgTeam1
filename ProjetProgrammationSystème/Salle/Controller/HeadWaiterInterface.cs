@@ -9,17 +9,9 @@ namespace Salle.Controller
     public interface HeadWaiterInterface
     {
 
-        int IdHeadWaiter
-        {
-            get;
-            set;
-        }
-
-        bool Busy
-        {
-            get;
-            set;
-        }
+        int IdHeadWaiter { get; set; }
+        int IdSquare { get; set; }
+        bool Busy { get; set; }
 
         int Position(int IdSquare);
         OrderInterface getOrder(int IdTable, bool SecondOrder);
@@ -28,7 +20,7 @@ namespace Salle.Controller
         void DistributeCards(int IdTable, int nbClients);
         void DrowUpTable(int IdTable);
         void WaitOrder(int IdTable, int nbClients);
-
+        void OrderWaiters(int IdTable);
 
     }
 }
