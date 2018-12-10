@@ -17,25 +17,30 @@ namespace Salle.Controller
             { 
             CommisWaiterInstance = new CommisWaiter();
             }
-
             return CommisWaiterInstance;
         }
 
         public void ServeBreadDrinks(int idTable)
         {
             //donner du pain et ou à boire aux clients qui le demandent
-            return 0;
+            return;
         }
     
-        public void update()
+        public void Update(int id)
         {
-            ServeBreadDrinks();
+            this.ServeBreadDrinks();
+        }
+
+        private void ServeBreadDrinks()
+        {
+            throw new NotImplementedException();
         }
 
         private CommisWaiter()
         {
-            Waiter.Busy = new Waiter.NotifiyObserver();           
+         //   Waiter.Busy = new Waiter.NotifyObserver();           
         }
+
 
     }
 }
