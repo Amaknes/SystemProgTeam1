@@ -10,6 +10,7 @@ namespace Kitchen.Controller
     {
         private int Time;
         private int order;
+        private bool Activity;
         
 
         public int time
@@ -17,6 +18,8 @@ namespace Kitchen.Controller
             get {return this.Time;}
             set { this.Time = value;}
         }
+
+        public bool Activity1 { get => Activity; set => Activity = value; }
 
         public int Order { get => order; set => order = value; }
 
@@ -34,22 +37,23 @@ namespace Kitchen.Controller
             set { _CommisChefList = value;}
         }
 
-
-        public List<CommisChefInterface> CommisChefsList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void CallType()
-            {
-                Console.WriteLine();
-            }
-
-        public int UseOven(int time)
+        public void UseOven(int duration)
         {
-            throw new NotImplementedException();
+            int StartTime = time;
+            while(time < StartTime + duration)
+            {
+
+            }
         }
 
-        public int UseHotPlate(int time)
+        public int UseHotPlate(int duration)
         {
-            throw new NotImplementedException();
+            int StartTime = time;
+            while (time < StartTime + duration)
+            {
+
+            }
+            return 0;
         }
 
         public int GiveOrders(int Order, int idCommisChef)

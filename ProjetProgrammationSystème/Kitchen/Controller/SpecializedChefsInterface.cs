@@ -10,9 +10,7 @@ namespace Kitchen.Controller
     interface SpecializedChefsInterface
     {
 
-    List<CommisChefInterface> CommisChefsList { get; set; }
-
-    int UseOven(int time);
+    void UseOven(int time);
 
     int UseHotPlate(int time);
     
