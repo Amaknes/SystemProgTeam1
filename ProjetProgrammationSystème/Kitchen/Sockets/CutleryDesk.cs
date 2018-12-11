@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Kitchen.Controller;
 
 namespace Kitchen.Sockets
 {
@@ -13,6 +14,7 @@ namespace Kitchen.Sockets
     {
         private Thread _thEcoute;
         private static CutleryDesk CutleryDeskInstance;
+        private DishWasherInterface DWasher;
 
         private byte[] _bytes;
         public byte[] bytes
@@ -41,11 +43,13 @@ namespace Kitchen.Sockets
 
         private CutleryDesk()
         {
-            _thEcoute = new Thread(new ThreadStart(Ecouter));
+            this.DWasher = new DishWasher();
+
+            _thEcoute = new Thread(new ThreadStart(EcouterCutleryDesk));
             _thEcoute.Start();
         }
 
-        private void Ecouter()
+        public void EcouterCutleryDesk()
         {
             Console.WriteLine("Préparation à l'écoute...");
 
@@ -66,8 +70,17 @@ namespace Kitchen.Sockets
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
                 Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
+
+
+
+                DWasher.GetCutlery(message);
+
             }
 
+        }
+
+        public void SendDataCutleryDesk()
+        {
         }
     }
 }

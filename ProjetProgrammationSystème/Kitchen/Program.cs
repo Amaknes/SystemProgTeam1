@@ -15,14 +15,6 @@ namespace Kitchen
             CutleryDesk cutleryDesk = CutleryDesk.cutleryDeskInstance();
             OrderDesk orderDesk = OrderDesk.orderDeskInstance();
 
-            /*DishWasher dish = new DishWasher();
-
-            List<bool> test = new List<bool>();
-            for (int i = 0; i < 15; i++)
-            {
-                test.Add(true);
-            }
-            dish.StockLaundry(true, test);*/
             Console.Read();
         }
 

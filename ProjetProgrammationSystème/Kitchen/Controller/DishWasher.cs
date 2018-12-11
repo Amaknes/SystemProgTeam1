@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,29 +18,29 @@ namespace Kitchen.Controller
             set => this._Busy = value;
         }
 
-        private List<bool> _ListCutlery;
-        public List<bool> ListCutlery
+        private int _ListCutlery;
+        public int ListCutlery
         {
             get => this._ListCutlery;
             set => this._ListCutlery = value;
         }
 
-        private List<bool> _ListLaundry;
-        public List<bool> ListLaundry
+        private int _ListLaundry;
+        public int ListLaundry
         {
             get => this._ListLaundry;
             set => this._ListLaundry = value;
         }
 
-        private List<bool> _ListDishWasher;
-        public List<bool> ListDishWasher
+        private int _ListDishWasher;
+        public int ListDishWasher
         {
             get => this._ListDishWasher;
             set => this._ListDishWasher = value;
         }
 
-        private List<bool> _ListWashMachine;
-        public List<bool> ListWashMachine
+        private int _ListWashMachine;
+        public int ListWashMachine
         {
             get => this._ListWashMachine;
             set => this._ListWashMachine = value;
@@ -55,10 +57,10 @@ namespace Kitchen.Controller
         public DishWasher()
         {
             this.Busy = false;
-            this.ListCutlery = new List<bool>();
-            this.ListLaundry = new List<bool>();
-            this.ListWashMachine = new List<bool>();
-            this.ListDishWasher = new List<bool>();
+            this.ListCutlery = 0;
+            this.ListLaundry = 0;
+            this.ListWashMachine = 0;
+            this.ListDishWasher = 0;
             this.Timer = DateTime.Now.Ticks;
 
 
@@ -70,19 +72,24 @@ namespace Kitchen.Controller
 
 
 
-        public void GetCutlery()
+        public void GetCutlery(string nbCutlery)
         {
-            //take from the socket et utiliser Stock
+            string[] Lists = Regex.Split(nbCutlery, @"\D+");
+            int nb = 0;
+
+            nb = Int32.Parse(Lists[0]+Lists[1]);
+            
+
+            StockCutlery(true, nb);
+            
+            StockLaundry(true);
         }
 
-        public void StockCutlery(bool Dirty, List<bool> Cutlery)
+        public void StockCutlery(bool Dirty, int Cutlery)
         {
             if (Dirty)
             {
-                foreach (bool Ctl in Cutlery)
-                {
-                    ListCutlery.Add(true);
-                }
+                ListCutlery += Cutlery;
             }
             else
             {
@@ -94,59 +101,60 @@ namespace Kitchen.Controller
 
         public void TimingDishWasher()
         {
-            while ((DateTime.Now.Ticks - Timer < 10000) && (this.ListCutlery.Count > 0))
+            while(Timer != 0)
             {
-                Thread.Sleep(500);
+                while ((DateTime.Now.Ticks - Timer) < 10000)
+                {
+                    Thread.Sleep(500);
+                }
+                if (this.ListCutlery > 0)
+                {
+                    this.ListCutlery = 0;
+                    this.Timer = DateTime.Now.Ticks;
+
+                    Thread threadDishWashingMachine = new Thread(() => LaunchDishWasher());
+                    threadDishWashingMachine.Start();
+                }
+
             }
-            Thread threadDishWashingMachine = new Thread(() => LaunchDishWasher());
-            threadDishWashingMachine.Start();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void LaunchDishWasher()
         {
-            this.Timer = DateTime.Now.Ticks;
             Console.WriteLine("The DishWasher is launching the DishWashing Machine");
-            foreach (bool Ctl in ListCutlery)
-            {
-                ListCutlery.Remove(Ctl);
-                ListDishWasher.Add(true);
-            }
+
+            ListDishWasher = ListCutlery;
+
             Thread.Sleep(8000);
+
+            Console.WriteLine("DishWashing Machine Stopped");
 
             StockCutlery(false, this.ListDishWasher);
         }
 
 
 
-        public void GetLaundry()
-        {
-            //take from the socket et utiliser Stock
 
-        }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void LaunchWashingMachine()
         {
             Console.WriteLine("The DishWasher is launching the Washing Machine");
-            for(int i = 0; i < ListLaundry.Count; i++)
-            {
-                this.ListLaundry.RemoveAt(i);
-                ListWashMachine.Add(true);
-            }
+
+            this.ListLaundry -= 10;
+            ListWashMachine += 10;
 
             Thread.Sleep(15000);
-            StockLaundry(false, this.ListLaundry);
+            StockLaundry(false);
         }
         
-        public void StockLaundry(bool Dirty, List<bool> Laundry)
+        public void StockLaundry(bool Dirty)
         {
             if (Dirty)
             {
-                foreach(bool Ldr in Laundry)
-                {
-                    ListLaundry.Add(true);
-                }
+                ListLaundry += 1;
 
-                if (ListLaundry.Count >= 10)
+                if (ListLaundry >= 10)
                 {
                     Thread threadWashingMachine = new Thread(() => LaunchWashingMachine());
                     threadWashingMachine.Start();

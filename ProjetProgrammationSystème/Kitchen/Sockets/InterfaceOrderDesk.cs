@@ -11,5 +11,8 @@ namespace Kitchen.Sockets
         /*int[,] OrderTable { get; set; }
         int[,] FinishedOrder { get; set; }
         void DeliverOrder(int foo, int fooo);*/
+
+        void EcouterOrderDesk();
+        void SendDataOrderDesk();
     }
 }

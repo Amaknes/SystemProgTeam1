@@ -8,17 +8,16 @@ namespace Kitchen.Controller
 {
     public interface DishWasherInterface
     {
-        List<bool> ListLaundry { get; set; }
-        List<bool> ListCutlery { get; set; }
+        int ListLaundry { get; set; }
+        int ListCutlery { get; set; }
         bool Busy { get; set; }
         long Timer { get; set; }
-        List<bool> ListWashMachine { get; set; }
-        List<bool> ListDishWasher { get; set; }
+        int ListWashMachine { get; set; }
+        int ListDishWasher { get; set; }
 
-        void GetCutlery();
-        void GetLaundry();
-        void StockLaundry(bool Dirty, List<bool> Laundry);
-        void StockCutlery(bool Dirty, List<bool> Cutlery);
+        void GetCutlery(string nb);
+        void StockLaundry(bool Dirty);
+        void StockCutlery(bool Dirty, int Cutlery);
         void LaunchWashingMachine();
         void LaunchDishWasher();
 

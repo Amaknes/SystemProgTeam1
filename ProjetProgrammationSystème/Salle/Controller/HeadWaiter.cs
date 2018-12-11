@@ -96,7 +96,7 @@ namespace Salle.Controller
         public void OrderWaiters(int IdTable)
         {
             bool served = false;
-            Square sqr = (Square)Hall.hallInstance().SquareList[IdSquare];
+            Square sqr = (Square)Hall.hallInstance().SquareList[IdSquare-1];
 
             while (!served)
             { 

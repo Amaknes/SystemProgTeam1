@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Salle.Sockets;
 
 namespace Salle.Controller
 {
@@ -70,12 +71,15 @@ namespace Salle.Controller
 
 
 
-        public void CleanTable(int idTable)
+        public void CleanTable(int idTable, int nbCouverts)
         {
             Console.WriteLine("Waiter Cleans");
             Busy = true;
             Hall.hallInstance().FindTableById(idTable).Cutlery = false;
             //take cutlery to the Dishes desk
+
+            CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(nbCouverts);
+
             Busy = false;
         }
 

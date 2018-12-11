@@ -235,8 +235,8 @@ namespace Salle.Model
         public void Payment()
         {
             Console.WriteLine("Clients Pay");
-            Thread threadWaiterCleaning = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().CleanTable(idTable));
-            threadWaiterCleaning.Start();
+
+            leave();
 
             MaîtreHôtel MH = MaîtreHôtel.maîtreHôtelInstance();
             bool paid = false;
@@ -248,7 +248,7 @@ namespace Salle.Model
                 }
                 else
                 {
-                    MH.GetMoney(Bill, this);
+                    paid = MH.GetMoney(Bill, this);
                 }
             }
 
@@ -258,32 +258,47 @@ namespace Salle.Model
         {
             this.TimeOfArrival = DateTime.Now.Ticks;
             Console.WriteLine("Clients Starts to eat");
-            WaitForNextDishe(0);
+            bool leaving = false;
 
-            Thread.Sleep(15000);
+            leaving = WaitForNextDishe(0);
 
-            WaitForNextDishe(1);
-
-            Thread.Sleep(25000);
-
-            if (Order)
+            if (!leaving)
             {
-                MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
+                Thread.Sleep(15000);
+            
+                leaving = WaitForNextDishe(1);
+
+                if (!leaving)
+                {
+                    Thread.Sleep(25000);
+
+                    if (Order && !leaving)
+                    {
+                        MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
+                    }
+
+                    leaving = WaitForNextDishe(2);
+
+                    if (!leaving)
+                    {
+                        Thread.Sleep(10000);
+
+                    }
+                }
+
+
+                Payment();
             }
 
-            WaitForNextDishe(2);
-
-            Thread.Sleep(10000);
-
-            Payment();
         }
 
-        public void WaitForNextDishe(int NbDishe)
+        public bool WaitForNextDishe(int NbDishe)
         {
             Random rnd = new Random();
             int Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
             int Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
             bool request = false;
+            bool leaving = false;
 
             foreach (IndividualClient Cl in ClientsList)
             {
@@ -295,51 +310,64 @@ namespace Salle.Model
 
             Console.WriteLine("Request : {0}, WaitTime : {1} ", request, TimeSpend);
             
-            while (CurrentDishe == NbDishe)
+            while (CurrentDishe == NbDishe && !leaving)
             {
+                Console.WriteLine("Request : {0}", leaving);
                 if ((DateTime.Now.Ticks - TimeOfArrival) >= (TimeSpend * (1000  * 10000)))
                 {
-                    leave();
+                    leaving = leave();
                 }
 
-                if (rnd.Next(80) < 2)
+                if (!leaving)
                 {
-                    if (Bread <= 0 && request)
+                    if (rnd.Next(80) < 2)
                     {
-                        NotifyObserver(this.idTable);
-                        Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
-                        Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
+                        if (Bread <= 0 && request)
+                        {
+                            NotifyObserver(this.idTable);
+                            Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
+                            Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
+                        }
+                        else if (Bread > 0)
+                        {
+                            Bread -= 1;
+                            Console.WriteLine("Eats Bread : {0}", Bread);
+                        }
                     }
-                    else
+
+                    if (rnd.Next(80) < 2)
                     {
-                        Bread -= 1;
-                        Console.WriteLine("Eats Bread : {0}", Bread);
+                        if (Drinks <= 0 && request)
+                        {
+                            NotifyObserver(this.idTable);
+                            Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
+                            Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
+                        }
+                        else if (Drinks > 0)
+                        {
+                            Drinks -= 1;
+                            Console.WriteLine(".....Drinking : {0}", Drinks);
+                        }
                     }
+
+                    Thread.Sleep(200);
                 }
 
-                if (rnd.Next(80) < 2)
-                {
-                    if (Drinks <= 0 && request)
-                    {
-                        NotifyObserver(this.idTable);
-                        Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
-                        Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
-                    }
-                    else
-                    {
-                        Drinks -= 1;
-                        Console.WriteLine(".....Drinking : {0}", Drinks);
-                    }
-                }
-
-                Thread.Sleep(200);
+                
             }
+            return leaving;
         }
 
-        public void leave()
+        public bool leave()
         {
             Console.WriteLine("Client is leaving");
             //detruire le client
+            Hall.hallInstance().FindTableById(idTable).Clients = null;
+
+            Thread threadWaiterCleaning = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().CleanTable(this.idTable,this.ClientsNumber));
+            threadWaiterCleaning.Start();
+
+            return true;
         }
     }
 }

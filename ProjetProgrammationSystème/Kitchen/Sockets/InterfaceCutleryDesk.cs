@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Sockets
 {
-    class InterfaceCutleryDesk
+    interface InterfaceCutleryDesk
     {
         byte[] bytes { get; set; }
         Socket s { get; set; }
+
+        void SendDataCutleryDesk();
+        void EcouterCutleryDesk();
     }
 }

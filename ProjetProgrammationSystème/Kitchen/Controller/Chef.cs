@@ -78,7 +78,11 @@ namespace Kitchen.Controller
         public void GetOrder(String strOrder)
         {
             string[] Lists = strOrder.Split(':');
-            Order order = new Order(Int32.Parse(Lists[0]));
+            Order order = null;
+
+
+            String[] IdsTables = Regex.Split(Lists[0], @"\D+");
+            order = new Order(Int32.Parse(IdsTables[0] + IdsTables[1])); 
 
 
             String[] IdsEntries = Regex.Split(Lists[1], @"\D+");
@@ -156,6 +160,7 @@ namespace Kitchen.Controller
                 }
                 suite = false;
 
+                /*
                 foreach (int test in ord.ListEntries)
                 {
                     Console.Write(" {0} ", test);
@@ -165,7 +170,7 @@ namespace Kitchen.Controller
                 {
                     Console.WriteLine(test);
                 }
-
+                */
                 //dispatch
 
 
@@ -193,6 +198,7 @@ namespace Kitchen.Controller
                 }
                 suite = false;
 
+                /*
                 foreach (int test in ord.ListPlats)
                 {
                     Console.Write(" {0} ", test);
@@ -202,7 +208,7 @@ namespace Kitchen.Controller
                 {
                     Console.WriteLine(test);
                 }
-
+                 */
                 //dispatch
 
 
@@ -228,7 +234,7 @@ namespace Kitchen.Controller
                         suite = false;
                     }
                 }
-
+                /*
                 foreach (int test in ord.ListDesserts)
                 {
                     Console.Write(" {0} ", test);
@@ -238,14 +244,16 @@ namespace Kitchen.Controller
                 {
                     Console.WriteLine(test);
                 }
-
+                */
                 //dispatch
             }
         }
 
         public void Dispatch(int Order, int IdSpecializedChefs)
         {
-
+            //parcourir SpecializedChefsList et ordonner en fonction du plat et metier
+            //parcour de la list de commandes pour rechercher ingrédients et ordres a donner
+            //passer liste d'ordre au chef
         }
     }
 }

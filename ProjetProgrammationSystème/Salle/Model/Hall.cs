@@ -53,10 +53,10 @@ namespace Salle.Model
 
         public SquareInterface FindSquareByTableId(int IdTable)
         {
-            SquareInterface res = SquareList[1];
+            SquareInterface res = SquareList[0];
             if (IdTable >= 17)
             {
-                res = SquareList[2];
+                res = SquareList[1];
             }
 
             return res;

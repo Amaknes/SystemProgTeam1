@@ -158,18 +158,22 @@ namespace Salle.Controller
             int res = -1;
             int i = 0;
             int countMal = 0;
+
+            if (res >= 7 && res < 17)
+            {
+                countMal = 7;
+            }
+            else if (res >= 17 && res < 25)
+            {
+                countMal = 17;
+            }
+            else if (res >= 25 && res <= 32)
+            {
+                countMal = 25;
+            }
+
             while (i < ListSquare[idSquare].LineList[idLine].ListTable.Count)
             {
-                if(res >= 7 && res < 17)
-                {
-                    countMal = 7;
-                }else if(res >= 17 && res < 25)
-                {
-                    countMal = 17;
-                }else if(res >= 25 && res < 32)
-                {
-                    countMal = 25;
-                }
 
                 if (ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace >= groupe.ClientsNumber && ListSquare[idSquare].LineList[idLine].ListTable[i].Clients == null)
                 {
@@ -242,12 +246,13 @@ namespace Salle.Controller
             Busy = false;
         }
 
-        public void GetMoney(int Bill, ClientsInterface groupe)
+        public bool GetMoney(int Bill, ClientsInterface groupe)
         {
             Busy = true;
             Thread.Sleep(200);
             groupe.leave();
             Busy = false;
+            return true;
         }
 
         public void SecondOrderFromClient(int IdTable)

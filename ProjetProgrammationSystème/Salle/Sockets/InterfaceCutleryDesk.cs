@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Salle.Sockets
 {
-    class InterfaceCutleryDesk
+    public interface InterfaceCutleryDesk
     {
         byte[] bytes { get; set; }
         Socket s { get; set; }
+
+        void SendDataCutleryDesk(int data);
+        void EcouterCutleryDesk();
     }
 }
 

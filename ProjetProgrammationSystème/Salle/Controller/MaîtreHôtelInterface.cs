@@ -20,6 +20,6 @@ namespace Salle.Controller
         HeadWaiterInterface GetHeadWaiterDisposable();
         void ClientsReception();
         int VerifTables(int idSquare, int idLine, ClientsInterface groupe);
-        void GetMoney(int Bill, ClientsInterface groupe);
+        bool GetMoney(int Bill, ClientsInterface groupe);
     }
 }

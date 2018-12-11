@@ -41,11 +41,11 @@ namespace Salle.Sockets
 
         private CutleryDesk()
         {
-            _thEcoute = new Thread(new ThreadStart(Ecouter));
+            _thEcoute = new Thread(new ThreadStart(EcouterCutleryDesk));
             _thEcoute.Start();
         }
 
-        private void Ecouter()
+        public void EcouterCutleryDesk()
         {
             Console.WriteLine("Préparation à l'écoute...");
 
@@ -68,6 +68,30 @@ namespace Salle.Sockets
                 Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
             }
 
+        }
+
+        public void SendDataCutleryDesk(int data)
+        {
+            try
+            {
+                // Sending message 
+                //<Client Quit> is the sign for end of data 
+                string theMessageToSend = ""+data;
+                
+                Console.WriteLine("Message  {0} ", theMessageToSend);
+
+                byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
+
+                UdpClient udpClient = new UdpClient();
+                udpClient.Send(msg, msg.Length, "127.0.0.1", 5038);
+                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5038); 
+                udpClient.Close();
+
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+            }
         }
     }
 }

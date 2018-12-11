@@ -43,14 +43,14 @@ namespace Kitchen.Sockets
 
         private OrderDesk()
         {
-            _thEcoute = new Thread(new ThreadStart(Ecouter));
+            _thEcoute = new Thread(new ThreadStart(EcouterOrderDesk));
             _thEcoute.Start();
         }
 
 
 
 
-        private void Ecouter()
+        public void EcouterOrderDesk()
         {
             Console.WriteLine("Préparation à l'écoute...");
 
@@ -75,5 +75,9 @@ namespace Kitchen.Sockets
                 Chef.chefInstance().GetOrder(message);
             }
         }
-    }
+
+        public void SendDataOrderDesk()
+        {
+        }
+        }
 }

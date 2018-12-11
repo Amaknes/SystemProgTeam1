@@ -17,10 +17,10 @@ namespace Salle.Model
         int Bill { get; set; }
         int idTable { get; set; }
 
-        void WaitForNextDishe(int NbDishe);
+        bool WaitForNextDishe(int NbDishe);
         OrderInterface ChoiceOrder(bool SecondOrder);
         void Payment();
         void Eat();
-        void leave();
+        bool leave();
     }
 }
