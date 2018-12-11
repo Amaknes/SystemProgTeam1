@@ -96,6 +96,8 @@
     <Compile Include="Controller\Staff.cs" />
     <Compile Include="Controller\StaffInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sockets\CutleryDesk.cs" />
+    <Compile Include="Sockets\InterfaceCutleryDesk.cs" />
     <Compile Include="Sockets\InterfaceOrderDesk.cs" />
     <Compile Include="Sockets\OrderDesk.cs" />
     <Compile Include="View\DisplayElements.cs" />

@@ -47,7 +47,7 @@ namespace Kitchen.Controller
 
         public void CallType()
         {
-            Console.WriteLine(Strategy.TypeTestStrategy());
+            Console.WriteLine();
         }
 
         public string TypeTestStrategy()

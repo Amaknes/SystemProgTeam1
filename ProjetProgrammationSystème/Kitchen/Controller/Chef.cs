@@ -1,4 +1,4 @@
-﻿using Kitchen.Socket;
+﻿
 using System;
 using Kitchen.Model;
 using System.Collections.Generic;
@@ -14,21 +14,23 @@ namespace Kitchen.Controller
     {
         private static Chef ChefInstance;
 
-        private List<SpecializedChefsInterface> _SpecializedChefsList;
-        public List<SpecializedChefsInterface> SpecializedChefsList
+        private static List<SpecializedChefsInterface> _SpecializedChefsList;
+        public static List<SpecializedChefsInterface> SpecializedChefsList
         {
-            get => this._SpecializedChefsList; 
-            set => this._SpecializedChefsList = value;
+            get => _SpecializedChefsList;
+            set => _SpecializedChefsList = value;
         }
 
-        public bool DefineStrategy()
+        public static bool DefineStrategy()
         {
             //Check if list is odd or even
-            if (Chef.chefInstance().SpecializedChefsList.Count() % 2 == 0)
+            if (SpecializedChefsList.Count() % 2 == 0)
             {
                 return true;
             }
             else return false;
+        }
+
         private List<Order> _ListOrder;
         public List<Order> ListOrder
         {
@@ -36,38 +38,40 @@ namespace Kitchen.Controller
             set => this._ListOrder = value;
         }
 
-        }
 
-        public void AddSpecializedChef()
+        public static void AddSpecializedChef()
         {
-            if (this.DefineStrategy())
+            if (DefineStrategy())
             {
                 SpecializedChefsList.Add((SpecializedChefsInterface)new Pastry());
-
-            }else
+            }
+            else
             {
                 SpecializedChefsList.Add((SpecializedChefsInterface)new Cookers());
             }
         }
-
-        private Chef()
-        {
-            List<SpecializedChefsInterface> SpecializedChefsList = new List<SpecializedChefsInterface>();
-            this.AddSpecializedChef();
-            this.AddSpecializedChef();
-
-            SpecializedChefsList = newSpecializedChefsList;
-            ListOrder = new List<Order>();
-        }
-
+        
         public static Chef chefInstance()
         {
-            if(ChefInstance == null)
+            if (ChefInstance == null)
             {
                 ChefInstance = new Chef();
+                AddSpecializedChef();
+                AddSpecializedChef();
             }
             return ChefInstance;
         }
+
+
+
+
+        private Chef()
+        {
+            SpecializedChefsList = new List<SpecializedChefsInterface>();
+
+            ListOrder = new List<Order>();
+        }
+
 
 
 
@@ -131,15 +135,15 @@ namespace Kitchen.Controller
             {
                 ord.ListEntries.Sort();
                 List<int> SuiteDish = new List<int>();
-                for(int i = 0; i < ord.ListEntries.Count -1; i++)
+                for (int i = 0; i < ord.ListEntries.Count - 1; i++)
                 {
-                    if(!suite && ord.ListEntries[i] == ord.ListEntries[i + 1])
+                    if (!suite && ord.ListEntries[i] == ord.ListEntries[i + 1])
                     {
                         SuiteDish.Add(i);
-                        SuiteDish.Add(i+1);
+                        SuiteDish.Add(i + 1);
                         suite = true;
                     }
-                    else if(suite && ord.ListEntries[i] == ord.ListEntries[i + 1])
+                    else if (suite && ord.ListEntries[i] == ord.ListEntries[i + 1])
                     {
                         SuiteDish.Remove(i);
                         SuiteDish.Add(i + 1);
@@ -225,7 +229,7 @@ namespace Kitchen.Controller
                     }
                 }
 
-                foreach(int test in ord.ListDesserts)
+                foreach (int test in ord.ListDesserts)
                 {
                     Console.Write(" {0} ", test);
                 }
@@ -237,9 +241,6 @@ namespace Kitchen.Controller
 
                 //dispatch
             }
-
-
-
         }
 
         public void Dispatch(int Order, int IdSpecializedChefs)
@@ -248,3 +249,4 @@ namespace Kitchen.Controller
         }
     }
 }
+

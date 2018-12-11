@@ -18,6 +18,9 @@ namespace Salle
         {
             HallInterface salle = Hall.hallInstance();
             MHotel = MaîtreHôtel.maîtreHôtelInstance();
+            
+            CutleryDesk.cutleryDeskInstance();
+            OrderDesk.orderDeskInstance();
 
             ThreadStart jobArriverClient = new ThreadStart(ArriverClient);
             Thread threadClient = new Thread(jobArriverClient);

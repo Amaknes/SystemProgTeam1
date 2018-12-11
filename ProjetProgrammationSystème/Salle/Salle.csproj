@@ -128,6 +128,8 @@
     <Compile Include="Model\TableInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sockets\CutleryDesk.cs" />
+    <Compile Include="Sockets\InterfaceCutleryDesk.cs" />
     <Compile Include="Sockets\InterfaceOrderDesk.cs" />
     <Compile Include="Sockets\OrderDesk.cs" />
     <Compile Include="View\Elements.cs" />

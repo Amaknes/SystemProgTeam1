@@ -8,8 +8,6 @@ namespace Kitchen.Controller
 {
     public interface ChefInterface
     {
-        List<SpecializedChefsInterface> SpecializedChefsList { get; set; }
-
         void GetOrder(String strOrder);
     
         void Sort();
