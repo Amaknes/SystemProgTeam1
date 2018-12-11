@@ -21,36 +21,29 @@ namespace Kitchen.Controller
             }
         }
 
-        private int _ingredients;
-        public int ingredients
+        private list<int>_ingredients;
+        public list<int>ingredients
         {
             get => this._ingredients;
-            set
-            {
-                if(value >= 0)
-                {
-                    this._ingredients = value;
-                }
-            }
+            set => this._ingredients = value;
         }
 
-        private int _IdVegetables;
-        public int IdVegetables
+        private list<int>_IdVegetables;
+        public list<int>IdVegetables
         {
             get => this._IdVegetables;
-            set
-            {
-                if(value >= 0)
-                {
-                    this._IdVegetables = value;
-                }
-            }
+            set => this._IdVegetables = value;
+        }
+
+        public int SearchIngredients(int ingredients)
+        {
+            
+            return GiveIngredients();
         }
 
         public void GiveIngredients()
         {
-
-
+            return this.ingredients;
         }
 
         public int PeelVegetables()
@@ -58,10 +51,6 @@ namespace Kitchen.Controller
             //threadsleep(500);
         }
 
-        public int SearchIngredients(int ingredients)
-        {
-            //search in BDD
-        }
 
         public int SendDishes()
         {
