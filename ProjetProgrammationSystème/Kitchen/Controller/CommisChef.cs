@@ -49,22 +49,23 @@ namespace Kitchen.Controller
 
         public void GiveIngredients()
         {
-            //bouge jusq'au chef pour lui donner les ingrédients
+
+
         }
 
-        public int PeelVegetables(int IdVegetables)
+        public int PeelVegetables()
         {
-            throw new NotImplementedException();
+            //threadsleep(500);
         }
 
         public int SearchIngredients(int ingredients)
         {
-            throw new NotImplementedException();
+            //search in BDD
         }
 
         public int SendDishes()
         {
-            throw new NotImplementedException();
+            //connecter au passe plat avec le socket + sémaphore
         }
     }
 }
