@@ -50,7 +50,6 @@ namespace Salle.Controller
             this.IdHeadWaiter = idHeadWaiter;
             this.IdSquare = idHeadWaiter;
             this.Busy = false;
-            this.orderDesk = OrderDesk.orderDeskInstance();
         }
 
 
@@ -90,7 +89,7 @@ namespace Salle.Controller
             threadWaiterServeBreadDrinks.Start();
 
             //HeadWaiter give Order to the CommandDesk
-            orderDesk.SendData(Order);
+            OrderDesk.orderDeskInstance().SendData(Order);
             this.Busy = false;
         }
 
