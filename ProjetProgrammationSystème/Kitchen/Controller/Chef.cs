@@ -21,6 +21,14 @@ namespace Kitchen.Controller
             set => this._SpecializedChefsList = value;
         }
 
+        public bool DefineStrategy()
+        {
+            //Check if list is odd or even
+            if (Chef.chefInstance().SpecializedChefsList.Count() % 2 == 0)
+            {
+                return true;
+            }
+            else return false;
         private List<Order> _ListOrder;
         public List<Order> ListOrder
         {
