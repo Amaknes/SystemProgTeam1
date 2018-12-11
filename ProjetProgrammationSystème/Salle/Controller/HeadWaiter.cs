@@ -41,13 +41,9 @@ namespace Salle.Controller
                 }
             }
         }
+        
 
-        private OrderDesk _orderDesk;
-        public OrderDesk orderDesk
-        {
-            get => this._orderDesk;
-            set => this._orderDesk = value;
-        }
+
 
         public HeadWaiter(int idHeadWaiter)
         {
@@ -94,7 +90,7 @@ namespace Salle.Controller
             threadWaiterServeBreadDrinks.Start();
 
             //HeadWaiter give Order to the CommandDesk
-            //orderDesk.SendData(Order);
+            orderDesk.SendData(Order);
             this.Busy = false;
         }
 

@@ -10,7 +10,7 @@ namespace Kitchen.Controller
     {
         List<SpecializedChefsInterface> SpecializedChefsList { get; set; }
 
-        void GetOrder();
+        void GetOrder(String strOrder);
     
         void Sort();
 

@@ -106,6 +106,19 @@ namespace Salle.Model
             }
         }
 
+        private int _TimeSpend;
+        public int TimeSpend
+        {
+            get => this._TimeSpend;
+            set
+            {
+                if (value >= 30 && value <= 120)
+                {
+                    this._TimeSpend = value;
+                }
+            }
+        }
+
         private long _TimeOfArrival;
         public long TimeOfArrival
         {
@@ -114,7 +127,7 @@ namespace Salle.Model
         }
 
 
-        public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber)
+        public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber, int TimeSpend)
         {
 
             this.IdClients = IdClients;
@@ -122,7 +135,7 @@ namespace Salle.Model
             this.Booking = Booking;
             this.ClientsNumber = ClientsNumber;
             this.CurrentDishe = 0;
-            
+            this.TimeSpend = TimeSpend;
 
             this.Observers = new List<IObserver>();
             AddObserver(CommisWaiter.commisWaiterInstance());
@@ -142,7 +155,7 @@ namespace Salle.Model
                     WaiterRequest = true;
                 }
 
-                this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(rnd.Next(5), rnd.Next(30,121), rnd.Next(5), WaiterRequest));
+                this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(rnd.Next(5), rnd.Next(5), WaiterRequest));
             }
         }
 
@@ -178,22 +191,28 @@ namespace Salle.Model
 
             int plat = -1;
 
-            foreach(IndividualClient IndCl in ClientsList)
+            
+
+
+            foreach (IndividualClient IndCl in ClientsList)
             {
+                int TimeSpent = 0;
                 if (!SecondOrder)
                 {
                     plat = IndCl.ChooseEntry(rnd);
-                    if(plat != -1)
+                    if (plat != -1)
                     {
                         resOrder.ListEntries.Add(plat);
                         plat = -1;
+                        TimeSpent += 15;
                     }
-
+                    
                     plat = IndCl.ChoosePlat(rnd);
                     if (plat != -1)
                     {
                         resOrder.ListPlats.Add(plat);
                         plat = -1;
+                        TimeSpent += 25;
                     }
                 }
 
@@ -204,7 +223,9 @@ namespace Salle.Model
                     {
                         resOrder.ListDesserts.Add(plat);
                         plat = -1;
+                        TimeSpent += 10;
                     }
+                    
                 }
             }
 
@@ -263,7 +284,6 @@ namespace Salle.Model
             int Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
             int Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
             bool request = false;
-            int WaitTime = 300;
 
             foreach (IndividualClient Cl in ClientsList)
             {
@@ -271,17 +291,13 @@ namespace Salle.Model
                 {
                     request = true;
                 }
-                if(Cl.TimeSpend < WaitTime)
-                {
-                    WaitTime = Cl.TimeSpend;
-                }
             }
 
-            Console.WriteLine("Request : {0}, WaitTime : {1} ", request, WaitTime);
+            Console.WriteLine("Request : {0}, WaitTime : {1} ", request, TimeSpend);
             
             while (CurrentDishe == NbDishe)
             {
-                if ((DateTime.Now.Ticks - TimeOfArrival) >= (WaitTime * (1000  * 10000)))
+                if ((DateTime.Now.Ticks - TimeOfArrival) >= (TimeSpend * (1000  * 10000)))
                 {
                     leave();
                 }

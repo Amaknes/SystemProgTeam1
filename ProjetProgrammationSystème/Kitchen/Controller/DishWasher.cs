@@ -44,13 +44,6 @@ namespace Kitchen.Controller
             set => this._ListWashMachine = value;
         }
 
-        private List<bool> _ListUstensile;
-        public List<bool> ListUstensile
-        {
-            get => this._ListUstensile;
-            set => this._ListUstensile = value;
-        }
-
         private long _Timer;
         public long Timer
         {
@@ -64,7 +57,6 @@ namespace Kitchen.Controller
             this.Busy = false;
             this.ListCutlery = new List<bool>();
             this.ListLaundry = new List<bool>();
-            this.ListUstensile = new List<bool>();
             this.ListWashMachine = new List<bool>();
             this.ListDishWasher = new List<bool>();
             this.Timer = DateTime.Now.Ticks;
@@ -167,34 +159,6 @@ namespace Kitchen.Controller
                 Thread.Sleep(1000);
             }
         }
-
-
-
-        public void GetDirtyUstensil()
-        {
-            //récupère les instruments et les rajoutent à la liste
-        }
-
-        public void HandWashing()
-        {
-            if(ListUstensile.Count > 0)
-            {
-                if(ListUstensile[0] == true)
-                {
-                    Thread.Sleep(500);
-                }
-                else
-                {
-                    Thread.Sleep(1000);
-                }
-                TidyUstensils();
-            }
-        }
-
-        public void TidyUstensils()
-        {
-            ListUstensile.RemoveAt(0);
-            //range sur la map
-        }
+        
     }
 }

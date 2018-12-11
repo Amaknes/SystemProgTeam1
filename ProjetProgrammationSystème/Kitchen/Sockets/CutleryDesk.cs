@@ -1,5 +1,4 @@
-﻿using Kitchen.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,14 +6,13 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Kitchen.Controller;
 
 namespace Kitchen.Sockets
 {
-    class OrderDesk : InterfaceOrderDesk
+    class CutleryDesk : InterfaceCutleryDesk
     {
         private Thread _thEcoute;
-        private static OrderDesk OrderDeskInstance;
+        private static CutleryDesk CutleryDeskInstance;
 
         private byte[] _bytes;
         public byte[] bytes
@@ -31,31 +29,28 @@ namespace Kitchen.Sockets
         }
 
 
-        public static OrderDesk orderDeskInstance()
+        public static CutleryDesk cutleryDeskInstance()
         {
-            if (OrderDeskInstance == null)
+            if (CutleryDeskInstance == null)
             {
-                OrderDeskInstance = new OrderDesk();
+                CutleryDeskInstance = new CutleryDesk();
             }
-            return OrderDeskInstance;
+            return CutleryDeskInstance;
         }
 
 
-        private OrderDesk()
+        private CutleryDesk()
         {
             _thEcoute = new Thread(new ThreadStart(Ecouter));
             _thEcoute.Start();
         }
-
-
-
 
         private void Ecouter()
         {
             Console.WriteLine("Préparation à l'écoute...");
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
-            UdpClient serveur = new UdpClient(5036);
+            UdpClient serveur = new UdpClient(5038);
 
             //Création d'une boucle infinie qui aura pour tâche d'écouter.
             while (true)
@@ -71,9 +66,8 @@ namespace Kitchen.Sockets
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
                 Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
-
-                Chef.chefInstance().GetOrder(message);
             }
+
         }
     }
 }

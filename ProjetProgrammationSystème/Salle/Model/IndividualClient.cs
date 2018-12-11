@@ -8,17 +8,6 @@ namespace Salle.Model
 {
     public class IndividualClient : IndividualClientInterface
     {
-        private int _TimeSpend;
-        public int TimeSpend {
-            get => this._TimeSpend;
-            set
-            {
-                if (value >= 30 && value <= 120)
-                {
-                    this._TimeSpend = value;
-                }
-            }
-        }
 
         private int _Taste;
         public int Taste {
@@ -50,17 +39,22 @@ namespace Salle.Model
             set => this._WaiterRequest = value;
         }
 
-        public IndividualClient(int Taste, int TimeSpend, int Choice, bool WaiterRequest)
+
+
+
+        public IndividualClient(int Taste, int Choice, bool WaiterRequest)
         {
 
             //Console.WriteLine("Taste: {0}, TimeSpend: {1}, Choice: {2}, WaiterRequest: {3}", Taste, TimeSpend, Choice, WaiterRequest);
 
-            this.TimeSpend = TimeSpend;
             this.Taste = Taste;
 
             this.Choice = Choice;
             this.WaiterRequest = WaiterRequest;
         }
+
+
+
 
         public int ChooseEntry(Random rnd)
         {
@@ -83,7 +77,7 @@ namespace Salle.Model
 
                 if(pass > 3)
                 {
-                    idEntry = rnd.Next(11);
+                    idEntry = rnd.Next(10);
                 }
             }
             return idEntry;
@@ -91,7 +85,7 @@ namespace Salle.Model
 
         public int ChoosePlat(Random rnd)
         {
-            return rnd.Next(11);
+            return rnd.Next(10);
         }
 
         public int ChooseDessert(Random rnd)
@@ -116,7 +110,7 @@ namespace Salle.Model
 
                 if (pass > 3)
                 {
-                    idDessert = rnd.Next(11);
+                    idDessert = rnd.Next(10);
                 }
             }
             return idDessert;

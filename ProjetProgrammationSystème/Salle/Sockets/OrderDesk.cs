@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Salle.Sockets
 {
-    public class OrderDesk: InterfaceOrderDesk
+    public class OrderDesk : InterfaceOrderDesk
     {
         private static OrderDesk OrderDeskInstance;
         private Thread _thEcoute;
-       
+
 
         private byte[] _bytes;
         public byte[] bytes
@@ -25,7 +25,8 @@ namespace Salle.Sockets
 
 
         private Socket _s;
-        public Socket s {
+        public Socket s
+        {
             get => this._s;
             set => this._s = value;
         }
@@ -33,7 +34,7 @@ namespace Salle.Sockets
 
         public static OrderDesk orderDeskInstance()
         {
-            if(OrderDeskInstance == null)
+            if (OrderDeskInstance == null)
             {
                 OrderDeskInstance = new OrderDesk();
             }
@@ -42,68 +43,89 @@ namespace Salle.Sockets
 
         private OrderDesk()
         {
-            bool continuer = true;
-
-            while (continuer)
-            {
-                Console.Write("\nEntrez un message : ");
-                string message = Console.ReadLine();
-
-                //Sérialisation du message en tableau de bytes.
-                byte[] msg = Encoding.Default.GetBytes(message);
-
-                UdpClient udpClient = new UdpClient();
-
-                //La méthode Send envoie un message UDP.
-                udpClient.Send(msg, msg.Length, "127.0.0.1", 5035);
-
-                udpClient.Close();
-
-                Console.Write("\nContinuer ? (O/N)");
-                continuer = (Console.ReadKey().Key == ConsoleKey.O);
-            }
+            _thEcoute = new Thread(new ThreadStart(Ecouter));
+            _thEcoute.Start();
         }
 
 
-        
-    }
-}
 
-        
-        /*public void SendData(OrderInterface ord)
+        private void Ecouter()
+        {
+            Console.WriteLine("Préparation à l'écoute...");
+
+            //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
+            UdpClient serveur = new UdpClient(5035);
+
+            //Création d'une boucle infinie qui aura pour tâche d'écouter.
+            while (true)
+            {
+                //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
+                IPEndPoint client = null;
+                Console.WriteLine("ÉCOUTE...");
+
+                //On écoute jusqu'à recevoir un message.
+                byte[] data = serveur.Receive(ref client);
+                Console.WriteLine("Données reçues en provenance de {0}:{1}.", client.Address, client.Port);
+
+                //Décryptage et affichage du message.
+                string message = Encoding.Default.GetString(data);
+                Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
+            }
+
+        }
+
+        public void SendData(OrderInterface ord)
         {
             try
             {
                 // Sending message 
                 //<Client Quit> is the sign for end of data 
                 string theMessageToSend = ord.IdTable + ":";
-                foreach (int idEntry in ord.ListEntries)
+
+                for(int i = 0; i < ord.ListEntries.Count;i++)
                 {
-                    theMessageToSend += " " + idEntry;
+                    if(i != 0)
+                    {
+                        theMessageToSend += ",";
+                    }
+                    theMessageToSend += ord.ListEntries[i];
                 }
+
                 theMessageToSend += ":";
-                foreach (int idPlat in ord.ListPlats)
+                for (int i = 0; i < ord.ListPlats.Count;i++)
                 {
-                    theMessageToSend += " " + idPlat;
+                    if (i != 0)
+                    {
+                        theMessageToSend += ",";
+                    }
+                    theMessageToSend += ord.ListPlats[i];
                 }
+
                 theMessageToSend += ":";
-                foreach (int idDessert in ord.ListDesserts)
+                for (int i = 0; i < ord.ListDesserts.Count; i++)
                 {
-                    theMessageToSend += " " + idDessert;
+                    if (i != 0)
+                    {
+                        theMessageToSend += ",";
+                    }
+                    theMessageToSend += ord.ListDesserts[i];
                 }
 
-                Console.WriteLine("Message  {0} ",theMessageToSend);
+                Console.WriteLine("Message  {0} ", theMessageToSend);
 
-                byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend + "<Client Quit>");
+                byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 
-                // Sends data to a connected Socket. 
-                int bytesSend = s.Send(msg);
-
-                ReceiveDataFromServer();
+                UdpClient udpClient = new UdpClient();
+                udpClient.Send(msg, msg.Length, "127.0.0.1", 5036);
+               // udpClient.Send(msg, msg.Length, "10.144.50.44", 5036); 
+                udpClient.Close();
 
             }
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
             }
-        }*/  
+
+        }
+    }
+}
