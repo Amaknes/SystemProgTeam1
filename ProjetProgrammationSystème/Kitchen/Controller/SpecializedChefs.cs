@@ -8,43 +8,30 @@ namespace Kitchen.Controller
 {
     public class SpecializedChefs : SpecializedChefsInterface
     {
-        private int _time;
+        private int Time;
+        private int order;
+        
+
         public int time
         {
-            get => this._time;
-            set
-            {
-                if (value >= 0)
-                {
-                    this._time = value;
-                }
-            }
+            get {return this.Time;}
+            set { this.Time = value;}
         }
 
-        private int _Order;
-        public int Order
-        {
-            get => this._Order;
-            set
-            {
-                if (value >= 0)
-                {
-                    this._Order = value;
-                }
-            }
-        }
+        public int Order { get => order; set => order = value; }
 
-        private int _idCommisChef;
-        public int idCommisChef
+        /*public int idCommisChef
         {
-            get => this._idCommisChef;
-            set
-            {
-                if (value >= 0)
-                {
-                    this._idCommisChef = value;
-                }
-            }
+            get;
+            set;
+        }*/
+        
+
+        private static List<CommisChefInterface> _CommisChefList;
+        public static List<CommisChefInterface> CommisChefList
+        {
+            get { return _CommisChefList;}
+            set { _CommisChefList = value;}
         }
 
 
@@ -55,12 +42,8 @@ namespace Kitchen.Controller
             set { this._CommisChefsList = value; }
         }
 
-        private SpecializedChefsInterface _Strategy;
-        public SpecializedChefsInterface Strategy {
-            get => this._Strategy;
-            set => this._Strategy = value;
-        }
 
+        public SpecializedChefsInterface Strategy { get; set; }
 
         public void CallType()
         {

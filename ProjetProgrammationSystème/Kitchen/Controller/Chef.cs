@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kitchen.Socket;
+using System;
 using Kitchen.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +28,25 @@ namespace Kitchen.Controller
             set => this._ListOrder = value;
         }
 
+        }
+
+        public void AddSpecializedChef()
+        {
+            if (this.DefineStrategy())
+            {
+                SpecializedChefsList.Add((SpecializedChefsInterface)new Pastry());
+
+            }else
+            {
+                SpecializedChefsList.Add((SpecializedChefsInterface)new Cookers());
+            }
+        }
+
         private Chef()
         {
-            List<SpecializedChefsInterface> newSpecializedChefsList = new List<SpecializedChefsInterface>();
-
-            newSpecializedChefsList.Add((SpecializedChefsInterface)new SpecializedChefs());
-            newSpecializedChefsList.Add((SpecializedChefsInterface)new SpecializedChefs());
+            List<SpecializedChefsInterface> SpecializedChefsList = new List<SpecializedChefsInterface>();
+            this.AddSpecializedChef();
+            this.AddSpecializedChef();
 
             SpecializedChefsList = newSpecializedChefsList;
             ListOrder = new List<Order>();
