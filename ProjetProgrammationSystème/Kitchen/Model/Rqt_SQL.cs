@@ -18,19 +18,19 @@ namespace Kitchen.Model
         public string Nom { get => nom; set => nom = value; }
         public string Prénom { get => prénom; set => prénom = value; }
 
-        public static string selectIngredients(int Param)
+        public static string selectIngredientsById(int param)
         {
-            return "SELECT * FROM dbo.Ingrient WHERE id= " + Param;
+            return "SELECT * FROM dbo.Ingrient WHERE IDIngredient= " + param;
         }
 
-        public static string selectByName(string param)
+        public static string selectEtapePreparation(string param)
         {
-            return "SELECT * FROM dbo.TB_A2_WS2 WHERE nom =" + param;
+            return "SELECT * FROM dbo.Cut WHERE IDPreparation= " + param;
         }
 
         public static string delete(int param)
         {
-            return "DELETE FROM dbo.TB_A2_WS2 WHERE id= " + param;
+            return "DELETE FROM dbo.TB_A2_WS2 " + param;
         }
 
         public static string insert(string nom, string prenom)
