@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    interface HallInterface
+    public interface HallInterface
     {
+
+        List<SquareInterface> SquareList { get; set; }
+
+        TableInterface FindTableById(int IdTable);
+        TableInterface VerifTableById(int idSquare, int idLine, int idTable);
+        SquareInterface FindSquareByTableId(int IdTable);
     }
 }

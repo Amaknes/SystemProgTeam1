@@ -9,12 +9,12 @@ namespace Salle.Controller
     public class Staff : StaffInterface
     {
         private static Staff _StaffInstance;
+        private long _schedule;
 
-        private int _Schedule;
-        public int Schedule
+        public long Schedule
         {
-            get { return _Schedule; }
-            set { _Schedule = value; }
+            get { return _schedule; }
+            set { _schedule = value; }
         }
 
 
@@ -23,9 +23,13 @@ namespace Salle.Controller
             if (_StaffInstance == null)
             {
                 _StaffInstance = new Staff();
-                return _StaffInstance;
             }
-            else return _StaffInstance;
+            return _StaffInstance;
+        }
+
+        private Staff()
+        { 
+            Schedule = DateTime.Now.Ticks;
         }
     }
 }

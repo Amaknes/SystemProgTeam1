@@ -6,25 +6,15 @@ using System.Threading.Tasks;
 
 namespace Salle.Controller
 {
-    interface WaiterInterface
+    public interface WaiterInterface
     {
 
-       int IdWaiter
-        {
-            get;
-            set;
-        }
+        int IdWaiter { get; set; } 
+        bool Busy { get; set; }
 
-        bool Busy
-        {
-            get;
-            set;
-        }
-
-        bool StateType 
-        {
-            get;
-            set;
-        }   
+        void CleanTable(int idTable);
+        void getCommand(int idTable);
+        void Serve(int idTable);
+        void ServeBreadDrinks(int idTable);
     }
 }

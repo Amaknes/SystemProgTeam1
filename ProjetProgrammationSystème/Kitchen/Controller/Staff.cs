@@ -11,8 +11,7 @@ namespace Kitchen.Controller
         private static Staff _StaffInstance;
         private int _schedule;
 
-        public int Schedule
-        {
+        public int Schedule {
             get { return _schedule; }
             set { _schedule = value; }
         }

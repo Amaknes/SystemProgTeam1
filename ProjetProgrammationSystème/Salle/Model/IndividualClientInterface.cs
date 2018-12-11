@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Salle.Model
 {
-    interface IndividualClientInterface
+    public interface IndividualClientInterface
     {
+        int Taste { get; set; }
+        int Choice { get; set; }
+        bool WaiterRequest { get; set; }
+
+        int ChooseEntry(Random rnd);
+        int ChoosePlat(Random rnd);
+        int ChooseDessert(Random rnd);
     }
 }
