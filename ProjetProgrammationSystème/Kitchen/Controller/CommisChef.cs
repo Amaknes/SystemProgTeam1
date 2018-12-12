@@ -38,12 +38,8 @@ namespace Kitchen.Controller
         public int SearchIngredients(int ingredients)
         {
             
-            return GiveIngredients();
-        }
-
-        public void GiveIngredients()
-        {
-            return this.ingredients;
+                
+            return ;
         }
 
         public int PeelVegetables()

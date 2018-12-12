@@ -18,19 +18,19 @@ namespace Kitchen.Model
         public string Nom { get => nom; set => nom = value; }
         public string Prénom { get => prénom; set => prénom = value; }
 
-        public static string selectIngredientsById(int param)
+        public static string ListeEtapeCommande()
         {
-            return "SELECT * FROM dbo.Ingrient WHERE IDIngredient= " + param;
+            return "SELECT * FROM dbo.Preparation INNER JOIN dbo.CommandLine ON dbo.Preparation.TypePreparation = dbo.CommandLine.TypePreparation";
         }
 
-        public static string selectEtapePreparation(string param)
+        public static string LieuDeStockageIngredient()
         {
-            return "SELECT * FROM dbo.Cut WHERE IDPreparation= " + param;
+            return "SELECT IDStock, IDIngredient FROM dbo.StockKitchen";
         }
 
-        public static string delete(int param)
+        /*public static string select(int param)
         {
-            return "DELETE FROM dbo.TB_A2_WS2 " + param;
+            return "SELECT IDTabel, IDPreparation, TypePreparation FROM dbo.Preparation, dbo.TabelRest";
         }
 
         public static string insert(string nom, string prenom)
@@ -41,6 +41,6 @@ namespace Kitchen.Model
         public static string update(string nom, string prenom, int id)
         {
             return "UPDATE dbo.TB_A2_WS2 SET nom = " + nom + ", prenom = " + prenom + ", WHERE id = " + id;
-        }
+        }*/
     }
 }
