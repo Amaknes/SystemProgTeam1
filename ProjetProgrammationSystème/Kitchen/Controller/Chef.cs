@@ -4,9 +4,11 @@ using Kitchen.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace Kitchen.Controller
 {
@@ -20,6 +22,7 @@ namespace Kitchen.Controller
             get => _SpecializedChefsList;
             set => _SpecializedChefsList = value;
         }
+
 
         public static bool DefineStrategy()
         {
@@ -62,13 +65,22 @@ namespace Kitchen.Controller
             return ChefInstance;
         }
 
+        private Semaphore _sem;
 
 
+        private CLprocessus _process;
+        private CLprocessus process
+        {
+            get => this._process;
+            set => this._process = value;
+        }
+        public object Dataset { get; private set; }
 
         private Chef()
         {
             SpecializedChefsList = new List<SpecializedChefsInterface>();
-
+            _sem = new Semaphore(1, 1);
+            process = new CLprocessus();
             ListOrder = new List<Order>();
         }
 
@@ -77,6 +89,7 @@ namespace Kitchen.Controller
 
         public void GetOrder(String strOrder)
         {
+
             string[] Lists = strOrder.Split(':');
             Order order = null;
 
@@ -160,7 +173,8 @@ namespace Kitchen.Controller
                 }
                 suite = false;
 
-                /*
+
+                Console.Write("entries ");
                 foreach (int test in ord.ListEntries)
                 {
                     Console.Write(" {0} ", test);
@@ -168,10 +182,12 @@ namespace Kitchen.Controller
                 Console.WriteLine("\n");
                 foreach (int test in SuiteDish)
                 {
-                    Console.WriteLine(test);
+                    Console.Write(test);
                 }
-                */
+                Console.WriteLine("\n");
+
                 //dispatch
+                Dispatch(SuiteDish, 1, ord.IdTable);
 
 
 
@@ -198,18 +214,20 @@ namespace Kitchen.Controller
                 }
                 suite = false;
 
-                /*
+                Console.Write("Plats ");
                 foreach (int test in ord.ListPlats)
                 {
-                    Console.Write(" {0} ", test);
+                    Console.Write("{0} ", test);
                 }
                 Console.WriteLine("\n");
                 foreach (int test in SuiteDish)
                 {
-                    Console.WriteLine(test);
+                    Console.Write(test);
                 }
-                 */
+                Console.WriteLine("\n");
+
                 //dispatch
+                Dispatch(SuiteDish, 2, ord.IdTable);
 
 
 
@@ -234,7 +252,9 @@ namespace Kitchen.Controller
                         suite = false;
                     }
                 }
-                /*
+                suite = false;
+
+                Console.Write("Desserts ");
                 foreach (int test in ord.ListDesserts)
                 {
                     Console.Write(" {0} ", test);
@@ -242,19 +262,75 @@ namespace Kitchen.Controller
                 Console.WriteLine("\n");
                 foreach (int test in SuiteDish)
                 {
-                    Console.WriteLine(test);
+                    Console.Write(test);
                 }
-                */
+                Console.WriteLine("\n");
+
                 //dispatch
+                Dispatch(SuiteDish, 3, ord.IdTable);
             }
         }
 
-        public void Dispatch(int Order, int IdSpecializedChefs)
+        public void Dispatch(List<int> Suite, int pastry, int idTable)
         {
             //parcourir SpecializedChefsList et ordonner en fonction du plat et metier
             //parcour de la list de commandes pour rechercher ingrédients et ordres a donner
             //passer liste d'ordre au chef
             //liste des ingrédients
+            DataSet setData = new DataSet();
+            int count = 0;
+            if (pastry == 3)
+            {
+                //Chef patissier
+                foreach(Order ord in ListOrder)
+                {
+                    int i = 0;
+                    while(i < ord.ListDesserts.Count)
+                    {
+                        if (Suite.Count != 0 && Suite[0] == i)
+                        {
+                            i = Suite[0+1];
+                            count = 1 + Suite[1] - Suite[0];
+                            Suite.RemoveAt(0);
+                            Suite.RemoveAt(1);
+                        }
+                        else
+                        {
+                            count = 1;
+                        }
+                        setData = process.GetListCommand("ProjetProgSystem",ord.ListDesserts[i]);
+                        Console.WriteLine("{0} Desserts de {1}", count,count);
+
+                        foreach (DataRow dr in setData.Tables[0].Rows)
+                        {
+                            string NameTask = dr["NameTask"].ToString();
+                            int Timetask = Int32.Parse(dr["TimeStask"].ToString());
+                            int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
+
+                            Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 3, ord.ListDesserts.Count, count);
+                            //ordres : 1.Couper   2.Cuire   3.Mélanger     4.Cuire (Four)    5.Fondre    6.Préparation    7.Cuire(plaques)  8.Mixer     9.Raper
+                            SpecializedChefsList[0].takeOrders(currentTask);
+                        }
+                        i++;
+                    }
+                }
+            }
+            else
+            {
+                //Cuisinier
+                if (pastry == 2)
+                {
+
+
+                    //ordres : 1.Couper   2.Cuire   3.Mélanger     4.Cuire (Four)    5.Fondre    6.Préparation    7.Cuire(plaques)  8.Mixer     9.Raper
+                }
+                else if(pastry == 1)
+                {
+
+                    //ordres : 1.Couper   2.Cuire   3.Mélanger     4.Cuire (Four)    5.Fondre    6.Préparation    7.Cuire(plaques)  8.Mixer     9.Raper
+                }
+
+            }
         }
     }
 }

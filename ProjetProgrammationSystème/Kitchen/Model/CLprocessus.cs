@@ -11,22 +11,16 @@ namespace Kitchen.Model
     class CLprocessus
     {
         private DataSet oDs;
-        private Rqt_SQL oMap;
         private CAD oCad;
-        private string rq_sql;
 
-        public CLprocessus(DataSet oDs, Rqt_SQL oMap, CAD oCad, string rq_sql)
+        public CLprocessus()
         {
-            this.oDs = oDs;
-            this.oMap = oMap;
-            this.oCad = oCad;
-            this.rq_sql = rq_sql;
+            this.oDs = new DataSet();
+            this.oCad = new CAD();
         }
 
         public DataSet ODs { get => oDs; set => oDs = value; }
-        public Rqt_SQL OMap { get => oMap; set => oMap = value; }
         public CAD OCad { get => oCad; set => oCad = value; }
-        public string Rq_sql { get => rq_sql; set => rq_sql = value; }
 
         public DataSet GetListCommand(string dataTableName, int idCommand)
         {

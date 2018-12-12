@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Kitchen.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,6 +62,7 @@ namespace Kitchen.Controller
             throw new NotImplementedException();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int UseHotPlate(int time)
         {
             throw new NotImplementedException();
@@ -73,6 +76,11 @@ namespace Kitchen.Controller
         public int Preparation()
         {
             throw new NotImplementedException();
+        }
+
+        public void takeOrders(Tasks newTask)
+        {
+
         }
     }
 }

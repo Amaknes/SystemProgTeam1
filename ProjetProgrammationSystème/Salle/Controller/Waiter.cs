@@ -80,10 +80,7 @@ namespace Salle.Controller
             //take cutlery to the Dishes desk
 
             CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(nbCouverts);
-
-
-            Thread threadHWaiterDrowUpTable = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).headWaiter.DrowUpTable(idTable,nbCouverts));
-            threadHWaiterDrowUpTable.Start();
+            
 
             Busy = false;
         }

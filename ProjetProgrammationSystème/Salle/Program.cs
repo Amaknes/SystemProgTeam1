@@ -41,9 +41,9 @@ namespace Salle
             bool Order;
             bool Book;
 
-            while (true) {
+            //while (true) {
 
-                FactoryClients factClients = new FactoryClients();
+            FactoryClients factClients = new FactoryClients();
 
                 if (rnd.Next(2) == 0)
                 {
@@ -66,14 +66,14 @@ namespace Salle
 
             //Création random de clients 
 
-            MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, rnd.Next(1, 11), 30));
+            //MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, rnd.Next(1, 11), 30));
 
-            //MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, 9, 30));
+            MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, 10, 30));
             //MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, rnd.Next(1, 11), 60));
 
             Thread.Sleep(1500);
                IdClients++;
-            }
+            //}
         }
 
         static void AccueilMaitreHotel()
