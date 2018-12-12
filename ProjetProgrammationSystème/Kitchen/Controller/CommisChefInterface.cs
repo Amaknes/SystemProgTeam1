@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Controller
 {
-    interface CommisChefInterface
+    public interface CommisChefInterface
     {
 
 
         int SearchIngredients(int ingredients);
 
 
-        int GiveIngredients();
+        void GiveIngredients();
 
-        int PeelVegetables(int IdVegetables);
+        void PeelVegetables();
 
         int SendDishes();
 

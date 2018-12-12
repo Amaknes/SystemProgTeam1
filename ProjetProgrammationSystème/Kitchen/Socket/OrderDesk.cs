@@ -8,17 +8,39 @@ namespace Kitchen.Socket
 {
     class OrderDesk : InterfaceOrderDesk
     {
-        int[,] _OrderTable;
-        int[,] _FinishedOrder;
+        private static OrderDesk OrderDeskInstance;
+        List<int> _OrderTable;
+        List<int> _FinishedOrder;
 
-        public int[,] OrderTable {
+        public List<int> OrderTable {
             get { return _OrderTable; }
             set { _OrderTable = value; }
         }
-        public int[,] FinishedOrder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<int> FinishedOrder {
+            get { return _FinishedOrder; }
+            set { _FinishedOrder = value; }
+        }
 
-        public void DeliverOrder(int foo, int fooo)
+        private OrderDesk()
         {
+            _OrderTable = new List<int>();
+            _FinishedOrder = new List<int>();
+        }
+
+        public static OrderDesk getInstance()
+        {
+            if (OrderDeskInstance == null)
+            {
+                OrderDeskInstance = new OrderDesk();
+                return OrderDeskInstance;
+            } else return OrderDeskInstance;
+        }
+
+        public void DeliverOrder(int OrderDone)
+        {
+            foreach (int Order in FinishedOrder) {
+                //Needs to call the DB and change the status of the order
+            }
             throw new NotImplementedException();
         }
     }

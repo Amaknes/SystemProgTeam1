@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Salle.Controller;
 
 namespace Salle.Model
 {
-    public class Clients : ClientsInterface
+    public class Clients : ClientsInterface, IObservable
     {
         private int _IdClients;
         public int IdClients
@@ -14,7 +16,7 @@ namespace Salle.Model
             get => this._IdClients;
             set
             {
-                if (value > 0)
+                if (value >= 0)
                 {
                     this._IdClients = value;
                 }
@@ -26,6 +28,19 @@ namespace Salle.Model
         {
             get => this._Order;
             set => this._Order = value;
+        }
+
+        private int _CurrentDishe;
+        public int CurrentDishe
+        {
+            get => this._CurrentDishe;
+            set
+            {
+                if(value >= 0 && value < 4)
+                {
+                    this._CurrentDishe = value;
+                }
+            }
         }
 
         private bool _Booking;
@@ -41,7 +56,7 @@ namespace Salle.Model
             get => this._ClientsNumber;
             set
             {
-                if (value > 0)
+                if (value >= 0)
                 {
                     this._ClientsNumber = value;
                 }
@@ -67,39 +82,293 @@ namespace Salle.Model
             }
         }
 
+        private List<IObserver> _Observers;
+        public List<IObserver> Observers {
+            get => this._Observers;
+            set => this._Observers = value;
+        }
 
-        public Clients(int idClients, bool Order, bool Booking, int ClientsNumber)
+        private int _StateType;
+        public int StateType {
+            get => this._StateType;
+            set => this._StateType = value;
+        }
+
+        private int _idTable;
+        public int idTable {
+            get => this._idTable;
+            set
+            {
+                if (value >= 0)
+                {
+                    this._idTable = value;
+                }
+            }
+        }
+
+        private int _TimeSpend;
+        public int TimeSpend
         {
+            get => this._TimeSpend;
+            set
+            {
+                if (value >= 30 && value <= 120)
+                {
+                    this._TimeSpend = value;
+                }
+            }
+        }
+
+        private long _TimeOfArrival;
+        public long TimeOfArrival
+        {
+            get => this._TimeOfArrival;
+            set => this._TimeOfArrival = value;
+        }
+
+
+        public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber, int TimeSpend)
+        {
+
             this.IdClients = IdClients;
             this.Order = Order;
             this.Booking = Booking;
+            this.ClientsNumber = ClientsNumber;
+            this.CurrentDishe = 0;
+            this.TimeSpend = TimeSpend;
 
-            for(int i = 0; i < ClientsNumber; i++)
+            this.Observers = new List<IObserver>();
+            AddObserver(CommisWaiter.commisWaiterInstance());
+            this.ClientsList = new List<IndividualClientInterface>();
+
+            Random rnd = new Random();
+            bool WaiterRequest;
+
+            for (int i = 0; i < ClientsNumber; i++)
             {
-                this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(0, 0, 0, false));
+                if(rnd.Next(2) == 0)
+                {
+                    WaiterRequest = false;
+                }
+                else
+                {
+                    WaiterRequest = true;
+                }
+
+                this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(rnd.Next(5), rnd.Next(5), WaiterRequest));
             }
-            //temporaire
         }
 
 
-        public void AlertCommisWaiter()
+
+
+        public void AddObserver(IObserver Obs)
         {
-            throw new NotImplementedException();
+            this.Observers.Add(Obs);
         }
 
-        public int[] ChoiceOrder()
+        public bool SuppObserver(IObserver Obs)
         {
-            throw new NotImplementedException();
+            return this.Observers.Remove(Obs);
         }
 
-        public void HelloMaîtreHôtel(ClientsInterface Clients)
+        public void NotifyObserver(int idTable, bool ft)
         {
-            throw new NotImplementedException();
+            foreach (IObserver o in Observers)
+            {
+                o.Update(idTable, false);
+            }
         }
 
-        public int Payment()
+
+        
+
+        public OrderInterface ChoiceOrder(bool SecondOrder)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Client Choosing......");
+            Order resOrder = new Order(idTable);
+            Random rnd = new Random();
+
+            int plat = -1;
+
+            
+
+
+            foreach (IndividualClient IndCl in ClientsList)
+            {
+                //          int TimeSpent = 0;
+                if (!SecondOrder)
+                {
+                    plat = IndCl.ChooseEntry(rnd);
+                    if (plat != -1)
+                    {
+                        resOrder.ListEntries.Add(plat);
+                        plat = -1;
+                        //                      TimeSpent += 15;
+                    }
+
+                    plat = IndCl.ChoosePlat(rnd);
+                    if (plat != -1)
+                    {
+                        resOrder.ListPlats.Add(plat);
+                        plat = -1;
+                        //                        TimeSpent += 25;
+                    }
+                }
+
+                if (!Order || (Order && SecondOrder))
+                {
+                    plat = IndCl.ChooseDessert(rnd);
+                    if (plat != -1)
+                    {
+                        resOrder.ListDesserts.Add(plat);
+                        plat = -1;
+ //                       TimeSpent += 10;
+                    }
+                    
+                }
+            }
+
+            return resOrder;
+        }
+
+        public void Payment()
+        {
+            Console.WriteLine("Clients Pay");
+
+            leave();
+            MaîtreHôtel.maîtreHôtelInstance().GetMoney(Bill, this);
+
+            /* MaîtreHôtel MH = MaîtreHôtel.maîtreHôtelInstance();
+             bool paid = false;
+             while (!paid)
+             {
+                 if (MH.Busy)
+                 {
+                     Thread.Sleep(70);
+                 }
+                 else
+                 {
+                     paid = MH.GetMoney(Bill, this);
+                 }
+             }*/
+
+        }
+
+        public void Eat()
+        {
+            this.TimeOfArrival = DateTime.Now.Ticks;
+            Console.WriteLine("Clients Starts to eat");
+            bool leaving = false;
+
+            leaving = WaitForNextDishe(0);
+
+            if (!leaving)
+            {
+                Thread.Sleep(15000);
+            
+                leaving = WaitForNextDishe(1);
+
+                if (!leaving)
+                {
+                    Thread.Sleep(25000);
+
+                    if (Order && !leaving)
+                    {
+                        MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
+                    }
+
+                    leaving = WaitForNextDishe(2);
+
+                    if (!leaving)
+                    {
+                        Thread.Sleep(10000);
+
+                    }
+                }
+
+
+                Payment();
+            }
+
+        }
+
+        public bool WaitForNextDishe(int NbDishe)
+        {
+            Random rnd = new Random();
+            int Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
+            int Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
+            bool request = false;
+            bool leaving = false;
+
+            foreach (IndividualClient Cl in ClientsList)
+            {
+                if (Cl.WaiterRequest == true)
+                {
+                    request = true;
+                }
+            }
+
+            Console.WriteLine("Request : {0}, WaitTime : {1} ", request, TimeSpend);
+            
+            while (CurrentDishe == NbDishe && !leaving)
+            {
+
+                if ((DateTime.Now.Ticks - TimeOfArrival) >= (TimeSpend * (1000  * 10000)))
+                {
+                    leaving = leave();
+                }
+
+                if (!leaving)
+                {
+                    if (rnd.Next(80) < 2)
+                    {
+                        if (Bread <= 0 && request)
+                        {
+                            NotifyObserver(this.idTable, false);
+                            Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
+                            Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
+                        }
+                        else if (Bread > 0)
+                        {
+                            Bread -= 1;
+                            Console.WriteLine("Eats Bread at Table {0} : {1}", idTable, Bread);
+                        }
+                    }
+
+                    if (rnd.Next(80) < 2)
+                    {
+                        if (Drinks <= 0 && request)
+                        {
+                            NotifyObserver(this.idTable, false);
+                            Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
+                            Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
+                        }
+                        else if (Drinks > 0)
+                        {
+                            Drinks -= 1;
+                            Console.WriteLine(".....Drinking at Table {0} : {1}",idTable ,Drinks);
+                        }
+                    }
+
+                    Thread.Sleep(200);
+                }
+
+                
+            }
+            return leaving;
+        }
+
+        public bool leave()
+        {
+            Console.WriteLine("Client is leaving");
+            //detruire le client
+            Hall.hallInstance().FindTableById(idTable).Clients = null;
+
+            Thread threadWaiterCleaning = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().CleanTable(this.idTable,this.ClientsNumber));
+            threadWaiterCleaning.Start();
+
+            return true;
         }
     }
 }

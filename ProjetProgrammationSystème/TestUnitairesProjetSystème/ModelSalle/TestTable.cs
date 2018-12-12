@@ -11,7 +11,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestGetIdTable()
         {
             Table testTable1 = new Table(2,6);
-            Assert.Equals(testTable1.IdTable, 2);
+            Assert.AreEqual(testTable1.IdTable, 2);
         }
 
         [TestMethod]
@@ -19,14 +19,14 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Table testTable1 = new Table(1, 6);
             testTable1.IdTable = 254;
-            Assert.Equals(testTable1.IdTable, 254);
+            Assert.AreEqual(testTable1.IdTable, 254);
         }
 
         [TestMethod]
         public void TestGetClients()
         {
             Table testTable1 = new Table(1, 6);
-            Assert.Equals(testTable1.Clients, null);
+            Assert.AreEqual(testTable1.Clients, null);
         }
 
         [TestMethod]
@@ -34,17 +34,17 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Table testTable1 = new Table(1, 6);
 
-            Clients clientsAssert = new Clients(1, false, false, 1);
+            Clients clientsAssert = new Clients(1, false, false, 2);
             testTable1.Clients = clientsAssert;
 
-            Assert.Equals(testTable1.Clients, clientsAssert);
+            Assert.AreEqual(testTable1.Clients, clientsAssert);
         }
 
         [TestMethod]
         public void TestGetNbPlace()
         {
             Table testTable1 = new Table(1, 6);
-            Assert.Equals(testTable1.NbPlace, 6);
+            Assert.AreEqual(testTable1.NbPlace, 6);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Table testTable1 = new Table(1, 6);
             testTable1.NbPlace = 4;
-            Assert.Equals(testTable1.NbPlace, 1);
+            Assert.AreEqual(testTable1.NbPlace, 4);
         }
     }
 }

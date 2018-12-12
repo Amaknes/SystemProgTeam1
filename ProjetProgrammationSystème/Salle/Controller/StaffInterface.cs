@@ -8,5 +8,10 @@ namespace Salle.Controller
 {
     public interface StaffInterface
     {
+        long Schedule
+        {
+            get;
+            set;
+        }
     }
 }

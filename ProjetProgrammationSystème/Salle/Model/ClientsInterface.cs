@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,12 @@ namespace Salle.Model
         int ClientsNumber { get; set; }
         List<IndividualClientInterface> ClientsList { get; set; }
         int Bill { get; set; }
+        int idTable { get; set; }
 
-        void HelloMaîtreHôtel(ClientsInterface Clients);
-        int[] ChoiceOrder();
-        int Payment();
-        void AlertCommisWaiter();
-
+        bool WaitForNextDishe(int NbDishe);
+        OrderInterface ChoiceOrder(bool SecondOrder);
+        void Payment();
+        void Eat();
+        bool leave();
     }
 }

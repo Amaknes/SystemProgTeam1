@@ -11,7 +11,9 @@ namespace Salle.Model
         int IdTable { set; get; }
         int NbPlace { set; get; }
         ClientsInterface Clients { set; get; }
-
+        int Bread { set; get; }
+        int Drinks { set; get; }
+        bool Cutlery { set; get; }
 
     }
 }

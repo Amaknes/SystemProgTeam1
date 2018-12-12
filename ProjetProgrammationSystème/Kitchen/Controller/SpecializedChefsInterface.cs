@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 namespace Kitchen.Controller
 {
 
-    interface SpecializedChefsInterface
+    public interface SpecializedChefsInterface
     {
 
     List<CommisChefInterface> CommisChefsList { get; set; }
-
-    string TypeTestStrategy();
-
 
     int UseOven(int time);
 

@@ -9,16 +9,11 @@ namespace Salle.Controller
     public interface WaiterInterface
     {
 
-       int IdWaiter
-        {
-            get;
-            set;
-        }
+        int IdWaiter { get; set; } 
+        bool Busy { get; set; }
 
-        bool Busy
-        {
-            get;
-            set;
-        }
+        void CleanTable(int idTable, int nbClients);
+        void Serve(int idTable, int stepDishes);
+        void ServeBreadDrinks(int idTable);
     }
 }

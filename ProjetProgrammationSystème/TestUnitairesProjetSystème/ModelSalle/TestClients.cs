@@ -15,7 +15,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestGetIdClients()
         {
             Clients testClients1 = new Clients(1,false,false,1);
-            Assert.Equals(testClients1.IdClients, 1);
+            Assert.AreEqual(testClients1.IdClients, 1);
 
         }
 
@@ -24,7 +24,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.IdClients = 2;
-            Assert.Equals(testClients1.IdClients, 2);
+            Assert.AreEqual(testClients1.IdClients, 2);
 
         }
 
@@ -32,7 +32,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestGetOrder()
         {
             Clients testClients1 = new Clients(1, false, false, 1);
-            Assert.Equals(testClients1.Order, false);
+            Assert.AreEqual(testClients1.Order, false);
 
         }
 
@@ -41,7 +41,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.Order = true;
-            Assert.Equals(testClients1.Order, true);
+            Assert.AreEqual(testClients1.Order, true);
 
         }
 
@@ -49,7 +49,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestGetBooking()
         {
             Clients testClients1 = new Clients(1, false, false, 1);
-            Assert.Equals(testClients1.Booking, false);
+            Assert.AreEqual(testClients1.Booking, false);
 
         }
 
@@ -57,8 +57,8 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestSetBooking()
         {
             Clients testClients1 = new Clients(1, false, false, 1);
-            testClients1.Order = true;
-            Assert.Equals(testClients1.Booking, true);
+            testClients1.Booking = true;
+            Assert.AreEqual(testClients1.Booking, true);
 
         }
 
@@ -66,12 +66,8 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestGetClientsNumber()
         {
             Clients testClients1 = new Clients(0, false, false, 0);
-            testClients1.ClientsList.Add(new IndividualClient(1,1,1,false));
-            Assert.Equals(testClients1.ClientsNumber, 1);
-
-            testClients1.ClientsList.Add(new IndividualClient(1, 1, 1, false));
-            testClients1.ClientsList.Add(new IndividualClient(1, 1, 1, false));
-            Assert.Equals(testClients1.ClientsNumber, 3);
+            testClients1.ClientsNumber = 1;
+            Assert.AreEqual(testClients1.ClientsNumber, 1);
 
         }
 
@@ -80,7 +76,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.ClientsNumber = 5;
-            Assert.Equals(testClients1.ClientsNumber, 5);
+            Assert.AreEqual(testClients1.ClientsNumber, 5);
 
         }
 
@@ -88,7 +84,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestGetBill()
         {
             Clients testClients1 = new Clients(1, false, false, 1);
-            Assert.Equals(testClients1.Bill, 0);
+            Assert.AreEqual(testClients1.Bill, 0);
 
         }
 
@@ -97,7 +93,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Clients testClients1 = new Clients(1, false, false, 1);
             testClients1.Bill = 50;
-            Assert.Equals(testClients1.Bill, 50);
+            Assert.AreEqual(testClients1.Bill, 50);
 
         }
 
@@ -105,7 +101,11 @@ namespace TestUnitairesProjetSystème.ModelSalle
         public void TestGetClientsList()
         {
             Clients testClients1 = new Clients(1, false, false, 1);
-            Assert.Equals(testClients1.ClientsList, null);
+
+            List<IndividualClientInterface> list = new List<IndividualClientInterface>();
+            list.Add(new IndividualClient(1, 1, 1, false));
+
+            Assert.AreEqual(testClients1.ClientsList.Count, 1);
             //
         }
 
@@ -117,25 +117,19 @@ namespace TestUnitairesProjetSystème.ModelSalle
             List<IndividualClientInterface> list = new List<IndividualClientInterface>();
             list.Add(new IndividualClient(1,1,1,false));
             testClients1.ClientsList = list;
-            Assert.Equals(testClients1.ClientsList, list);
+            Assert.AreEqual(testClients1.ClientsList, list);
 
         }
 
-
-
-
-        [TestMethod]
-        public void TestHelloMaîtreHôtel()
-        {
-            Clients testClients1 = new Clients(1, false, false, 1);
-
-        }
+        
 
         [TestMethod]
         public void TestEat()
         {
             Clients testClients1 = new Clients(1, false, false, 1);
 
+
+            Assert.AreEqual(testClients1.ChoiceOrder(false), null);
         }
 
         [TestMethod]
@@ -143,6 +137,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Clients testClients1 = new Clients(1, false, false, 1);
 
+            Assert.AreEqual(testClients1.ChoiceOrder(false), null);
         }
 
         [TestMethod]
@@ -153,7 +148,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
             list.Add(new IndividualClient(1, 1, 1, false));
             testClients1.ClientsList = list;
 
-            Assert.Equals(testClients1.ChoiceOrder(), new int[1,5,2,4]);
+            Assert.AreEqual(testClients1.ChoiceOrder(false), new int[1,5,2,4]);
             //
 
         }
@@ -163,6 +158,7 @@ namespace TestUnitairesProjetSystème.ModelSalle
         {
             Clients testClients1 = new Clients(1, false, false, 1);
 
+            Assert.AreEqual(testClients1.ChoiceOrder(false), null);
         }
     }
 }

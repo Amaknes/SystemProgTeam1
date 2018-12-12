@@ -47,6 +47,46 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\test\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,7 +104,7 @@
     <Compile Include="Controller\IObservable.cs" />
     <Compile Include="Controller\IObserver.cs" />
     <Compile Include="Controller\MaîtreHôtel.cs" />
-    <Compile Include="Controller\CommisWaiterL%27observeur.cs" />
+    <Compile Include="Controller\CommisWaiter.cs" />
     <Compile Include="Controller\HeadWaiter.cs" />
     <Compile Include="Controller\MaîtreHôtelInterface.cs" />
     <Compile Include="Controller\Staff.cs" />
@@ -80,12 +120,18 @@
     <Compile Include="Model\IndividualClientInterface.cs" />
     <Compile Include="Model\Line.cs" />
     <Compile Include="Model\LineInterface.cs" />
+    <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\OrderInterface.cs" />
     <Compile Include="Model\Square.cs" />
     <Compile Include="Model\SquareInterface.cs" />
     <Compile Include="Model\Table.cs" />
     <Compile Include="Model\TableInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sockets\CutleryDesk.cs" />
+    <Compile Include="Sockets\InterfaceCutleryDesk.cs" />
+    <Compile Include="Sockets\InterfaceOrderDesk.cs" />
+    <Compile Include="Sockets\OrderDesk.cs" />
     <Compile Include="View\Elements.cs" />
     <Compile Include="View\Movable.cs" />
     <Compile Include="View\DisplayElements.cs" />
