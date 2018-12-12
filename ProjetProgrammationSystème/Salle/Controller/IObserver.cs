@@ -8,6 +8,6 @@ namespace Salle.Controller
 {
     public interface IObserver
     {
-        void Update(int idTable);
+        void Update(int idTable, bool FirstTime);
     }
 }

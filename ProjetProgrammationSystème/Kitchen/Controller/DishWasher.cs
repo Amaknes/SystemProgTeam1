@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kitchen.Sockets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -95,6 +96,8 @@ namespace Kitchen.Controller
             {
                 Thread.Sleep(1000);
                 //ranger ListDIshwasher dans le socket
+                CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(ListDishWasher,0);
+                ListWashMachine = 0;
                 Thread.Sleep(1000);
             }
         }
@@ -109,6 +112,7 @@ namespace Kitchen.Controller
                 }
                 if (this.ListCutlery > 0)
                 {
+                    this.ListDishWasher = ListCutlery;
                     this.ListCutlery = 0;
                     this.Timer = DateTime.Now.Ticks;
 
@@ -124,7 +128,6 @@ namespace Kitchen.Controller
         {
             Console.WriteLine("The DishWasher is launching the DishWashing Machine");
 
-            ListDishWasher = ListCutlery;
 
             Thread.Sleep(8000);
 
@@ -141,10 +144,11 @@ namespace Kitchen.Controller
         {
             Console.WriteLine("The DishWasher is launching the Washing Machine");
 
-            this.ListLaundry -= 10;
-            ListWashMachine += 10;
 
             Thread.Sleep(15000);
+
+            Console.WriteLine("Washing Machine Ended");
+
             StockLaundry(false);
         }
         
@@ -154,8 +158,12 @@ namespace Kitchen.Controller
             {
                 ListLaundry += 1;
 
+                Console.WriteLine(ListLaundry);
                 if (ListLaundry >= 10)
                 {
+                    this.ListLaundry -= 10;
+                    ListWashMachine += 10;
+
                     Thread threadWashingMachine = new Thread(() => LaunchWashingMachine());
                     threadWashingMachine.Start();
                 }
@@ -164,6 +172,7 @@ namespace Kitchen.Controller
             {
                 Thread.Sleep(1000);
                 //ranger dans le socket
+                CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(this.ListWashMachine,1);
                 Thread.Sleep(1000);
             }
         }

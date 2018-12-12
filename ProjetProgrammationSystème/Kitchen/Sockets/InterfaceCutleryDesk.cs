@@ -12,7 +12,7 @@ namespace Kitchen.Sockets
         byte[] bytes { get; set; }
         Socket s { get; set; }
 
-        void SendDataCutleryDesk();
+        void SendDataCutleryDesk(int nb, int type);
         void EcouterCutleryDesk();
     }
 }

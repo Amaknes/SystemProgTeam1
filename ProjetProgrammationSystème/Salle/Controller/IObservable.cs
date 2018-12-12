@@ -20,7 +20,7 @@ namespace Salle.Controller
             set;
         }
 
-        void NotifyObserver(int idTable);
+        void NotifyObserver(int idTable, bool ft);
         bool SuppObserver(IObserver Obs);
         void AddObserver(IObserver Obs);
 

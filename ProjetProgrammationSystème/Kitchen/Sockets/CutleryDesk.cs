@@ -74,13 +74,32 @@ namespace Kitchen.Sockets
 
 
                 DWasher.GetCutlery(message);
-
             }
 
         }
 
-        public void SendDataCutleryDesk()
+        public void SendDataCutleryDesk(int nb, int type)
         {
+            try
+            {
+                // Sending message 
+                //<Client Quit> is the sign for end of data 
+                string theMessageToSend = type +":" + nb;
+
+                Console.WriteLine("Message  {0} ", theMessageToSend);
+
+                byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
+
+                UdpClient udpClient = new UdpClient();
+                udpClient.Send(msg, msg.Length, "127.0.0.1", 5037);
+                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5038); 
+                udpClient.Close();
+
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+            }
         }
     }
 }

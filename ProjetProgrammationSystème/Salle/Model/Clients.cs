@@ -172,11 +172,11 @@ namespace Salle.Model
             return this.Observers.Remove(Obs);
         }
 
-        public void NotifyObserver(int idTable)
+        public void NotifyObserver(int idTable, bool ft)
         {
             foreach (IObserver o in Observers)
             {
-                o.Update(idTable);
+                o.Update(idTable, false);
             }
         }
 
@@ -196,7 +196,7 @@ namespace Salle.Model
 
             foreach (IndividualClient IndCl in ClientsList)
             {
-                int TimeSpent = 0;
+                //          int TimeSpent = 0;
                 if (!SecondOrder)
                 {
                     plat = IndCl.ChooseEntry(rnd);
@@ -204,15 +204,15 @@ namespace Salle.Model
                     {
                         resOrder.ListEntries.Add(plat);
                         plat = -1;
-                        TimeSpent += 15;
+                        //                      TimeSpent += 15;
                     }
-                    
+
                     plat = IndCl.ChoosePlat(rnd);
                     if (plat != -1)
                     {
                         resOrder.ListPlats.Add(plat);
                         plat = -1;
-                        TimeSpent += 25;
+                        //                        TimeSpent += 25;
                     }
                 }
 
@@ -223,7 +223,7 @@ namespace Salle.Model
                     {
                         resOrder.ListDesserts.Add(plat);
                         plat = -1;
-                        TimeSpent += 10;
+ //                       TimeSpent += 10;
                     }
                     
                 }
@@ -312,7 +312,7 @@ namespace Salle.Model
             
             while (CurrentDishe == NbDishe && !leaving)
             {
-                Console.WriteLine("Request : {0}", leaving);
+
                 if ((DateTime.Now.Ticks - TimeOfArrival) >= (TimeSpend * (1000  * 10000)))
                 {
                     leaving = leave();
@@ -324,14 +324,14 @@ namespace Salle.Model
                     {
                         if (Bread <= 0 && request)
                         {
-                            NotifyObserver(this.idTable);
+                            NotifyObserver(this.idTable, false);
                             Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
                             Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
                         }
                         else if (Bread > 0)
                         {
                             Bread -= 1;
-                            Console.WriteLine("Eats Bread : {0}", Bread);
+                            Console.WriteLine("Eats Bread at Table {0} : {1}", idTable, Bread);
                         }
                     }
 
@@ -339,14 +339,14 @@ namespace Salle.Model
                     {
                         if (Drinks <= 0 && request)
                         {
-                            NotifyObserver(this.idTable);
+                            NotifyObserver(this.idTable, false);
                             Bread = Hall.hallInstance().FindTableById(this.idTable).Bread;
                             Drinks = Hall.hallInstance().FindTableById(this.idTable).Drinks;
                         }
                         else if (Drinks > 0)
                         {
                             Drinks -= 1;
-                            Console.WriteLine(".....Drinking : {0}", Drinks);
+                            Console.WriteLine(".....Drinking at Table {0} : {1}",idTable ,Drinks);
                         }
                     }
 

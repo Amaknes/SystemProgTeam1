@@ -45,9 +45,13 @@ namespace Salle.Controller
             }
         }
     
-        public void Update(int idTable)
+        public void Update(int idTable, bool FirstTime)
         {
             ServeBreadDrinks(idTable);
+            if (FirstTime)
+            {
+                Hall.hallInstance().FindTableById(idTable).Clients.Eat();
+            }
         }
 
     }

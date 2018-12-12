@@ -54,17 +54,19 @@ namespace Kitchen.Controller
 
         public int PeelVegetables(int IdVegetables)
         {
-            throw new NotImplementedException();
+
+            return 0;
         }
 
         public int SearchIngredients(int ingredients)
         {
-            throw new NotImplementedException();
+            //liste des endroits ou le commis ira chercher les ingrédients (0,1,2)
+            return 0;
         }
 
         public int SendDishes()
         {
-            throw new NotImplementedException();
+            return 0;
         }
     }
 }

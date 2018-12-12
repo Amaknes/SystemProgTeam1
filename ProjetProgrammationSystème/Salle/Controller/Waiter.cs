@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Salle.Sockets;
+using System.Threading;
 
 namespace Salle.Controller
 {
@@ -61,11 +62,11 @@ namespace Salle.Controller
             return this.Observers.Remove(Obs);
         }
 
-        public void NotifyObserver(int idTable)
+        public void NotifyObserver(int idTable,bool ft)
         {
             foreach(IObserver o in Observers)
             {
-                o.Update(idTable);
+                o.Update(idTable, ft);
             }
         }
 
@@ -79,6 +80,10 @@ namespace Salle.Controller
             //take cutlery to the Dishes desk
 
             CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(nbCouverts);
+
+
+            Thread threadHWaiterDrowUpTable = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).headWaiter.DrowUpTable(idTable,nbCouverts));
+            threadHWaiterDrowUpTable.Start();
 
             Busy = false;
         }
@@ -99,7 +104,7 @@ namespace Salle.Controller
         {
             if (Busy)
             {
-                NotifyObserver(idTable);
+                NotifyObserver(idTable,true);
             }
             else
             {

@@ -254,6 +254,7 @@ namespace Kitchen.Controller
             //parcourir SpecializedChefsList et ordonner en fonction du plat et metier
             //parcour de la list de commandes pour rechercher ingrédients et ordres a donner
             //passer liste d'ordre au chef
+            //liste des ingrédients
         }
     }
 }

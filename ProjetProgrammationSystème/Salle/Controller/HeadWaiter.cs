@@ -62,9 +62,13 @@ namespace Salle.Controller
             threadWaitForCommand.Start();
         }
 
-        public void DrowUpTable(int IdTable)
+        public void DrowUpTable(int IdTable, int ClientsNumber)
         {
-            throw new NotImplementedException();
+            //semaphore
+            Table tb = (Table) Hall.hallInstance().FindTableById(IdTable);
+            CutleryDesk.cutleryDeskInstance().getCutlery(ClientsNumber);
+            tb.Cutlery = true;
+            Console.WriteLine("-----Headwaiter dressing the table-----");
         }
 
         public void WaitOrder(int IdTable, int nbClients)
@@ -79,8 +83,10 @@ namespace Salle.Controller
         public OrderInterface getOrder(int IdTable, bool SecondOrder)
         {
             Console.WriteLine("Headwaiter taking order");
-            
-            return (Order)Hall.hallInstance().FindTableById(IdTable).Clients.ChoiceOrder(SecondOrder);
+
+            Table tabl1 = (Table) Hall.hallInstance().FindTableById(IdTable);
+            Clients Cl1 = (Clients)tabl1.Clients;
+            return (Order)Cl1.ChoiceOrder(SecondOrder);
         }
 
         public void GiveOrder(OrderInterface Order)

@@ -15,7 +15,7 @@ namespace Salle.Controller
         List<SquareInterface> ListSquare { get; set; }
         bool Busy { get; set; }
 
-        void AssignTable(ClientsInterface clients);
+        bool AssignTable(ClientsInterface clients);
         void CallHeadWaiter(int idTable, int nbClients);
         HeadWaiterInterface GetHeadWaiterDisposable();
         void ClientsReception();

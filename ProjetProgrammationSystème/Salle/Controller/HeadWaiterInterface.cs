@@ -19,7 +19,7 @@ namespace Salle.Controller
         void GiveOrder(OrderInterface Order);
         void SitClient(int IdTable, int nbClients);
         void DistributeCards(int IdTable, int nbClients);
-        void DrowUpTable(int IdTable);
+        void DrowUpTable(int IdTable, int nbClients);
         void WaitOrder(int IdTable, int nbClients);
         void OrderWaiters(int IdTable);
 

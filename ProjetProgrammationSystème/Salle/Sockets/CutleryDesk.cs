@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,6 +29,22 @@ namespace Salle.Sockets
             set => this._s = value;
         }
 
+        private int _cutlery;
+        public int cutlery
+        {
+            get => this._cutlery;
+            set => this._cutlery = value;
+        }
+
+        private int _nappes;
+        public int nappes
+        {
+            get => this._nappes;
+            set => this._nappes = value;
+        }
+
+
+
 
         public static CutleryDesk cutleryDeskInstance()
         {
@@ -43,6 +60,7 @@ namespace Salle.Sockets
         {
             _thEcoute = new Thread(new ThreadStart(EcouterCutleryDesk));
             _thEcoute.Start();
+            this.cutlery = 0;
         }
 
         public void EcouterCutleryDesk()
@@ -65,7 +83,21 @@ namespace Salle.Sockets
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
-                Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
+
+                String[] MArriver = Regex.Split(message, ":");
+                String[] IdsTables = Regex.Split(MArriver[1], @"\D+");
+
+                if (Int32.Parse(MArriver[0]) == 0)
+                {
+                    Console.WriteLine("CONTENU DU MESSAGE : {0} Couverts ont été rangé\n", MArriver[1]);
+                    this.cutlery += Int32.Parse(IdsTables[0] + IdsTables[1]);
+                }
+                else
+                {
+                    Console.WriteLine("CONTENU DU MESSAGE : {0} Nappes ont été rangé\n", MArriver[1]);
+                    this.nappes += Int32.Parse(IdsTables[0] + IdsTables[1]);
+                }
+                
             }
 
         }
@@ -91,6 +123,14 @@ namespace Salle.Sockets
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
+            }
+        }
+
+        public void getCutlery(int nbCutlery)
+        {
+            if(cutlery >= nbCutlery)
+            {
+                cutlery -= nbCutlery;
             }
         }
     }

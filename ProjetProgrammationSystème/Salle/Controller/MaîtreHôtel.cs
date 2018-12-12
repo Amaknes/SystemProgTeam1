@@ -71,10 +71,10 @@ namespace Salle.Controller
 
 
 
-        public void AssignTable(ClientsInterface groupe)
+        public bool AssignTable(ClientsInterface groupe)
         {
             int idTable = -1;
-
+            bool res = false;
             if (ListSquare[0].NbClients <= ListSquare[1].NbClients)
             {
                 if(ListSquare[0].LineList[0].NbClients <= ListSquare[0].LineList[1].NbClients)
@@ -148,9 +148,17 @@ namespace Salle.Controller
 
             if(idTable >= 0)
             {
+
+                if(Hall.hallInstance().FindTableById(idTable).Cutlery == false)
+                {
+                    GetHeadWaiterDisposable().DrowUpTable(idTable, groupe.ClientsNumber);
+                }
                 Console.WriteLine("IdTable : {0}, nbClients {1}", idTable, groupe.ClientsNumber);
                 CallHeadWaiter(idTable,groupe.ClientsNumber);
+                res = true;
             }
+
+            return res;
         }
 
         public int VerifTables(int idSquare, int idLine, ClientsInterface groupe)
@@ -159,30 +167,31 @@ namespace Salle.Controller
             int i = 0;
             int countMal = 0;
 
-            if (res >= 7 && res < 17)
-            {
-                countMal = 7;
-            }
-            else if (res >= 17 && res < 25)
-            {
-                countMal = 17;
-            }
-            else if (res >= 25 && res <= 32)
-            {
-                countMal = 25;
-            }
-
             while (i < ListSquare[idSquare].LineList[idLine].ListTable.Count)
             {
-
                 if (ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace >= groupe.ClientsNumber && ListSquare[idSquare].LineList[idLine].ListTable[i].Clients == null)
                 {
+
 
                     if (res == -1)
                     {
                         res = ListSquare[idSquare].LineList[idLine].ListTable[i].IdTable;
                     }
-                    else if (res != -1 && ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace < ListSquare[idSquare].LineList[idLine].ListTable[res-countMal].NbPlace)
+
+                    if (res >= 7 && res < 17)
+                    {
+                        countMal = 7;
+                    }
+                    else if (res >= 17 && res < 25)
+                    {
+                        countMal = 17;
+                    }
+                    else if (res >= 25 && res <= 32)
+                    {
+                        countMal = 25;
+                    }
+
+                    if (res != -1 && ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace < ListSquare[idSquare].LineList[idLine].ListTable[res-countMal].NbPlace)
                     {
                         res = ListSquare[idSquare].LineList[idLine].ListTable[i].IdTable;
                     }
@@ -236,11 +245,17 @@ namespace Salle.Controller
         {
             Busy = true;
 
-            if(this.ListClients.Count > 0)
+            if (this.ListClients.Count > 0)
             {
-                ClientsInterface premierGroupe = this.ListClients[0];
-                AssignTable(premierGroupe);
-                this.ListClients.Remove(premierGroupe);
+                if (this.ListClients[0] != null)
+                {
+                    ClientsInterface premierGroupe = this.ListClients[0];
+                    Console.WriteLine(premierGroupe.IdClients);
+                    if (AssignTable(premierGroupe))
+                    {
+                        this.ListClients.Remove(premierGroupe);
+                    }
+                }
             }
 
             Busy = false;
