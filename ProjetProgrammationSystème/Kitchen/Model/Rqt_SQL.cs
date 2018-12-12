@@ -8,39 +8,17 @@ namespace Kitchen.Model
 {
     public class Rqt_SQL
     {
-        private string rq_sql;
-        private int id;
-        private string nom;
-        private string prénom;
 
-        public string Rq_sql { get => rq_sql; set => rq_sql = value; }
-        public int Id { get => id; set => id = value; }
-        public string Nom { get => nom; set => nom = value; }
-        public string Prénom { get => prénom; set => prénom = value; }
-
-        public static string ListeEtapeCommande()
+        public static string ListeEtapeCommande(int IdCommand)
         {
-            return "SELECT * FROM dbo.Preparation INNER JOIN dbo.CommandLine ON dbo.Preparation.TypePreparation = dbo.CommandLine.TypePreparation";
+            return "SELECT OrderStep, TimeTask, NameTask FROM dbo.Preparation, dbo.CommandLine, dbo.step, dbo.Task, dbo.Compose WHERE dbo.CommandLine.IDCommand = "+ IdCommand + " AND dbo.Preparation.TypePreparation = dbo.CommandLine.TypePreparation AND dbo.Preparation.IDPreparation = dbo.CommandLine.IDPreparation AND dbo.Preparation.IDPreparation = dbo.step.IDPreparation AND dbo.Preparation.TypePreparation = dbo.Step.TypePreparationAND db o.Step.IDStep = dbo.Compose.IDStep AND dbo.Compose.IDTask = dbo.Task.IDTask";
         }
 
-        public static string LieuDeStockageIngredient()
+        public static string LieuDeStockageIngredient(int IdCommand)
         {
-            return "SELECT IDStock, IDIngredient FROM dbo.StockKitchen";
+            return "SELECT NameIngredient, TypeIngredient FROM dbo.Ingredient, dbo.Require, dbo.step, dbo.Preparation, dbo.CommandLine WHERE dbo.CommandLine.IDCommand = "+ IdCommand + " AND dbo.Preparation.TypePreparation = dbo.CommandLine.TypePreparation AND dbo.Preparation.IDPreparation = dbo.CommandLine.IDPreparation AND dbo.Preparation.IDPreparation = dbo.step.IDPreparation AND dbo.Preparation.TypePreparation = dbo.Step.TypePreparation AND dbo.Step.IDStep = dbo.Require.IDStep AND dbo.Require.IDIngredient = dbo.Ingredient.IDIngredient";
         }
 
-        /*public static string select(int param)
-        {
-            return "SELECT IDTabel, IDPreparation, TypePreparation FROM dbo.Preparation, dbo.TabelRest";
-        }
-
-        public static string insert(string nom, string prenom)
-        {
-            return "INSERT INTO dbo.TB_A2_WS2 VALUES ('" + nom + ", " + prenom + "')";
-        }
-
-        public static string update(string nom, string prenom, int id)
-        {
-            return "UPDATE dbo.TB_A2_WS2 SET nom = " + nom + ", prenom = " + prenom + ", WHERE id = " + id;
-        }*/
+       
     }
 }

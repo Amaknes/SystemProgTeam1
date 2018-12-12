@@ -20,7 +20,7 @@ namespace Kitchen.Model
         public CAD()
         {
             this.cnx = "Data Source=DESKTOP-3L9CEES;Initial Catalog=ProjetProgSystem;Integrated Security=True";
-            this.rq_sql = rq_sql;
+            this.rq_sql = null;
             this.dataAdapter = new SqlDataAdapter();
             this.sqlconnexion = new SqlConnection(cnx);
             this.sqlcommand = new SqlCommand();

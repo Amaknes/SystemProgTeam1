@@ -15,7 +15,7 @@ namespace Kitchen.Controller
 
         void GiveIngredients();
 
-        int PeelVegetables(int IdVegetables);
+        void PeelVegetables();
 
         int SendDishes();
 

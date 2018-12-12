@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Kitchen.Controller
@@ -21,15 +22,15 @@ namespace Kitchen.Controller
             }
         }
 
-        private list<int>_ingredients;
-        public list<int>ingredients
+        private List<int>_ingredients;
+        public List<int>ingredients
         {
             get => this._ingredients;
             set => this._ingredients = value;
         }
 
-        private list<int>_IdVegetables;
-        public list<int>IdVegetables
+        private List<int>_IdVegetables;
+        public List<int>IdVegetables
         {
             get => this._IdVegetables;
             set => this._IdVegetables = value;
@@ -40,9 +41,9 @@ namespace Kitchen.Controller
             //bouge jusq'au chef pour lui donner les ingrédients
         }
 
-        public int PeelVegetables()
+        public void PeelVegetables()
         {
-            //threadsleep(500);
+            Thread.Sleep(500);
         }
 
         public int SearchIngredients(int ingredients)
@@ -51,9 +52,11 @@ namespace Kitchen.Controller
             return 0;
         }
 
+
         public int SendDishes()
         {
             //connecter au passe plat avec le socket + sémaphore
+            return  0;
         }
     }
 }

@@ -80,8 +80,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\CAD.cs" />
+    <Compile Include="Model\CLprocessus.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderInterface.cs" />
+    <Compile Include="Model\Rqt_SQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Controller\Chef.cs" />
     <Compile Include="Controller\ChefInterface.cs" />

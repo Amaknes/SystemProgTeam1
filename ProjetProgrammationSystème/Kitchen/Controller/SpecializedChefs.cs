@@ -72,7 +72,7 @@ namespace Kitchen.Controller
 
         public int Preparation()
         {
-            CommisChef.GiveIngredients();
+            throw new NotImplementedException();
         }
     }
 }
