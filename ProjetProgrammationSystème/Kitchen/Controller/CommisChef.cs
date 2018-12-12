@@ -21,30 +21,18 @@ namespace Kitchen.Controller
             }
         }
 
-        private int _ingredients;
-        public int ingredients
+        private list<int>_ingredients;
+        public list<int>ingredients
         {
             get => this._ingredients;
-            set
-            {
-                if(value >= 0)
-                {
-                    this._ingredients = value;
-                }
-            }
+            set => this._ingredients = value;
         }
 
-        private int _IdVegetables;
-        public int IdVegetables
+        private list<int>_IdVegetables;
+        public list<int>IdVegetables
         {
             get => this._IdVegetables;
-            set
-            {
-                if(value >= 0)
-                {
-                    this._IdVegetables = value;
-                }
-            }
+            set => this._IdVegetables = value;
         }
 
         public void GiveIngredients()
@@ -52,10 +40,9 @@ namespace Kitchen.Controller
             //bouge jusq'au chef pour lui donner les ingrédients
         }
 
-        public int PeelVegetables(int IdVegetables)
+        public int PeelVegetables()
         {
-
-            return 0;
+            //threadsleep(500);
         }
 
         public int SearchIngredients(int ingredients)
@@ -66,7 +53,7 @@ namespace Kitchen.Controller
 
         public int SendDishes()
         {
-            return 0;
+            //connecter au passe plat avec le socket + sémaphore
         }
     }
 }

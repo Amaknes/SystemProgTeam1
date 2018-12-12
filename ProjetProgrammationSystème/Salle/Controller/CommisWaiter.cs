@@ -17,7 +17,6 @@ namespace Salle.Controller
             { 
                 CommisWaiterInstance = new CommisWaiter();
             }
-
             return CommisWaiterInstance;
         }
 
@@ -53,6 +52,7 @@ namespace Salle.Controller
                 Hall.hallInstance().FindTableById(idTable).Clients.Eat();
             }
         }
+
 
     }
 }
