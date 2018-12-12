@@ -13,8 +13,7 @@ namespace Salle.Controller
         bool Busy { get; set; }
 
         void CleanTable(int idTable, int nbClients);
-        void getCommand(int idTable);
-        void Serve(int idTable);
+        void Serve(int idTable, int stepDishes);
         void ServeBreadDrinks(int idTable);
     }
 }

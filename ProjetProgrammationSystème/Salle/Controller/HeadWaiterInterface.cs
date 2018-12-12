@@ -14,7 +14,7 @@ namespace Salle.Controller
         int IdSquare { get; set; }
         bool Busy { get; set; }
 
-        int Position(int IdSquare);
+
         OrderInterface getOrder(int IdTable, bool SecondOrder);
         void GiveOrder(OrderInterface Order);
         void SitClient(int IdTable, int nbClients);

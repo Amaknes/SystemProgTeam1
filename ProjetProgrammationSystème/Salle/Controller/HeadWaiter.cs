@@ -11,6 +11,7 @@ namespace Salle.Controller
 {
     public class HeadWaiter : HeadWaiterInterface
     {
+        private Semaphore _semHW;
         private int _IdHeadWaiter;
         public int IdHeadWaiter {
             get => this._IdHeadWaiter;
@@ -50,6 +51,7 @@ namespace Salle.Controller
             this.IdHeadWaiter = idHeadWaiter;
             this.IdSquare = idHeadWaiter;
             this.Busy = false;
+            this._semHW = new Semaphore(1, 1);
         }
 
 
@@ -64,11 +66,14 @@ namespace Salle.Controller
 
         public void DrowUpTable(int IdTable, int ClientsNumber)
         {
-            //semaphore
+            _semHW.WaitOne();
+
             Table tb = (Table) Hall.hallInstance().FindTableById(IdTable);
             CutleryDesk.cutleryDeskInstance().getCutlery(ClientsNumber);
             tb.Cutlery = true;
-            Console.WriteLine("-----Headwaiter dressing the table-----");
+            Console.WriteLine("--{0}---Headwaiter dressing the table---{1}--", tb.IdTable, IdTable);
+
+            _semHW.Release();
         }
 
         public void WaitOrder(int IdTable, int nbClients)
@@ -86,6 +91,7 @@ namespace Salle.Controller
 
             Table tabl1 = (Table) Hall.hallInstance().FindTableById(IdTable);
             Clients Cl1 = (Clients)tabl1.Clients;
+
             return (Order)Cl1.ChoiceOrder(SecondOrder);
         }
 
@@ -124,17 +130,15 @@ namespace Salle.Controller
             }
         }
 
-        public int Position(int IdSquare)
-        {
-            throw new NotImplementedException();
-        }
 
         public void SitClient(int IdTable, int nbClients)
         {
-            this.Busy = true;
+            this._semHW.WaitOne();
+
             //Move the client to the table
             DistributeCards(IdTable, nbClients);
-            this.Busy = false;
+
+            this._semHW.Release();
         }
     }
 }

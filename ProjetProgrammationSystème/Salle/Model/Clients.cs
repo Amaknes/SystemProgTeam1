@@ -237,20 +237,21 @@ namespace Salle.Model
             Console.WriteLine("Clients Pay");
 
             leave();
+            MaîtreHôtel.maîtreHôtelInstance().GetMoney(Bill, this);
 
-            MaîtreHôtel MH = MaîtreHôtel.maîtreHôtelInstance();
-            bool paid = false;
-            while (!paid)
-            {
-                if (MH.Busy)
-                {
-                    Thread.Sleep(70);
-                }
-                else
-                {
-                    paid = MH.GetMoney(Bill, this);
-                }
-            }
+            /* MaîtreHôtel MH = MaîtreHôtel.maîtreHôtelInstance();
+             bool paid = false;
+             while (!paid)
+             {
+                 if (MH.Busy)
+                 {
+                     Thread.Sleep(70);
+                 }
+                 else
+                 {
+                     paid = MH.GetMoney(Bill, this);
+                 }
+             }*/
 
         }
 

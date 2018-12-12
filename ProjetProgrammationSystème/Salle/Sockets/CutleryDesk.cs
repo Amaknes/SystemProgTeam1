@@ -83,23 +83,27 @@ namespace Salle.Sockets
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
-
-                String[] MArriver = Regex.Split(message, ":");
-                String[] IdsTables = Regex.Split(MArriver[1], @"\D+");
-
-                if (Int32.Parse(MArriver[0]) == 0)
-                {
-                    Console.WriteLine("CONTENU DU MESSAGE : {0} Couverts ont été rangé\n", MArriver[1]);
-                    this.cutlery += Int32.Parse(IdsTables[0] + IdsTables[1]);
-                }
-                else
-                {
-                    Console.WriteLine("CONTENU DU MESSAGE : {0} Nappes ont été rangé\n", MArriver[1]);
-                    this.nappes += Int32.Parse(IdsTables[0] + IdsTables[1]);
-                }
+                ReceptMessage(message);
                 
             }
 
+        }
+
+        public void ReceptMessage(string message)
+        {
+            String[] MArriver = Regex.Split(message, ":");
+            String[] IdsTables = Regex.Split(MArriver[1], @"\D+");
+
+            if (Int32.Parse(MArriver[0]) == 0)
+            {
+                Console.WriteLine("CONTENU DU MESSAGE : {0} Couverts ont été rangé\n", MArriver[1]);
+                this.cutlery += Int32.Parse(IdsTables[0] + IdsTables[1]);
+            }
+            else
+            {
+                Console.WriteLine("CONTENU DU MESSAGE : {0} Nappes ont été rangé\n", MArriver[1]);
+                this.nappes += Int32.Parse(IdsTables[0] + IdsTables[1]);
+            }
         }
 
         public void SendDataCutleryDesk(int data)

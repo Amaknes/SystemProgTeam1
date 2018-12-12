@@ -11,6 +11,7 @@ namespace Salle.Controller
     public class MaîtreHôtel : MaîtreHôtelInterface
     { 
         private static MaîtreHôtel MaîtreHôtelInstance;
+        private Semaphore _sem;
 
         private bool _Busy;
         public bool Busy
@@ -59,6 +60,7 @@ namespace Salle.Controller
 
             List<ClientsInterface> newListClient = new List<ClientsInterface>();
             this.ListClients = (List<ClientsInterface>) newListClient;
+            this._sem = new Semaphore(1,1);
 
             List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
             {
@@ -243,7 +245,7 @@ namespace Salle.Controller
 
         public void ClientsReception()
         {
-            Busy = true;
+            _sem.WaitOne();
 
             if (this.ListClients.Count > 0)
             {
@@ -255,18 +257,25 @@ namespace Salle.Controller
                     {
                         this.ListClients.Remove(premierGroupe);
                     }
+                    else
+                    {
+                        this.ListClients.Add(premierGroupe);
+                        this.ListClients.Remove(premierGroupe);
+                    }
                 }
             }
 
-            Busy = false;
+            _sem.Release();
         }
 
         public bool GetMoney(int Bill, ClientsInterface groupe)
         {
-            Busy = true;
-            Thread.Sleep(200);
+            _sem.WaitOne();
+
+            Thread.Sleep(333);
             groupe.leave();
-            Busy = false;
+
+            _sem.Release();
             return true;
         }
 

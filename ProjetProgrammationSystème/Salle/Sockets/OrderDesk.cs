@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +16,18 @@ namespace Salle.Sockets
         private static OrderDesk OrderDeskInstance;
         private Thread _thEcoute;
 
-
+        private int _nbDishesWaiting;
+        public int nbDishesWaiting
+        {
+            get => this._nbDishesWaiting;
+            set
+            {
+                if(value >= 0)
+                {
+                    this._nbDishesWaiting = value;
+                }
+            }
+        }
         private byte[] _bytes;
         public byte[] bytes
         {
@@ -23,6 +35,12 @@ namespace Salle.Sockets
             set => this._bytes = value;
         }
 
+        private List<OrderInterface> _listOrders;
+        public List<OrderInterface> listOrders
+        {
+            get => this._listOrders;
+            set => this._listOrders = value;
+        }
 
         private Socket _s;
         public Socket s
@@ -43,6 +61,7 @@ namespace Salle.Sockets
 
         private OrderDesk()
         {
+            this.listOrders = new List<OrderInterface>();
             _thEcoute = new Thread(new ThreadStart(EcouterOrderDesk));
             _thEcoute.Start();
         }
@@ -69,9 +88,112 @@ namespace Salle.Sockets
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
+                //récupère une préparation avec l'id de la table : id de la préparation : id entree/plat/dessert : nb de plats actuels
                 Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
+
+                ReceptMessage(message);               
+                
             }
 
+        }
+
+        public void ReceptMessage(string message)
+        {
+            String[] listMessage = Regex.Split(message,":");
+
+            String[] IdTables = Regex.Split(listMessage[0], @"\D+");
+            int idTable = Int32.Parse(IdTables[0] + IdTables[1]);
+
+            int i = 0;
+            bool idFound = false;
+            while(i < listOrders.Count && !idFound)
+            {
+                if (listOrders[i].IdTable == idTable)
+                {
+                    idFound = true;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            if (!idFound)
+            {
+                i = listOrders.Count;
+                listOrders.Add(new Order(idTable));
+            }
+
+
+
+            String[] IdPreparation = Regex.Split(listMessage[2], @"\D+");
+            int Preparation = Int32.Parse(IdPreparation[0] + IdPreparation[1]);
+
+            String[] IdEntreePlatDessert = Regex.Split(listMessage[2], @"\D+");
+            int EntreePlatDessert = Int32.Parse(IdEntreePlatDessert[0] + IdEntreePlatDessert[1]);
+
+            String[] NbPlatsStr = Regex.Split(listMessage[3], @"\D+");
+            int NbPlats = Int32.Parse(IdEntreePlatDessert[0] + IdEntreePlatDessert[1]);
+
+
+            if (EntreePlatDessert == 0)
+            {
+                listOrders[i].ListEntries.Add(Preparation);
+                if(this.nbDishesWaiting + 1 <= 15)
+                {
+                    this.nbDishesWaiting += 1;
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+                if (listOrders[i].ListEntries.Count == NbPlats)
+                {
+                    //alertWaiter recup entries
+                    this.nbDishesWaiting -= listOrders[i].ListEntries.Count;
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,1);
+                }
+            }
+            else if (EntreePlatDessert == 1)
+            {
+                listOrders[i].ListPlats.Add(Preparation);
+                if (this.nbDishesWaiting + 1 <= 15)
+                {
+                    this.nbDishesWaiting += 1;
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+                if (listOrders[i].ListPlats.Count == NbPlats)
+                {
+                    //alertWaiter recup plats
+                    this.nbDishesWaiting -= listOrders[i].ListPlats.Count;
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,2);
+                }
+            }
+            else
+            {
+
+                listOrders[i].ListDesserts.Add(Preparation);
+                if (this.nbDishesWaiting + 1 <= 15)
+                {
+                    this.nbDishesWaiting += 1;
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+                if (listOrders[i].ListDesserts.Count == NbPlats)
+                {
+                    //alertWaiter recup Desserts
+                    this.nbDishesWaiting -= listOrders[i].ListDesserts.Count;
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,3);
+                }
+            }
         }
 
         public void SendData(OrderInterface ord)

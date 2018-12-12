@@ -88,15 +88,13 @@ namespace Salle.Controller
             Busy = false;
         }
 
-        public void getCommand(int idTable)
+        public void Serve(int idTable, int stepDishes)
         {
             Busy = true;
-            Busy = false;
-        }
 
-        public void Serve(int idTable)
-        {
-            Busy = true;
+            Clients leClient = (Clients) Hall.hallInstance().FindTableById(idTable).Clients;
+            leClient.CurrentDishe = stepDishes;
+
             Busy = false;
         }
 
