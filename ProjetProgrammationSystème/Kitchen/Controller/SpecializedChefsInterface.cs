@@ -11,20 +11,22 @@ namespace Kitchen.Controller
     public interface SpecializedChefsInterface
     {
 
-        List<CommisChefInterface> CommisChefsList { get; set; }
+        CommisChefInterface CommisChefs { get; set; }
 
-        int UseOven(int time);
+        void UseOven(int time);
+        void Preparation(int time);
+        void UseHotPlate(int time);
+        void UseRaper(int time);
+        void UseMixer(int time);
+        void UseBlend(int time);
+        void UseCut(int time);
 
-        int UseHotPlate(int time);
-        
-        
-        int GiveOrders(int Order, int idCommisChef);
+        void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable);
 
 
-        int Preparation();
 
 
-        void takeOrders(Tasks newTask);
+        void takeOrders(Tasks newTask, int idTable);
 
 
     }

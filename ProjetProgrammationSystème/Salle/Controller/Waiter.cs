@@ -88,7 +88,8 @@ namespace Salle.Controller
         public void Serve(int idTable, int stepDishes)
         {
             Busy = true;
-
+            Console.WriteLine("Waiter is serving food");
+            Console.WriteLine(stepDishes);
             Clients leClient = (Clients) Hall.hallInstance().FindTableById(idTable).Clients;
             leClient.CurrentDishe = stepDishes;
 

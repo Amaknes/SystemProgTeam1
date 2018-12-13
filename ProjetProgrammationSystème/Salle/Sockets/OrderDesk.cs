@@ -100,12 +100,13 @@ namespace Salle.Sockets
         public void ReceptMessage(string message)
         {
             String[] listMessage = Regex.Split(message,":");
-
             String[] IdTables = Regex.Split(listMessage[0], @"\D+");
             int idTable = Int32.Parse(IdTables[0] + IdTables[1]);
 
+            Clients leClient = (Clients)Hall.hallInstance().FindTableById(idTable).Clients;
             int i = 0;
             bool idFound = false;
+
             while(i < listOrders.Count && !idFound)
             {
                 if (listOrders[i].IdTable == idTable)
@@ -136,7 +137,7 @@ namespace Salle.Sockets
             int NbPlats = Int32.Parse(IdEntreePlatDessert[0] + IdEntreePlatDessert[1]);
 
 
-            if (EntreePlatDessert == 0)
+            if (EntreePlatDessert == 1 && leClient.CurrentDishe == 0)
             {
                 listOrders[i].ListEntries.Add(Preparation);
                 if(this.nbDishesWaiting + 1 <= 15)
@@ -155,7 +156,7 @@ namespace Salle.Sockets
                     Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,1);
                 }
             }
-            else if (EntreePlatDessert == 1)
+            else if (EntreePlatDessert == 2 && leClient.CurrentDishe == 1)
             {
                 listOrders[i].ListPlats.Add(Preparation);
                 if (this.nbDishesWaiting + 1 <= 15)
@@ -187,7 +188,7 @@ namespace Salle.Sockets
                     throw new Exception();
                 }
 
-                if (listOrders[i].ListDesserts.Count == NbPlats)
+                if (listOrders[i].ListDesserts.Count == NbPlats && leClient.CurrentDishe == 2)
                 {
                     //alertWaiter recup Desserts
                     this.nbDishesWaiting -= listOrders[i].ListDesserts.Count;

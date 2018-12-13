@@ -10,14 +10,11 @@ namespace Kitchen.Controller
     {
 
 
-        int SearchIngredients(int ingredients);
-
-
-        void GiveIngredients();
+        void SearchIngredients(string NameIngredient, int TypeIngredient, int nbSameDish); 
 
         void PeelVegetables();
 
-        int SendDishes();
+        void SendDishes(int idTable, int IdDish, int Dish, int NbDishesList);
 
 
 

@@ -76,8 +76,29 @@ namespace Kitchen.Sockets
             }
         }
 
-        public void SendDataOrderDesk()
+        public void SendDataOrderDesk(int idTable, int IdDish, int Dish, int NbDishesList)
         {
+            try
+            {
+                // Sending message 
+                //<Client Quit> is the sign for end of data 
+                string theMessageToSend = idTable + ":" + IdDish + ":" + Dish + ":" + NbDishesList;
+
+                Console.WriteLine("Message  {0} ", theMessageToSend);
+
+                byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
+
+                UdpClient udpClient = new UdpClient();
+                udpClient.Send(msg, msg.Length, "127.0.0.1", 5035);
+                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5035); 
+                udpClient.Close();
+
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+            }
         }
-        }
+    }
+        
 }

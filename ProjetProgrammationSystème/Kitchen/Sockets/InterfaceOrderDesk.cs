@@ -12,7 +12,7 @@ namespace Kitchen.Sockets
         int[,] FinishedOrder { get; set; }
         void DeliverOrder(int foo, int fooo);*/
 
-        void EcouterOrderDesk();
-        void SendDataOrderDesk();
+        void EcouterOrderDesk(); 
+        void SendDataOrderDesk(int idTable, int IdDish, int intDish, int intNbDishesList);
     }
 }

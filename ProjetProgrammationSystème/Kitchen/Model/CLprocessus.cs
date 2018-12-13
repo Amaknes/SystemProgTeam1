@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Kitchen.Model
 {
-    class CLprocessus
+    public class CLprocessus
     {
         private DataSet oDs;
         private CAD oCad;

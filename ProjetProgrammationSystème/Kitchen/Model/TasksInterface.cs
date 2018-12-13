@@ -14,5 +14,6 @@ namespace Kitchen.Model
         int Dish { get; set; }
         int NbDishesList { get; set; }
         int NbSameDish { get; set; }
+        int IdDish { get; set; }
     }
 }

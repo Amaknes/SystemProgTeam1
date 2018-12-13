@@ -43,6 +43,8 @@ namespace Salle.Model
             }
         }
 
+        private bool SkipEntry, SkipPlate, SkipDessert = false;
+
         private bool _Booking;
         public bool Booking
         {
@@ -229,14 +231,39 @@ namespace Salle.Model
                 }
             }
 
+
+            if(resOrder.ListEntries.Count == 0)
+            {
+                this.SkipEntry = true;
+            }
+            else
+            {
+                this.SkipEntry = false;
+            }
+            if (resOrder.ListPlats.Count == 0)
+            {
+                this.SkipPlate = true;
+            }
+            else
+            {
+                this.SkipPlate = false;
+            }
+            if (resOrder.ListDesserts.Count == 0)
+            {
+                this.SkipDessert = true;
+            }
+            else
+            {
+                this.SkipDessert = false;
+            }
+
             return resOrder;
         }
 
         public void Payment()
         {
             Console.WriteLine("Clients Pay");
-
-            leave();
+            
             MaîtreHôtel.maîtreHôtelInstance().GetMoney(Bill, this);
 
             /* MaîtreHôtel MH = MaîtreHôtel.maîtreHôtelInstance();
@@ -261,36 +288,49 @@ namespace Salle.Model
             Console.WriteLine("Clients Starts to eat");
             bool leaving = false;
 
-            leaving = WaitForNextDishe(0);
+            if (!SkipEntry)
+            {
+                leaving = WaitForNextDishe(0);
+            }
 
             if (!leaving)
             {
-                Thread.Sleep(15000);
-            
-                leaving = WaitForNextDishe(1);
+                if (!SkipPlate)
+                {
+                    Thread.Sleep(15000);
+                    Console.WriteLine("Client ate an entry");
+                    leaving = WaitForNextDishe(1);
+                }
 
                 if (!leaving)
                 {
                     Thread.Sleep(25000);
-
+                    Console.WriteLine("Client ate a Plat");
                     if (Order && !leaving)
                     {
                         MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
                     }
 
-                    leaving = WaitForNextDishe(2);
 
-                    if (!leaving)
+                    if (!SkipDessert)
                     {
-                        Thread.Sleep(10000);
+                        leaving = WaitForNextDishe(2);
 
+                        if (!leaving)
+                        {
+                            Thread.Sleep(10000);
+                            Console.WriteLine("Client ate a Dessert");
+                        }
                     }
                 }
 
-
-                Payment();
+                
             }
 
+            if (!leaving)
+            {
+                Payment();
+            }
         }
 
         public bool WaitForNextDishe(int NbDishe)
@@ -311,9 +351,9 @@ namespace Salle.Model
 
             Console.WriteLine("Request : {0}, WaitTime : {1} ", request, TimeSpend);
             
-            while (CurrentDishe == NbDishe && !leaving)
+            while (this.CurrentDishe == NbDishe && !leaving)
             {
-
+                Console.WriteLine(this.CurrentDishe);
                 if ((DateTime.Now.Ticks - TimeOfArrival) >= (TimeSpend * (1000  * 10000)))
                 {
                     leaving = leave();
