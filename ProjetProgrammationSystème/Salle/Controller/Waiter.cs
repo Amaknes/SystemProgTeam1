@@ -6,11 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Salle.Sockets;
 using System.Threading;
+using Salle.View;
 
 namespace Salle.Controller
 {
     public class Waiter : WaiterInterface, IObservable
     {
+        private Affichage afficher;
+
         private int _IdWaiter;
         public int IdWaiter {
             get => this._IdWaiter;
@@ -48,6 +51,7 @@ namespace Salle.Controller
             this.Busy = false;
             this.StateType = 0;
             this.Observers =  new List<IObserver>();
+            this.afficher = new Affichage();
         }
 
 
@@ -74,7 +78,7 @@ namespace Salle.Controller
 
         public void CleanTable(int idTable, int nbCouverts)
         {
-            Console.WriteLine("Waiter Cleans");
+            afficher.afficherLine("Waiter Cleans");
             Busy = true;
             Hall.hallInstance().FindTableById(idTable).Cutlery = false;
             //take cutlery to the Dishes desk
@@ -88,8 +92,8 @@ namespace Salle.Controller
         public void Serve(int idTable, int stepDishes)
         {
             Busy = true;
-            Console.WriteLine("Waiter is serving food");
-            Console.WriteLine(stepDishes);
+            afficher.afficherLine("Waiter is serving food");
+            afficher.afficherLine(""+stepDishes);
             Clients leClient = (Clients) Hall.hallInstance().FindTableById(idTable).Clients;
             leClient.CurrentDishe = stepDishes;
 
@@ -105,7 +109,7 @@ namespace Salle.Controller
             else
             {
                 Busy = true;
-                Console.WriteLine("Waiter giving Bread and Drinks");
+                afficher.afficherLine("Waiter giving Bread and Drinks");
                 Table table = (Table)Hall.hallInstance().FindTableById(idTable);
                 if(table.Clients.ClientsNumber > 6)
                 {

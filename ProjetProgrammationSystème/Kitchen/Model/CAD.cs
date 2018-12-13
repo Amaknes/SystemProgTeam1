@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.View;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,6 +11,7 @@ namespace Kitchen.Model
 {
     public class CAD
     {
+        private Affichage afficher;
         private string cnx;
         private string rq_sql;
         private SqlDataAdapter dataAdapter;
@@ -25,6 +27,7 @@ namespace Kitchen.Model
             this.sqlconnexion = new SqlConnection(cnx);
             this.sqlcommand = new SqlCommand();
             Dataset = new DataSet();
+            afficher = new Affichage();
         }
 
         public string Cnx { get => cnx; set => cnx = value; }
@@ -54,7 +57,7 @@ namespace Kitchen.Model
             catch (Exception ex)
             {
                 // Affiche des erreurs
-                Console.WriteLine(ex.Message);
+                afficher.afficherLine(ex.Message);
             }
             finally
             {
@@ -80,7 +83,7 @@ namespace Kitchen.Model
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                afficher.afficherLine(""+ex.Message);
 
             }
             finally

@@ -12,6 +12,7 @@ namespace Kitchen.Controller
     {
 
         CommisChefInterface CommisChefs { get; set; }
+        CLprocessus process { get; set; }
 
         void UseOven(int time);
         void Preparation(int time);
@@ -22,12 +23,6 @@ namespace Kitchen.Controller
         void UseCut(int time);
 
         void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable);
-
-
-
-
         void takeOrders(Tasks newTask, int idTable);
-
-
     }
 }

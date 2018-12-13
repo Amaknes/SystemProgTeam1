@@ -6,12 +6,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Salle.Sockets;
+using Salle.View;
 
 namespace Salle.Controller
 {
     public class HeadWaiter : HeadWaiterInterface
     {
         private Semaphore _semHW;
+        private Affichage afficher;
+
         private int _IdHeadWaiter;
         public int IdHeadWaiter {
             get => this._IdHeadWaiter;
@@ -52,6 +55,7 @@ namespace Salle.Controller
             this.IdSquare = idHeadWaiter;
             this.Busy = false;
             this._semHW = new Semaphore(1, 1);
+            this.afficher = new Affichage();
         }
 
 
@@ -71,7 +75,7 @@ namespace Salle.Controller
             Table tb = (Table) Hall.hallInstance().FindTableById(IdTable);
             CutleryDesk.cutleryDeskInstance().getCutlery(ClientsNumber);
             tb.Cutlery = true;
-            Console.WriteLine("--{0}---Headwaiter dressing the table---{1}--", tb.IdTable, IdTable);
+            afficher.afficherLine("--"+tb.IdTable+"---Headwaiter dressing the table---"+IdTable+"--");
 
             _semHW.Release();
         }
@@ -87,7 +91,7 @@ namespace Salle.Controller
 
         public OrderInterface getOrder(int IdTable, bool SecondOrder)
         {
-            Console.WriteLine("Headwaiter taking order");
+            afficher.afficherLine("Headwaiter taking order");
 
             Table tabl1 = (Table) Hall.hallInstance().FindTableById(IdTable);
             Clients Cl1 = (Clients)tabl1.Clients;
@@ -129,8 +133,7 @@ namespace Salle.Controller
                     
             }
         }
-
-
+        
         public void SitClient(int IdTable, int nbClients)
         {
             this._semHW.WaitOne();

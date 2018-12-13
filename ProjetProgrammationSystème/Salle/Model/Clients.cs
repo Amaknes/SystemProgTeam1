@@ -5,11 +5,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Salle.Controller;
+using Salle.View;
 
 namespace Salle.Model
 {
     public class Clients : ClientsInterface, IObservable
     {
+        private Affichage afficher;
+
         private int _IdClients;
         public int IdClients
         {
@@ -131,7 +134,7 @@ namespace Salle.Model
 
         public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber, int TimeSpend)
         {
-
+            this.afficher = new Affichage();
             this.IdClients = IdClients;
             this.Order = Order;
             this.Booking = Booking;
@@ -187,7 +190,7 @@ namespace Salle.Model
 
         public OrderInterface ChoiceOrder(bool SecondOrder)
         {
-            Console.WriteLine("Client Choosing......");
+            afficher.afficherLine("Client Choosing......");
             Order resOrder = new Order(idTable);
             Random rnd = new Random();
 
@@ -262,7 +265,7 @@ namespace Salle.Model
 
         public void Payment()
         {
-            Console.WriteLine("Clients Pay");
+            afficher.afficherLine("Clients Pay");
             
             MaîtreHôtel.maîtreHôtelInstance().GetMoney(Bill, this);
 
@@ -285,7 +288,7 @@ namespace Salle.Model
         public void Eat()
         {
             this.TimeOfArrival = DateTime.Now.Ticks;
-            Console.WriteLine("Clients Starts to eat");
+            afficher.afficherLine("Clients Starts to eat");
             bool leaving = false;
 
             if (!SkipEntry)
@@ -298,14 +301,14 @@ namespace Salle.Model
                 if (!SkipPlate)
                 {
                     Thread.Sleep(15000);
-                    Console.WriteLine("Client ate an entry");
+                    afficher.afficherLine("Client ate an entry");
                     leaving = WaitForNextDishe(1);
                 }
 
                 if (!leaving)
                 {
                     Thread.Sleep(25000);
-                    Console.WriteLine("Client ate a Plat");
+                    afficher.afficherLine("Client ate a Plat");
                     if (Order && !leaving)
                     {
                         MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
@@ -319,7 +322,7 @@ namespace Salle.Model
                         if (!leaving)
                         {
                             Thread.Sleep(10000);
-                            Console.WriteLine("Client ate a Dessert");
+                            afficher.afficherLine("Client ate a Dessert");
                         }
                     }
                 }
@@ -349,11 +352,11 @@ namespace Salle.Model
                 }
             }
 
-            Console.WriteLine("Request : {0}, WaitTime : {1} ", request, TimeSpend);
+            afficher.afficherLine("Request : "+request+", WaitTime : "+TimeSpend);
             
             while (this.CurrentDishe == NbDishe && !leaving)
             {
-                Console.WriteLine(this.CurrentDishe);
+                afficher.afficherLine(""+this.CurrentDishe);
                 if ((DateTime.Now.Ticks - TimeOfArrival) >= (TimeSpend * (1000  * 10000)))
                 {
                     leaving = leave();
@@ -372,7 +375,7 @@ namespace Salle.Model
                         else if (Bread > 0)
                         {
                             Bread -= 1;
-                            Console.WriteLine("Eats Bread at Table {0} : {1}", idTable, Bread);
+                            afficher.afficherLine("Eats Bread at Table "+idTable+" : "+Bread);
                         }
                     }
 
@@ -387,7 +390,7 @@ namespace Salle.Model
                         else if (Drinks > 0)
                         {
                             Drinks -= 1;
-                            Console.WriteLine(".....Drinking at Table {0} : {1}",idTable ,Drinks);
+                            afficher.afficherLine(".....Drinking at Table "+idTable+" : "+Drinks);
                         }
                     }
 
@@ -401,7 +404,7 @@ namespace Salle.Model
 
         public bool leave()
         {
-            Console.WriteLine("Client is leaving");
+            afficher.afficherLine("Client is leaving");
             //detruire le client
             Hall.hallInstance().FindTableById(idTable).Clients = null;
 

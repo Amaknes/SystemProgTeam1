@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Salle.View;
 
 namespace Kitchen.Controller
 {
     public class Chef : ChefInterface
     {
+        private Affichage afficher;
         private static Chef ChefInstance;
 
         private static List<SpecializedChefsInterface> _SpecializedChefsList;
@@ -81,6 +83,7 @@ namespace Kitchen.Controller
             _sem = new Semaphore(1, 1);
             process = new CLprocessus();
             ListOrder = new List<Order>();
+            afficher = new Affichage();
         }
 
 
@@ -138,7 +141,7 @@ namespace Kitchen.Controller
 
             this.ListOrder.Add(order);
 
-            Console.WriteLine("The chef took the order from the table {0}, {1} entries, {2} Plats and {3} desserts", order.IdTable, order.ListEntries.Count, order.ListPlats.Count, order.ListDesserts.Count);
+            afficher.afficherLine("The chef took the order from the table "+order.IdTable+", "+order.ListEntries.Count+" entries, "+ order.ListPlats.Count+" Plats and "+ order.ListDesserts.Count+" desserts");
             Sort();
         }
 
@@ -176,17 +179,17 @@ namespace Kitchen.Controller
                     suite = false;
 
 
-                    Console.Write("entries ");
+                    afficher.afficher("entries ");
                     foreach (int test in ord.ListEntries)
                     {
-                        Console.Write(" {0} ", test);
+                        afficher.afficher(""+ test);
                     }
-                    Console.WriteLine("\n");
+                    afficher.afficherLine("\n");
                     foreach (int test in SuiteDish)
                     {
-                        Console.Write(test);
+                        afficher.afficher(""+test);
                     }
-                    Console.WriteLine("\n");
+                    afficher.afficherLine("\n");
 
                     //dispatch
                     Dispatch(SuiteDish, 1, ord.IdTable);
@@ -221,17 +224,17 @@ namespace Kitchen.Controller
                     }
                     suite = false;
 
-                    Console.Write("Plats ");
+                    afficher.afficher("Plats ");
                     foreach (int test in ord.ListPlats)
                     {
-                        Console.Write("{0} ", test);
+                        afficher.afficher(""+test);
                     }
-                    Console.WriteLine("\n");
+                    afficher.afficherLine("\n");
                     foreach (int test in SuiteDish)
                     {
-                        Console.Write(test);
+                        afficher.afficher(""+test);
                     }
-                    Console.WriteLine("\n");
+                    afficher.afficherLine("\n");
 
 
                     //dispatch
@@ -266,17 +269,17 @@ namespace Kitchen.Controller
                     }
                     suite = false;
 
-                    Console.Write("Desserts ");
+                    afficher.afficher("Desserts ");
                     foreach (int test in ord.ListDesserts)
                     {
-                        Console.Write(" {0} ", test);
+                        afficher.afficher(""+test);
                     }
-                    Console.WriteLine("\n");
+                    afficher.afficherLine("\n");
                     foreach (int test in SuiteDish)
                     {
-                        Console.Write(test);
+                        afficher.afficher(""+test);
                     }
-                    Console.WriteLine("\n");
+                    afficher.afficherLine("\n");
 
                     //dispatch
                     Dispatch(SuiteDish, 3, ord.IdTable);
@@ -314,7 +317,7 @@ namespace Kitchen.Controller
                             count = 1;
                         }
                         setData = process.GetListCommand("ProjetProgSystem",ord.ListDesserts[i]);
-                        Console.WriteLine("{0} Desserts de {1}", count, ord.ListDesserts[i]);
+                        afficher.afficherLine(count+" Desserts de "+ ord.ListDesserts[i]);
 
                         foreach (DataRow dr in setData.Tables[0].Rows)
                         {
@@ -352,7 +355,7 @@ namespace Kitchen.Controller
                                 count = 1;
                             }
                             setData = process.GetListCommand("ProjetProgSystem", ord.ListPlats[i]);
-                            Console.WriteLine("{0} Desserts de {1}", count, ord.ListPlats[i]);
+                            afficher.afficherLine(count+" Desserts de "+ ord.ListPlats[i]);
 
                             foreach (DataRow dr in setData.Tables[0].Rows)
                             {
@@ -387,7 +390,7 @@ namespace Kitchen.Controller
                                 count = 1;
                             }
                             setData = process.GetListCommand("ProjetProgSystem", ord.ListEntries[i]);
-                            Console.WriteLine("{0} Desserts de {1}", count, ord.ListEntries[i]);
+                            afficher.afficherLine(count+" Desserts de "+ ord.ListEntries[i]);
 
                             foreach (DataRow dr in setData.Tables[0].Rows)
                             {

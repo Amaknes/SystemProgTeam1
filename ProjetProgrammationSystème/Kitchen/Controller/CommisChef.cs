@@ -1,4 +1,5 @@
 ﻿using Kitchen.Sockets;
+using Salle.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,31 +12,17 @@ namespace Kitchen.Controller
 {
     class CommisChef : CommisChefInterface
     {
-        private int _IdCommisChef;
-        public int IdCommisChef
-        {
-            get => this._IdCommisChef;
-            set
-            {
-                if (value >= 0)
-                {
-                    this._IdCommisChef = value;
-                }
-            }
-        }
-
+        private Affichage afficher;
+ 
         private List<int>_ingredients;
         public List<int>ingredients { get => this._ingredients; set => this._ingredients = value; }
 
-        private List<int>_IdVegetables;
-        public List<int>IdVegetables {  get => this._IdVegetables; set => this._IdVegetables = value; }
 
 
         public CommisChef(int id)
-        {
-            this.IdCommisChef = id;
+        { 
             this.ingredients = new List<int>();
-            this.IdVegetables = new List<int>();
+            this.afficher = new Affichage();
         }
 
 
@@ -43,7 +30,7 @@ namespace Kitchen.Controller
 
         public void PeelVegetables()
         {
-            Console.WriteLine("The Commis is peeling vegetables...");
+            afficher.afficherLine("The Commis is peeling vegetables...");
             Thread.Sleep(500);
         }
 
@@ -53,15 +40,15 @@ namespace Kitchen.Controller
             //liste des endroits ou le commis ira chercher les ingrédients (0,1,2)
             if (TypeIngredient == 0)
             {
-                Console.WriteLine("The Commis Chef took {0} {1} from the Reserve", nbSameDish, NameIngredient);
+                afficher.afficherLine("The Commis Chef took "+nbSameDish+" "+NameIngredient+" from the Reserve");
             }
             else if(TypeIngredient == 1)
             {
-                Console.WriteLine("The Commis Chef took {0} {1} from the Cold Chamber", nbSameDish, NameIngredient);
+                afficher.afficherLine("The Commis Chef took " + nbSameDish + " " + NameIngredient + " from the Cold Chamber");
             }
             else if(TypeIngredient == 2)
             {
-                Console.WriteLine("The Commis Chef took {0} {1} from the Freezer", nbSameDish, NameIngredient);
+                afficher.afficherLine("The Commis Chef took " + nbSameDish + " " + NameIngredient + " from the Freezer");
             }
 
             if (NameIngredient.Equals("Carotte") || NameIngredient.Equals("Pomme") || NameIngredient.Equals("Concombre") || NameIngredient.Equals("Oignon"))

@@ -1,4 +1,5 @@
 ﻿using Salle.Model;
+using Salle.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Salle.Controller
     class CommisWaiter : CommisWaiterInterface, IObserver
     {
         private static CommisWaiter CommisWaiterInstance;
-        
+        private Affichage afficher;
+
         public static CommisWaiter commisWaiterInstance()
         {
             if (CommisWaiterInstance == null)
@@ -24,13 +26,13 @@ namespace Salle.Controller
 
         private CommisWaiter()
         {
-
+            afficher = new Affichage();
         }
 
 
         public void ServeBreadDrinks(int idTable)
         {
-            Console.WriteLine("Commis Serving Drinks and Bread");
+            afficher.afficherLine("Commis Serving Drinks and Bread");
             Table table = (Table)Hall.hallInstance().FindTableById(idTable);
             if (table.Clients.ClientsNumber > 6)
             {

@@ -1,4 +1,5 @@
 ﻿using Salle.Model;
+using Salle.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Salle.Sockets
     {
         private static OrderDesk OrderDeskInstance;
         private Thread _thEcoute;
+        private Affichage afficher;
 
         private int _nbDishesWaiting;
         public int nbDishesWaiting
@@ -61,6 +63,7 @@ namespace Salle.Sockets
 
         private OrderDesk()
         {
+            afficher = new Affichage();
             this.listOrders = new List<OrderInterface>();
             _thEcoute = new Thread(new ThreadStart(EcouterOrderDesk));
             _thEcoute.Start();
@@ -70,7 +73,7 @@ namespace Salle.Sockets
 
         public void EcouterOrderDesk()
         {
-            Console.WriteLine("Préparation à l'écoute...");
+            afficher.afficherLine("Préparation à l'écoute...");
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
             UdpClient serveur = new UdpClient(5035);
@@ -80,16 +83,16 @@ namespace Salle.Sockets
             {
                 //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
                 IPEndPoint client = null;
-                Console.WriteLine("ÉCOUTE...");
+                afficher.afficherLine("ÉCOUTE...");
 
                 //On écoute jusqu'à recevoir un message.
                 byte[] data = serveur.Receive(ref client);
-                Console.WriteLine("Données reçues en provenance de {0}:{1}.", client.Address, client.Port);
+                afficher.afficherLine("Données reçues en provenance de "+ client.Address + ":"+ client.Port + ".");
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
                 //récupère une préparation avec l'id de la table : id de la préparation : id entree/plat/dessert : nb de plats actuels
-                Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
+                afficher.afficherLine("CONTENU DU MESSAGE : "+ message+"\n" );
 
                 ReceptMessage(message);               
                 
@@ -234,7 +237,7 @@ namespace Salle.Sockets
                     theMessageToSend += ord.ListDesserts[i];
                 }
 
-                Console.WriteLine("Message  {0} ", theMessageToSend);
+                afficher.afficherLine("Message  "+ theMessageToSend);
 
                 byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 

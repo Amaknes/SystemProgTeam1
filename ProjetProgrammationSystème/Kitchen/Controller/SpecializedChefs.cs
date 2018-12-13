@@ -59,18 +59,6 @@ namespace Kitchen.Controller
 
 
 
-
-        public void CallType()
-        {
-            Console.WriteLine();
-        }
-
-        public string TypeTestStrategy()
-        {
-            throw new NotImplementedException();
-        }
-
-
         //ordres : 1.Couper   2.Cuire(plaques)   3.Mélanger     4.Cuire (Four)    2.Fondre    6.Préparation    7.Mixer     8.Raper
 
         
@@ -196,7 +184,7 @@ namespace Kitchen.Controller
 
             if (newTask.OrderStep == 0)
             {
-                /*DataSet setData = process.GetLieuxIngredients("ProjetProgSystem", newTask.IdDish);
+                DataSet setData = process.GetLieuxIngredients("ProjetProgSystem", newTask.IdDish);
 
                 foreach (DataRow dr in setData.Tables[0].Rows)
                 {
@@ -207,11 +195,7 @@ namespace Kitchen.Controller
                     //ordres : 1.Couper   2.Cuire   3.Mélanger     4.Cuire (Four)    5.Fondre    6.Préparation    7.Cuire(plaques)  8.Mixer     9.Raper
                     Thread threadSpeChefOrder = new Thread(() => GiveOrders(NameIngredient, TypeIngredient, newTask, idTable));
                     threadSpeChefOrder.Start();
-                }
-                */
-
-                Thread threadSpeChefOrder = new Thread(() => GiveOrders("Carotte", 1, newTask, idTable));
-                threadSpeChefOrder.Start();
+                } 
             }
         }
     }

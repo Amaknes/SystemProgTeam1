@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Salle.Model;
+using Salle.View;
 
 namespace Salle.Controller
 {
     public class MaîtreHôtel : MaîtreHôtelInterface
-    { 
+    {
+        private Affichage afficher;
         private static MaîtreHôtel MaîtreHôtelInstance;
         private Semaphore _sem;
 
@@ -57,6 +59,7 @@ namespace Salle.Controller
         private MaîtreHôtel()
         {
             Busy = false;
+            this.afficher = new Affichage();
 
             List<ClientsInterface> newListClient = new List<ClientsInterface>();
             this.ListClients = (List<ClientsInterface>) newListClient;
@@ -155,7 +158,7 @@ namespace Salle.Controller
                 {
                     GetHeadWaiterDisposable().DrowUpTable(idTable, groupe.ClientsNumber);
                 }
-                Console.WriteLine("IdTable : {0}, nbClients {1}", idTable, groupe.ClientsNumber);
+                afficher.afficherLine("IdTable : "+idTable+", nbClients "+groupe.ClientsNumber);
                 CallHeadWaiter(idTable,groupe.ClientsNumber);
                 res = true;
             }
@@ -216,7 +219,7 @@ namespace Salle.Controller
         public void CallHeadWaiter(int idTable, int nbClients)
         {
             HeadWaiter HWaiter = (HeadWaiter) GetHeadWaiterDisposable();
-            Console.WriteLine("Headwaiter disponible : {0}", HWaiter.IdHeadWaiter);
+            afficher.afficherLine("Headwaiter disponible : "+HWaiter.IdHeadWaiter);
             //Hwaiter vient voir le maître d'hôtel
             
             Thread threadHWaiter = new Thread(() => HWaiter.SitClient(idTable, nbClients));
@@ -252,7 +255,7 @@ namespace Salle.Controller
                 if (this.ListClients[0] != null)
                 {
                     ClientsInterface premierGroupe = this.ListClients[0];
-                    Console.WriteLine(premierGroupe.IdClients);
+                    afficher.afficherLine(""+premierGroupe.IdClients);
                     if (AssignTable(premierGroupe))
                     {
                         this.ListClients.Remove(premierGroupe);

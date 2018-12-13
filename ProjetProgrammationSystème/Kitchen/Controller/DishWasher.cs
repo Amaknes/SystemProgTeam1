@@ -1,4 +1,5 @@
 ﻿using Kitchen.Sockets;
+using Salle.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Kitchen.Controller
 {
     class DishWasher : DishWasherInterface
     {
+        private Affichage afficher;
+
         private bool _Busy;
         public bool Busy
         {
@@ -63,7 +66,7 @@ namespace Kitchen.Controller
             this.ListWashMachine = 0;
             this.ListDishWasher = 0;
             this.Timer = DateTime.Now.Ticks;
-
+            this.afficher = new Affichage();
 
             Thread threadDishWashingMachine = new Thread(() => TimingDishWasher());
             threadDishWashingMachine.Start();
@@ -126,12 +129,12 @@ namespace Kitchen.Controller
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void LaunchDishWasher()
         {
-            Console.WriteLine("The DishWasher is launching the DishWashing Machine");
+            afficher.afficherLine("The DishWasher is launching the DishWashing Machine");
 
 
             Thread.Sleep(8000);
 
-            Console.WriteLine("DishWashing Machine Stopped");
+            afficher.afficherLine("DishWashing Machine Stopped");
 
             StockCutlery(false, this.ListDishWasher);
         }
@@ -142,12 +145,12 @@ namespace Kitchen.Controller
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void LaunchWashingMachine()
         {
-            Console.WriteLine("The DishWasher is launching the Washing Machine");
+            afficher.afficherLine("The DishWasher is launching the Washing Machine");
 
 
             Thread.Sleep(15000);
 
-            Console.WriteLine("Washing Machine Ended");
+            afficher.afficherLine("Washing Machine Ended");
 
             StockLaundry(false);
         }

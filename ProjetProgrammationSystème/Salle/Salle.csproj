@@ -132,7 +132,9 @@
     <Compile Include="Sockets\InterfaceCutleryDesk.cs" />
     <Compile Include="Sockets\InterfaceOrderDesk.cs" />
     <Compile Include="Sockets\OrderDesk.cs" />
+    <Compile Include="View\Affichage.cs" />
     <Compile Include="View\Elements.cs" />
+    <Compile Include="View\InterfaceAffichage.cs" />
     <Compile Include="View\Movable.cs" />
     <Compile Include="View\DisplayElements.cs" />
     <Compile Include="View\Window.cs" />

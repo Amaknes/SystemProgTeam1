@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,6 +15,7 @@ namespace Salle.Sockets
     {
         private Thread _thEcoute;
         private static CutleryDesk CutleryDeskInstance;
+        private Affichage afficher;
 
         private byte[] _bytes;
         public byte[] bytes
@@ -58,6 +60,7 @@ namespace Salle.Sockets
 
         private CutleryDesk()
         {
+            afficher = new Affichage();
             _thEcoute = new Thread(new ThreadStart(EcouterCutleryDesk));
             _thEcoute.Start();
             this.cutlery = 0;
@@ -65,7 +68,7 @@ namespace Salle.Sockets
 
         public void EcouterCutleryDesk()
         {
-            Console.WriteLine("Préparation à l'écoute...");
+            afficher.afficherLine("Préparation à l'écoute...");
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
             UdpClient serveur = new UdpClient(5037);
@@ -75,11 +78,11 @@ namespace Salle.Sockets
             {
                 //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
                 IPEndPoint client = null;
-                Console.WriteLine("ÉCOUTE...");
+                afficher.afficherLine("ÉCOUTE...");
 
                 //On écoute jusqu'à recevoir un message.
                 byte[] data = serveur.Receive(ref client);
-                Console.WriteLine("Données reçues en provenance de {0}:{1}.", client.Address, client.Port);
+                afficher.afficherLine("Données reçues en provenance de "+ client.Address+":"+ client.Port+".");
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
@@ -96,12 +99,12 @@ namespace Salle.Sockets
 
             if (Int32.Parse(MArriver[0]) == 0)
             {
-                Console.WriteLine("CONTENU DU MESSAGE : {0} Couverts ont été rangé\n", MArriver[1]);
+                afficher.afficherLine("CONTENU DU MESSAGE : "+ MArriver[1]+" Couverts ont été rangé\n");
                 this.cutlery += Int32.Parse(IdsTables[0] + IdsTables[1]);
             }
             else
             {
-                Console.WriteLine("CONTENU DU MESSAGE : {0} Nappes ont été rangé\n", MArriver[1]);
+                afficher.afficherLine("CONTENU DU MESSAGE : "+ MArriver[1]+" Nappes ont été rangé\n");
                 this.nappes += Int32.Parse(IdsTables[0] + IdsTables[1]);
             }
         }
@@ -113,8 +116,8 @@ namespace Salle.Sockets
                 // Sending message 
                 //<Client Quit> is the sign for end of data 
                 string theMessageToSend = ""+data;
-                
-                Console.WriteLine("Message  {0} ", theMessageToSend);
+
+                afficher.afficherLine("Message "+ theMessageToSend);
 
                 byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 
