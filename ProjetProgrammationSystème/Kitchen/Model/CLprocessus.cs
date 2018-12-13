@@ -22,21 +22,23 @@ namespace Kitchen.Model
         public DataSet ODs { get => oDs; set => oDs = value; }
         public CAD OCad { get => oCad; set => oCad = value; }
 
-        public DataSet GetListCommand(string dataTableName, int idCommand)
+        public DataSet GetListCommand(string dataTableName, int IDPreparation, int TypePreparation)
         {
             ODs.Clear();
 
-            string req = Rqt_SQL.ListeEtapeCommande(idCommand);
+            string req = Rqt_SQL.ListeEtapeCommande(IDPreparation, TypePreparation);
+            Console.WriteLine(req);
             ODs = OCad.getRows(req, dataTableName);
 
             return ODs;
         }
 
-        public DataSet GetLieuxIngredients(string dataTableName, int idCommand)
+        public DataSet GetLieuxIngredients(string dataTableName, int IDPreparation, int TypePreparation)
         {
             ODs.Clear();
 
-            string req = Rqt_SQL.LieuDeStockageIngredient(idCommand);
+            string req = Rqt_SQL.LieuDeStockageIngredient(IDPreparation, TypePreparation);
+            Console.WriteLine(req);
             ODs = OCad.getRows(req, dataTableName);
 
             return ODs;

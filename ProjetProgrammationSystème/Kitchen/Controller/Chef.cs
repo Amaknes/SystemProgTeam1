@@ -316,7 +316,7 @@ namespace Kitchen.Controller
                         {
                             count = 1;
                         }
-                        setData = process.GetListCommand("ProjetProgSystem",ord.ListDesserts[i]);
+                        setData = process.GetListCommand("Projet_Syst2", ord.ListDesserts[i],2);
                         afficher.afficherLine(count+" Desserts de "+ ord.ListDesserts[i]);
 
                         foreach (DataRow dr in setData.Tables[0].Rows)
@@ -354,7 +354,7 @@ namespace Kitchen.Controller
                             {
                                 count = 1;
                             }
-                            setData = process.GetListCommand("ProjetProgSystem", ord.ListPlats[i]);
+                            setData = process.GetListCommand("Projet_Syst2", ord.ListPlats[i],1);
                             afficher.afficherLine(count+" Desserts de "+ ord.ListPlats[i]);
 
                             foreach (DataRow dr in setData.Tables[0].Rows)
@@ -363,7 +363,7 @@ namespace Kitchen.Controller
                                 int Timetask = Int32.Parse(dr["TimeStask"].ToString());
                                 int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
-                                Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 3, ord.ListPlats.Count, count, ord.ListPlats[i]);
+                                Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 2, ord.ListPlats.Count, count, ord.ListPlats[i]);
 
                                 SpecializedChefsList[0].takeOrders(currentTask, ord.IdTable);
                             }
@@ -389,8 +389,9 @@ namespace Kitchen.Controller
                             {
                                 count = 1;
                             }
-                            setData = process.GetListCommand("ProjetProgSystem", ord.ListEntries[i]);
+                            setData = process.GetListCommand("Projet_Syst2", ord.ListEntries[i],0);
                             afficher.afficherLine(count+" Desserts de "+ ord.ListEntries[i]);
+
 
                             foreach (DataRow dr in setData.Tables[0].Rows)
                             {
@@ -398,7 +399,7 @@ namespace Kitchen.Controller
                                 int Timetask = Int32.Parse(dr["TimeStask"].ToString());
                                 int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
-                                Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 3, ord.ListEntries.Count, count, ord.ListEntries[i]);
+                                Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 1, ord.ListEntries.Count, count, ord.ListEntries[i]);
 
                                 SpecializedChefsList[0].takeOrders(currentTask, ord.IdTable);
                             }

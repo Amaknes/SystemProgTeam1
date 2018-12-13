@@ -1,4 +1,5 @@
 ﻿using Kitchen.Model;
+using Salle.View;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,7 +13,7 @@ namespace Kitchen.Controller
 {
     public class SpecializedChefs : SpecializedChefsInterface
     {
-
+        Affichage afficher;
         private List<Tasks> _ListTask;
         public List<Tasks> ListTask { get => this._ListTask; set => this._ListTask = value; }
         
@@ -28,13 +29,7 @@ namespace Kitchen.Controller
             get => this._process;
             set => this._process = value;
         }
-
-        public static Semaphore semFour;
-        public static Semaphore semFeux;
-        public static Semaphore semMixeur;
-        public static Semaphore semCouper;
-        public static Semaphore semMelange;
-        public static Semaphore semRaper;
+        
 
 
 
@@ -44,17 +39,7 @@ namespace Kitchen.Controller
             this.ListTask = new List<Tasks>();
             this.CommisChefs = new CommisChef(0);
             this.process = new CLprocessus();
-
-            if(semCouper == null)
-            {
-                semCouper = new Semaphore(5, 5);
-                semFeux = new Semaphore(5, 5);
-                semMixeur = new Semaphore(1, 1);
-                semFour = new Semaphore(1, 1);
-                semRaper = new Semaphore(2, 2);
-                semMelange = new Semaphore(5, 5);
-            }
-
+            this.afficher = new Affichage();
         }
 
 
@@ -64,49 +49,50 @@ namespace Kitchen.Controller
         
         public void UseCut(int time)
         {
-            semCouper.WaitOne();
+            afficher.afficherLine("The " + this.Strategy + " is cutting ingredients");
             Thread.Sleep(time * 1000);
-            semCouper.Release();
         }
 
         public void UseHotPlate(int time)
         {
-            semFeux.WaitOne();
+            afficher.afficherLine("The " + this.Strategy + " is cooking ingredients");
             Thread.Sleep(time * 1000);
-            semFeux.Release();
         }
 
         public void UseBlend(int time)
         {
-            semMelange.WaitOne();
+            afficher.afficherLine("The " + this.Strategy + " is blending ingredients");
             Thread.Sleep(time * 1000);
-            semMelange.Release();
         }
 
         public void UseMixer(int time)
         {
-            semMixeur.WaitOne();
+            afficher.afficherLine("The " + this.Strategy + " is mixing ingredients");
             Thread.Sleep(time * 1000);
-            semMixeur.Release();
         }
 
         public void UseRaper(int time)
         {
-            semRaper.WaitOne();
+            afficher.afficherLine("The " + this.Strategy + " is grating ingredients");
             Thread.Sleep(time * 1000);
-            semRaper.Release();
         }
-        
+
         public void UseOven(int time)
         {
-            semFour.WaitOne();
+            afficher.afficherLine("The " + this.Strategy + " is baking ingredients");
             Thread.Sleep(time * 1000);
-            semFour.Release();
+        }
+
+        public void UseFriteuse(int time)
+        {
+            afficher.afficherLine("The " + this.Strategy + " is frying french fries");
+            Thread.Sleep(time * 1000);
         }
 
 
         public void Preparation(int time)
         {
+            afficher.afficherLine("The " + this.Strategy + " is preparing ingredients");
             Thread.Sleep(time * 1000);
         }
 
@@ -119,7 +105,7 @@ namespace Kitchen.Controller
             int i = 0;
             bool currentDish = false;
             bool endDish = false;
-            int currentStep = 0;
+            int currentStep = 1;
 
             while (i < this.ListTask.Count && !endDish)
             {
@@ -132,29 +118,42 @@ namespace Kitchen.Controller
                     //ordres : 1.Couper   2.Cuire(plaques)   3.Mélanger     4.Cuire (Four)    2.Fondre    6.Préparation    7.Mixer     8.Raper
                     switch (nomEtape)
                     {
+                        case "Eplucher":
+                            Preparation(tempsEtape);
+                            break;
                         case "Couper":
                             UseCut(tempsEtape);
                             break;
                         case "Cuire":
-                            UseHotPlate(tempsEtape);
+                            if(tempsEtape < 30)
+                            {
+                                UseHotPlate(tempsEtape);
+                            }
+                            else
+                            {
+                                UseOven(tempsEtape);
+                            }
                             break;
                         case "Fondre":
                             UseHotPlate(tempsEtape);
                             break;
-                        case "Mélanger":
+                        case "Melanger":
                             UseBlend(tempsEtape);
-                            break;
-                        case "Préparation":
-                            Preparation(tempsEtape);
-                            break;
-                        case "Four":
-                            UseOven(tempsEtape);
                             break;
                         case "Raper":
                             UseRaper(tempsEtape);
                             break;
+                        case "Frire":
+                            UseFriteuse(tempsEtape);
+                            break;
                         case "Mixer":
                             UseMixer(tempsEtape);
+                            break;
+                        case "Présenter":
+                            Preparation(tempsEtape);
+                            break;
+                        case "Ouvrir_huitres":
+                            Preparation(tempsEtape);
                             break;
                         default:
                             break;
@@ -163,7 +162,7 @@ namespace Kitchen.Controller
                     this.ListTask.RemoveAt(i);
                     currentStep += 1;
                 }
-                else if (this.ListTask[i].OrderStep != currentStep && currentStep != 0)
+                else if (this.ListTask[i].OrderStep != currentStep && currentStep != 1)
                 {
                     endDish = true;
                 }
@@ -184,7 +183,7 @@ namespace Kitchen.Controller
 
             if (newTask.OrderStep == 0)
             {
-                DataSet setData = process.GetLieuxIngredients("ProjetProgSystem", newTask.IdDish);
+                DataSet setData = process.GetLieuxIngredients("Projet_Syst2", newTask.IdDish, newTask.Dish-1);
 
                 foreach (DataRow dr in setData.Tables[0].Rows)
                 {
