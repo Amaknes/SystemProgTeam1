@@ -223,6 +223,7 @@ namespace Salle.Controller
             //Hwaiter vient voir le maître d'hôtel
             
             Thread threadHWaiter = new Thread(() => HWaiter.SitClient(idTable, nbClients));
+            new Pause().AddThread(threadHWaiter);
             threadHWaiter.Start();
         }
 

@@ -24,14 +24,25 @@ namespace Salle
 
             ThreadStart jobArriverClient = new ThreadStart(ArriverClient);
             Thread threadClient = new Thread(jobArriverClient);
+            new Pause().AddThread(threadClient);
             threadClient.Start();
 
             ThreadStart jobAccueilMaitreHotel = new ThreadStart(AccueilMaitreHotel);
             Thread threadAccueilMaitreHotel = new Thread(jobAccueilMaitreHotel);
+            new Pause().AddThread(threadAccueilMaitreHotel);
             threadAccueilMaitreHotel.Start();
 
-
-            Console.Read();
+            while (true)
+            {
+                char key = Console.ReadKey().KeyChar;
+                if (key.Equals('w'))
+                {
+                    new Pause().PauseThreads();
+                }else if (key.Equals('x'))
+                {
+                    new Pause().Resume();
+                }
+            }
         }
 
         static void ArriverClient()

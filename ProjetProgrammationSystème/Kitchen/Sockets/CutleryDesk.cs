@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Kitchen.Controller;
@@ -48,6 +49,7 @@ namespace Kitchen.Sockets
             this.DWasher = new DishWasher();
             afficher = new Affichage();
             _thEcoute = new Thread(new ThreadStart(EcouterCutleryDesk));
+            new Pause().AddThread(_thEcoute);
             _thEcoute.Start();
         }
 
@@ -72,10 +74,9 @@ namespace Kitchen.Sockets
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
                 afficher.afficherLine("CONTENU DU MESSAGE : "+message+"\n");
-
-
-
+                
                 DWasher.GetCutlery(message);
+                
             }
 
         }
@@ -94,7 +95,7 @@ namespace Kitchen.Sockets
 
                 UdpClient udpClient = new UdpClient();
                 udpClient.Send(msg, msg.Length, "127.0.0.1", 5037);
-                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5038); 
+                //  udpClient.Send(msg, msg.Length, "10.144.50.44", 5037); 
                 udpClient.Close();
 
             }
@@ -103,5 +104,8 @@ namespace Kitchen.Sockets
                 Console.WriteLine(exc);
             }
         }
+
+
+        
     }
 }

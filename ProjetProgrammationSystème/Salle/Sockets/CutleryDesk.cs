@@ -1,4 +1,5 @@
-﻿using Salle.View;
+﻿using Salle.Controller;
+using Salle.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,7 @@ namespace Salle.Sockets
         {
             afficher = new Affichage();
             _thEcoute = new Thread(new ThreadStart(EcouterCutleryDesk));
+            new Pause().AddThread(_thEcoute);
             _thEcoute.Start();
             this.cutlery = 0;
         }
@@ -81,11 +83,14 @@ namespace Salle.Sockets
                 afficher.afficherLine("ÉCOUTE...");
 
                 //On écoute jusqu'à recevoir un message.
-                byte[] data = serveur.Receive(ref client);
+                byte[] data = serveur.Receive(ref client); 
                 afficher.afficherLine("Données reçues en provenance de "+ client.Address+":"+ client.Port+".");
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
+
+
+                
                 ReceptMessage(message);
                 
             }
@@ -115,15 +120,15 @@ namespace Salle.Sockets
             {
                 // Sending message 
                 //<Client Quit> is the sign for end of data 
-                string theMessageToSend = ""+data;
+                string theMessageToSend = "" + data;
 
-                afficher.afficherLine("Message "+ theMessageToSend);
+                afficher.afficherLine("Message " + theMessageToSend);
 
                 byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 
                 UdpClient udpClient = new UdpClient();
                 udpClient.Send(msg, msg.Length, "127.0.0.1", 5038);
-                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5038); 
+                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5038);
                 udpClient.Close();
 
             }
@@ -132,6 +137,8 @@ namespace Salle.Sockets
                 Console.WriteLine(exc);
             }
         }
+
+       
 
         public void getCutlery(int nbCutlery)
         {

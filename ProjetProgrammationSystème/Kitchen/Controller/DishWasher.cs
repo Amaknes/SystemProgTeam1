@@ -69,6 +69,7 @@ namespace Kitchen.Controller
             this.afficher = new Affichage();
 
             Thread threadDishWashingMachine = new Thread(() => TimingDishWasher());
+            new Pause().AddThread(threadDishWashingMachine);
             threadDishWashingMachine.Start();
         }
 
@@ -120,6 +121,7 @@ namespace Kitchen.Controller
                     this.Timer = DateTime.Now.Ticks;
 
                     Thread threadDishWashingMachine = new Thread(() => LaunchDishWasher());
+                    new Pause().AddThread(threadDishWashingMachine);
                     threadDishWashingMachine.Start();
                 }
 
@@ -168,6 +170,7 @@ namespace Kitchen.Controller
                     ListWashMachine += 10;
 
                     Thread threadWashingMachine = new Thread(() => LaunchWashingMachine());
+                    new Pause().AddThread(threadWashingMachine);
                     threadWashingMachine.Start();
                 }
             }

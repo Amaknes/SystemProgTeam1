@@ -15,7 +15,18 @@ namespace Kitchen
             CutleryDesk cutleryDesk = CutleryDesk.cutleryDeskInstance();
             OrderDesk orderDesk = OrderDesk.orderDeskInstance();
 
-            Console.Read();
+            while (true)
+            {
+                char key = Console.ReadKey().KeyChar;
+                if (key.Equals('w'))
+                {
+                    new Pause().PauseThreads();
+                }
+                else if (key.Equals('x'))
+                {
+                    new Pause().Resume();
+                }
+            }
         }
 
     }

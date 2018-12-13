@@ -268,20 +268,7 @@ namespace Salle.Model
             afficher.afficherLine("Clients Pay");
             
             MaîtreHôtel.maîtreHôtelInstance().GetMoney(Bill, this);
-
-            /* MaîtreHôtel MH = MaîtreHôtel.maîtreHôtelInstance();
-             bool paid = false;
-             while (!paid)
-             {
-                 if (MH.Busy)
-                 {
-                     Thread.Sleep(70);
-                 }
-                 else
-                 {
-                     paid = MH.GetMoney(Bill, this);
-                 }
-             }*/
+            
 
         }
 
@@ -409,6 +396,7 @@ namespace Salle.Model
             Hall.hallInstance().FindTableById(idTable).Clients = null;
 
             Thread threadWaiterCleaning = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().CleanTable(this.idTable,this.ClientsNumber));
+            new Pause().AddThread(threadWaiterCleaning);
             threadWaiterCleaning.Start();
 
             return true;

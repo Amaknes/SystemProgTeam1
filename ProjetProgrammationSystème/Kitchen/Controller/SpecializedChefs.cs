@@ -290,6 +290,7 @@ namespace Kitchen.Controller
 
 
                 Thread threadSpeChefOrder = new Thread(() => GiveOrders(NameIngredient, TypeIngredient, newTask, idTable));
+                new Pause().AddThread(threadSpeChefOrder);
                 threadSpeChefOrder.Start();
             }
         }

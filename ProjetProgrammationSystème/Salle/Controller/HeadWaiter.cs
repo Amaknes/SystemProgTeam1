@@ -65,6 +65,7 @@ namespace Salle.Controller
             //va chercher les cartes et les donnes aux clients (VIEW)
 
             Thread threadWaitForCommand = new Thread(() => WaitOrder(IdTable, nbClients));
+            new Pause().AddThread(threadWaitForCommand);
             threadWaitForCommand.Start();
         }
 
@@ -102,6 +103,7 @@ namespace Salle.Controller
         public void GiveOrder(OrderInterface Order)
         {
             Thread threadWaiterServeBreadDrinks = new Thread(() => OrderWaiters(Order.IdTable));
+            new Pause().AddThread(threadWaiterServeBreadDrinks);
             threadWaiterServeBreadDrinks.Start();
 
             //HeadWaiter give Order to the CommandDesk

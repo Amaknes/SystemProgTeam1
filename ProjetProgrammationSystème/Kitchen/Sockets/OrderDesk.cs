@@ -47,6 +47,7 @@ namespace Kitchen.Sockets
         {
             afficher = new Affichage();
             _thEcoute = new Thread(new ThreadStart(EcouterOrderDesk));
+            new Pause().AddThread(_thEcoute);
             _thEcoute.Start();
         }
 

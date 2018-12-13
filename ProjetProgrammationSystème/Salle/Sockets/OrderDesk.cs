@@ -1,4 +1,5 @@
-﻿using Salle.Model;
+﻿using Salle.Controller;
+using Salle.Model;
 using Salle.View;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,7 @@ namespace Salle.Sockets
             afficher = new Affichage();
             this.listOrders = new List<OrderInterface>();
             _thEcoute = new Thread(new ThreadStart(EcouterOrderDesk));
+            new Pause().AddThread(_thEcoute);
             _thEcoute.Start();
         }
 
@@ -243,7 +245,7 @@ namespace Salle.Sockets
 
                 UdpClient udpClient = new UdpClient();
                 udpClient.Send(msg, msg.Length, "127.0.0.1", 5036);
-               // udpClient.Send(msg, msg.Length, "10.144.50.44", 5036); 
+                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5036); 
                 udpClient.Close();
 
             }
