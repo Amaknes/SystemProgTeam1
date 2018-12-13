@@ -22,7 +22,8 @@ namespace Kitchen.Controller
         void UseBlend(int time);
         void UseCut(int time);
 
-        void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable);
-        void takeOrders(Tasks newTask, int idTable);
+        void GiveOrders(object t);
+        //void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable);
+        void takeOrders(Tasks newTask);
     }
 }

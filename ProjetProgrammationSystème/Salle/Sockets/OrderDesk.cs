@@ -142,7 +142,7 @@ namespace Salle.Sockets
             int NbPlats = Int32.Parse(IdEntreePlatDessert[0] + IdEntreePlatDessert[1]);
 
 
-            if (EntreePlatDessert == 1 && leClient.CurrentDishe == 0)
+            if (EntreePlatDessert == 1)
             {
                 listOrders[i].ListEntries.Add(Preparation);
                 if(this.nbDishesWaiting + 1 <= 15)
@@ -153,15 +153,8 @@ namespace Salle.Sockets
                 {
                     throw new Exception();
                 }
-
-                if (listOrders[i].ListEntries.Count == NbPlats)
-                {
-                    //alertWaiter recup entries
-                    this.nbDishesWaiting -= listOrders[i].ListEntries.Count;
-                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,1);
-                }
             }
-            else if (EntreePlatDessert == 2 && leClient.CurrentDishe == 1)
+            else if (EntreePlatDessert == 2)
             {
                 listOrders[i].ListPlats.Add(Preparation);
                 if (this.nbDishesWaiting + 1 <= 15)
@@ -171,13 +164,6 @@ namespace Salle.Sockets
                 else
                 {
                     throw new Exception();
-                }
-
-                if (listOrders[i].ListPlats.Count == NbPlats)
-                {
-                    //alertWaiter recup plats
-                    this.nbDishesWaiting -= listOrders[i].ListPlats.Count;
-                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,2);
                 }
             }
             else
@@ -193,13 +179,68 @@ namespace Salle.Sockets
                     throw new Exception();
                 }
 
-                if (listOrders[i].ListDesserts.Count == NbPlats && leClient.CurrentDishe == 2)
+            }
+
+
+
+            if (leClient.CurrentDishe == 0)
+            {
+                if (listOrders[i].ListEntries.Count == NbPlats)
+                {
+                    //alertWaiter recup entries
+                    this.nbDishesWaiting -= listOrders[i].ListEntries.Count;
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable, 1);
+                }
+            }else if (leClient.CurrentDishe == 1)
+            { 
+                if (listOrders[i].ListPlats.Count == NbPlats)
+                {
+                    //alertWaiter recup plats
+                    this.nbDishesWaiting -= listOrders[i].ListPlats.Count;
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable, 2);
+                }
+            }else if (leClient.CurrentDishe == 2)
+            {
+                if (listOrders[i].ListDesserts.Count == NbPlats)
                 {
                     //alertWaiter recup Desserts
                     this.nbDishesWaiting -= listOrders[i].ListDesserts.Count;
-                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,3);
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable, 3);
                 }
             }
+
+        }
+
+        public void verifCommands(int IdTable, Clients leClient)
+        {
+            int i = 0;
+            bool idFound = false;
+
+            while (i < listOrders.Count && !idFound)
+            {
+                if (listOrders[i].IdTable == IdTable)
+                {
+                    idFound = true;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            if (idFound)
+            {
+                if (leClient.CurrentDishe == 2)
+                {
+                    if (listOrders[i].ListDesserts.Count > 0)
+                    {
+                        //alertWaiter recup Desserts
+                        this.nbDishesWaiting -= listOrders[i].ListDesserts.Count;
+                        Hall.hallInstance().FindSquareByTableId(IdTable).GetFreeWaiter().Serve(IdTable, 3);
+                    }
+                }
+            }
+            
         }
 
         public void SendData(OrderInterface ord)

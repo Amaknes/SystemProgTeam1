@@ -98,9 +98,11 @@ namespace Kitchen.Controller
             Thread.Sleep(time * 1000);
         }
 
-
-        public void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable)
+        public void GiveOrders(object firstTask)
+        //public void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable)
         {
+            new Pause().AddThread(Thread.CurrentThread);
+            Tasks TaskNew = (Tasks)firstTask;
 
             int i = 0;
 
@@ -117,7 +119,7 @@ namespace Kitchen.Controller
 
                 while(i < this.ListTask.Count && !taskFound)
                 {
-                    if(this.ListTask[i].OrderStep == firstTask.OrderStep && this.ListTask[i].IdDish == firstTask.IdDish)
+                    if(this.ListTask[i].OrderStep == TaskNew.OrderStep && this.ListTask[i].IdDish == TaskNew.IdDish)
                     {
                         taskFound = true;
                     }
@@ -136,10 +138,7 @@ namespace Kitchen.Controller
                 {
                     firstTask = this.ListTask[i+1];
                 }
-
-                Console.WriteLine("i = " + i);
-                Console.WriteLine("Count = " + ListTask.Count);
-                Console.WriteLine("-----------------");
+                 
                 this.ListTask.RemoveAt(i);
 
                 }
@@ -200,76 +199,16 @@ namespace Kitchen.Controller
 
                 i = 0;
                 taskFound = false;
-                /*
-                if (this.ListTask[i].OrderStep == currentStep && this.ListTask[i].IdDish == firstTask.IdDish)
-                {
-                    string nomEtape = this.ListTask[i].NameTask;
-                    int tempsEtape = this.ListTask[i].TimeTask;
-
-                    //ordres : 1.Couper   2.Cuire(plaques)   3.Mélanger     4.Cuire (Four)    2.Fondre    6.Préparation    7.Mixer     8.Raper
-                    switch (nomEtape)
-                    {
-                        case "Eplucher":
-                            Preparation(tempsEtape);
-                            break;
-                        case "Couper":
-                            UseCut(tempsEtape);
-                            break;
-                        case "Cuire":
-                            if(tempsEtape < 30)
-                            {
-                                UseHotPlate(tempsEtape);
-                            }
-                            else
-                            {
-                                UseOven(tempsEtape);
-                            }
-                            break;
-                        case "Fondre":
-                            UseHotPlate(tempsEtape);
-                            break;
-                        case "Melanger":
-                            UseBlend(tempsEtape);
-                            break;
-                        case "Raper":
-                            UseRaper(tempsEtape);
-                            break;
-                        case "Frire":
-                            UseFriteuse(tempsEtape);
-                            break;
-                        case "Mixer":
-                            UseMixer(tempsEtape);
-                            break;
-                        case "Présenter":
-                            Preparation(tempsEtape);
-                            break;
-                        case "Ouvrir_huitres":
-                            Preparation(tempsEtape);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    Console.WriteLine("i = "+i);
-                    Console.WriteLine("COunt = " +ListTask.Count);
-                    Console.WriteLine("-----------------");
-                    this.ListTask.RemoveAt(i);
-                    i = 0;
-                    currentStep += 1;
-                }
-
-                i++;*/
+                
             }
 
-            //envoi l'id de la table : l'id de la préparation : si c est un entree/plat/dessert : nombre de plats de ce type dans la commande
-
-            CommisChefs.SendDishes(idTable, firstTask.IdDish, firstTask.Dish, firstTask.NbDishesList);
+            //envoi l'id de la table : l'id de la préparation : si c est un entree/plat/dessert : nombre de plats de ce type dans la commande 
+            CommisChefs.SendDishes(TaskNew.IdTable, TaskNew.IdDish, TaskNew.Dish, TaskNew.NbDishesList);
         }
 
-        public void takeOrders(Tasks newTask, int idTable)
+        public void takeOrders(Tasks newTask)
         {
             this.ListTask.Add(newTask);
-
             if (newTask.OrderStep == 1)
             {
                 string NameIngredient = null;
@@ -289,9 +228,11 @@ namespace Kitchen.Controller
                 }
 
 
-                Thread threadSpeChefOrder = new Thread(() => GiveOrders(NameIngredient, TypeIngredient, newTask, idTable));
+                /*Thread threadSpeChefOrder = new Thread(() => GiveOrders(NameIngredient, TypeIngredient, newTask, idTable));
                 new Pause().AddThread(threadSpeChefOrder);
-                threadSpeChefOrder.Start();
+                threadSpeChefOrder.Start();*/
+                
+                ThreadPool.QueueUserWorkItem(GiveOrders, newTask);
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Salle.Controller;
+using Salle.Sockets;
 using Salle.View;
 
 namespace Salle.Model
@@ -45,7 +46,7 @@ namespace Salle.Model
                 }
             }
         }
-
+         
         private bool SkipEntry, SkipPlate, SkipDessert = false;
 
         private bool _Booking;
@@ -202,8 +203,8 @@ namespace Salle.Model
             foreach (IndividualClient IndCl in ClientsList)
             {
                 //          int TimeSpent = 0;
-                if (!SecondOrder)
-                {
+                //if (!SecondOrder)
+                //{
                     plat = IndCl.ChooseEntry(rnd);
                     if (plat != -1)
                     {
@@ -219,10 +220,10 @@ namespace Salle.Model
                         plat = -1;
                         //                        TimeSpent += 25;
                     }
-                }
+                //}
 
-                if (!Order || (Order && SecondOrder))
-                {
+                //if (!Order || (Order && SecondOrder))
+                //{
                     plat = IndCl.ChooseDessert(rnd);
                     if (plat != -1)
                     {
@@ -231,7 +232,7 @@ namespace Salle.Model
  //                       TimeSpent += 10;
                     }
                     
-                }
+                //}
             }
 
 
@@ -296,14 +297,15 @@ namespace Salle.Model
                 {
                     Thread.Sleep(25000);
                     afficher.afficherLine("Client ate a Plat");
-                    if (Order && !leaving)
-                    {
-                        MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
-                    }
+                    //if (Order && !leaving)
+                    //{
+                    //    MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
+                    //}
 
 
                     if (!SkipDessert)
                     {
+                        OrderDesk.orderDeskInstance().verifCommands(this.idTable, this);
                         leaving = WaitForNextDishe(2);
 
                         if (!leaving)

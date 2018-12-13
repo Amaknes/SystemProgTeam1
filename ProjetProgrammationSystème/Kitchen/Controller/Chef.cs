@@ -325,9 +325,9 @@ namespace Kitchen.Controller
                             int Timetask = Int32.Parse(dr["TimeTask"].ToString());
                             int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
-                            Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 3, ord.ListDesserts.Count, count, ord.ListDesserts[i]);
+                            Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 3, ord.ListDesserts.Count, count, ord.ListDesserts[i], ord.IdTable);
 
-                            SpecializedChefsList[0].takeOrders(currentTask, ord.IdTable);
+                            SpecializedChefsList[0].takeOrders(currentTask);
                         }
                         i++;
                     }
@@ -363,9 +363,9 @@ namespace Kitchen.Controller
                                 int Timetask = Int32.Parse(dr["TimeTask"].ToString());
                                 int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
-                                Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 2, ord.ListPlats.Count, count, ord.ListPlats[i]);
+                                Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 2, ord.ListPlats.Count, count, ord.ListPlats[i], ord.IdTable);
 
-                                SpecializedChefsList[0].takeOrders(currentTask, ord.IdTable);
+                                SpecializedChefsList[0].takeOrders(currentTask);
                             }
                             i++;
                         }
@@ -399,9 +399,9 @@ namespace Kitchen.Controller
                                 int Timetask = Int32.Parse(dr["TimeTask"].ToString());
                                 int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
-                                Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 1, ord.ListEntries.Count, count, ord.ListEntries[i]);
+                                Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 1, ord.ListEntries.Count, count, ord.ListEntries[i], ord.IdTable);
 
-                                SpecializedChefsList[0].takeOrders(currentTask, ord.IdTable);
+                                SpecializedChefsList[0].takeOrders(currentTask);
                             }
                             i++;
                         }

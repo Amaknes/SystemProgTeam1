@@ -115,7 +115,25 @@ namespace Kitchen.Model
             }
         }
 
-        public Tasks(String NameTask,int TimeTask,int OrderStep, int Dish, int nbDishesList, int NbSameDish, int idDish)
+        private int _IdTable;
+        public int IdTable
+        {
+            get => this._IdTable;
+            set
+            {
+                if (value >= 0)
+                {
+                    this._IdTable = value;
+                }
+                else
+                {
+                    this._IdTable = 0;
+                }
+            }
+        }
+
+       
+        public Tasks(String NameTask, int TimeTask, int OrderStep, int Dish, int nbDishesList, int NbSameDish, int idDish, int idTable)
         {
             this.Dish = Dish;
             this.NameTask = NameTask;
@@ -124,6 +142,7 @@ namespace Kitchen.Model
             this.NbDishesList = nbDishesList;
             this.NbSameDish = NbSameDish;
             this.IdDish = idDish;
+            this.IdTable = idTable;
         }
     }
 }
