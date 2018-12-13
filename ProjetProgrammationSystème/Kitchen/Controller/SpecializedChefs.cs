@@ -16,7 +16,8 @@ namespace Kitchen.Controller
         Affichage afficher;
         private List<Tasks> _ListTask;
         public List<Tasks> ListTask { get => this._ListTask; set => this._ListTask = value; }
-        
+
+        private static Semaphore _sem;
 
         private CommisChefInterface _CommisChefs;
         public CommisChefInterface CommisChefs { get => this._CommisChefs; set => this._CommisChefs = value; }
@@ -40,6 +41,7 @@ namespace Kitchen.Controller
             this.CommisChefs = new CommisChef(0);
             this.process = new CLprocessus();
             this.afficher = new Affichage();
+            _sem = new Semaphore(1, 1);
         }
 
 
@@ -97,21 +99,110 @@ namespace Kitchen.Controller
         }
 
 
-
         public void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable)
         {
-            this.CommisChefs.SearchIngredients(NameIngredient, TypeIngredient, firstTask.NbSameDish);
 
             int i = 0;
-            bool currentDish = false;
-            bool endDish = false;
-            int currentStep = 1;
 
-            while (i < this.ListTask.Count && !endDish)
+            bool endDish = false;
+            bool taskFound = false;
+
+            string nomEtape = null;
+            int tempsEtape = 0;
+
+            while (!endDish)
             {
-                if (this.ListTask[i].OrderStep == currentStep)
+
+                _sem.WaitOne();
+
+                while(i < this.ListTask.Count && !taskFound)
                 {
-                    currentDish = true;
+                    if(this.ListTask[i].OrderStep == firstTask.OrderStep && this.ListTask[i].IdDish == firstTask.IdDish)
+                    {
+                        taskFound = true;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
+                if (taskFound)
+                {
+                    nomEtape = this.ListTask[i].NameTask;
+                    tempsEtape = this.ListTask[i].TimeTask;
+
+                if (i + 1 < this.ListTask.Count)
+                {
+                    firstTask = this.ListTask[i+1];
+                }
+
+                Console.WriteLine("i = " + i);
+                Console.WriteLine("Count = " + ListTask.Count);
+                Console.WriteLine("-----------------");
+                this.ListTask.RemoveAt(i);
+
+                }
+                if (i+1 < this.ListTask.Count && this.ListTask[i].OrderStep+1 == this.ListTask[i+1].OrderStep && this.ListTask[i].IdDish == this.ListTask[i+1].IdDish)
+                {
+                    endDish = true;
+                }
+                else if(i + 1 >= this.ListTask.Count)
+                {
+                    endDish = true;
+                }
+
+                _sem.Release();
+
+                //ordres : 1.Couper   2.Cuire(plaques)   3.Mélanger     4.Cuire (Four)    2.Fondre    6.Préparation    7.Mixer     8.Raper
+                switch (nomEtape)
+                {
+                    case "Eplucher":
+                        Preparation(tempsEtape);
+                        break;
+                    case "Couper":
+                        UseCut(tempsEtape);
+                        break;
+                    case "Cuire":
+                        if (tempsEtape < 30)
+                        {
+                            UseHotPlate(tempsEtape);
+                        }
+                        else
+                        {
+                            UseOven(tempsEtape);
+                        }
+                        break;
+                    case "Fondre":
+                        UseHotPlate(tempsEtape);
+                        break;
+                    case "Melanger":
+                        UseBlend(tempsEtape);
+                        break;
+                    case "Raper":
+                        UseRaper(tempsEtape);
+                        break;
+                    case "Frire":
+                        UseFriteuse(tempsEtape);
+                        break;
+                    case "Mixer":
+                        UseMixer(tempsEtape);
+                        break;
+                    case "Présenter":
+                        Preparation(tempsEtape);
+                        break;
+                    case "Ouvrir_huitres":
+                        Preparation(tempsEtape);
+                        break;
+                    default:
+                        break;
+                }
+
+                i = 0;
+                taskFound = false;
+                /*
+                if (this.ListTask[i].OrderStep == currentStep && this.ListTask[i].IdDish == firstTask.IdDish)
+                {
                     string nomEtape = this.ListTask[i].NameTask;
                     int tempsEtape = this.ListTask[i].TimeTask;
 
@@ -159,21 +250,19 @@ namespace Kitchen.Controller
                             break;
                     }
 
+                    Console.WriteLine("i = "+i);
+                    Console.WriteLine("COunt = " +ListTask.Count);
+                    Console.WriteLine("-----------------");
                     this.ListTask.RemoveAt(i);
+                    i = 0;
                     currentStep += 1;
                 }
-                else if (this.ListTask[i].OrderStep != currentStep && currentStep != 1)
-                {
-                    endDish = true;
-                }
 
-                if (!currentDish)
-                {
-                    i++;
-                }
+                i++;*/
             }
 
             //envoi l'id de la table : l'id de la préparation : si c est un entree/plat/dessert : nombre de plats de ce type dans la commande
+
             CommisChefs.SendDishes(idTable, firstTask.IdDish, firstTask.Dish, firstTask.NbDishesList);
         }
 
@@ -181,20 +270,27 @@ namespace Kitchen.Controller
         {
             this.ListTask.Add(newTask);
 
-            if (newTask.OrderStep == 0)
+            if (newTask.OrderStep == 1)
             {
+                string NameIngredient = null;
+                int TypeIngredient = 0;
+
                 DataSet setData = process.GetLieuxIngredients("Projet_Syst2", newTask.IdDish, newTask.Dish-1);
 
+                afficher.afficherLine(""+(newTask.Dish-1));
                 foreach (DataRow dr in setData.Tables[0].Rows)
                 {
-                    string NameIngredient = dr["NameIngredient"].ToString();
-                    int TypeIngredient = Int32.Parse(dr["TypeIngredient"].ToString());
-
+                    NameIngredient = dr["NameIngredient"].ToString();
+                    TypeIngredient = Int32.Parse(dr["TypeIngredient"].ToString());
+                    
 
                     //ordres : 1.Couper   2.Cuire   3.Mélanger     4.Cuire (Four)    5.Fondre    6.Préparation    7.Cuire(plaques)  8.Mixer     9.Raper
-                    Thread threadSpeChefOrder = new Thread(() => GiveOrders(NameIngredient, TypeIngredient, newTask, idTable));
-                    threadSpeChefOrder.Start();
-                } 
+                    this.CommisChefs.SearchIngredients(NameIngredient, TypeIngredient, newTask.NbSameDish);
+                }
+
+
+                Thread threadSpeChefOrder = new Thread(() => GiveOrders(NameIngredient, TypeIngredient, newTask, idTable));
+                threadSpeChefOrder.Start();
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Kitchen.Model
 
         public static string LieuDeStockageIngredient(int IDPreparation, int TypePreparation)
         {
-            return "SELECT NameIngredient, TypeIngredient FROM dbo.Ingredient, dbo.Require, dbo.step, dbo.Preparation, dbo.CommandLine WHERE dbo.CommandLine.IDCommand = " + IDPreparation + " AND dbo.CommandLine.TypePreparation = " + TypePreparation + " AND dbo.Preparation.TypePreparation = dbo.CommandLine.TypePreparation AND dbo.Preparation.IDPreparation = dbo.CommandLine.IDPreparation AND dbo.Preparation.IDPreparation = dbo.step.IDPreparation AND dbo.Preparation.TypePreparation = dbo.Step.TypePreparation AND dbo.Step.IDStep = dbo.Require.IDStep AND dbo.Require.IDIngredient = dbo.Ingredient.IDIngredient";
+            return "SELECT NameIngredient, TypeIngredient FROM dbo.Ingredient, dbo.Require, dbo.step, dbo.Preparation, dbo.CommandLine WHERE dbo.CommandLine.IDPreparation = " + IDPreparation + " AND dbo.CommandLine.TypePreparation = " + TypePreparation + " AND dbo.Preparation.TypePreparation = dbo.CommandLine.TypePreparation AND dbo.Preparation.IDPreparation = dbo.CommandLine.IDPreparation AND dbo.Preparation.IDPreparation = dbo.step.IDPreparation AND dbo.Preparation.TypePreparation = dbo.Step.TypePreparation AND dbo.Step.IDStep = dbo.Require.IDStep AND dbo.Require.IDIngredient = dbo.Ingredient.IDIngredient";
         }
 
        

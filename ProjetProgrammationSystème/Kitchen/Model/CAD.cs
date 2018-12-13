@@ -46,8 +46,14 @@ namespace Kitchen.Model
             Sqlcommand.Connection = Sqlconnexion; // Connexion instanciée auparavant
             Sqlcommand.CommandText = rq_sql;
 
+
             SqlDataAdapter adapter = DataAdapter; // Permet de lire les données
             DataSet data = Dataset; // Contiendra les données
+
+            this.sqlconnexion = new SqlConnection(this.cnx);
+
+            this.DataAdapter.SelectCommand = new SqlCommand(this.sqlcommand.CommandText);
+            this.DataAdapter.SelectCommand.Connection = this.sqlconnexion;
 
             try
             {
@@ -68,13 +74,18 @@ namespace Kitchen.Model
 
         public DataSet getRows(string rq_sql, string dataTableName)
         {
-            Sqlconnexion.ConnectionString = @"Data Source = Localhost\SQLEXPRESS";
-            Sqlconnexion.ConnectionString += @"Initial Catalog = Northwind; Integrated Security =SSPI";
 
             Sqlcommand.Connection = Sqlconnexion;
             Sqlcommand.CommandText = rq_sql;
 
 
+            this.sqlconnexion = new SqlConnection(this.cnx);
+
+            //DataAdapter = new SqlDataAdapter(rq_sql, sqlconnexion);
+
+
+            this.DataAdapter.SelectCommand = new SqlCommand(this.sqlcommand.CommandText);
+            this.DataAdapter.SelectCommand.Connection = this.sqlconnexion;
 
             try
             {
@@ -84,7 +95,6 @@ namespace Kitchen.Model
             catch (Exception ex)
             {
                 afficher.afficherLine(""+ex.Message);
-
             }
             finally
             {

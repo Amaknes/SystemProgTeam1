@@ -68,7 +68,7 @@ namespace Salle
 
             //MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, rnd.Next(1, 11), 30));
 
-            MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, 10, 120));
+            MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, 5, 120));
             //MHotel.ListClients.Add(factClients.CreateClientsInterface(IdClients, Order, Book, rnd.Next(1, 11), 60));
 
             Thread.Sleep(1500);

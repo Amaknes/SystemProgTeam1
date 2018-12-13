@@ -27,7 +27,7 @@ namespace Kitchen.Model
             ODs.Clear();
 
             string req = Rqt_SQL.ListeEtapeCommande(IDPreparation, TypePreparation);
-            Console.WriteLine(req);
+
             ODs = OCad.getRows(req, dataTableName);
 
             return ODs;
@@ -38,7 +38,7 @@ namespace Kitchen.Model
             ODs.Clear();
 
             string req = Rqt_SQL.LieuDeStockageIngredient(IDPreparation, TypePreparation);
-            Console.WriteLine(req);
+
             ODs = OCad.getRows(req, dataTableName);
 
             return ODs;

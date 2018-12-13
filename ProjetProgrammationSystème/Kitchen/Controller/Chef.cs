@@ -322,7 +322,7 @@ namespace Kitchen.Controller
                         foreach (DataRow dr in setData.Tables[0].Rows)
                         {
                             string NameTask = dr["NameTask"].ToString();
-                            int Timetask = Int32.Parse(dr["TimeStask"].ToString());
+                            int Timetask = Int32.Parse(dr["TimeTask"].ToString());
                             int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
                             Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 3, ord.ListDesserts.Count, count, ord.ListDesserts[i]);
@@ -355,12 +355,12 @@ namespace Kitchen.Controller
                                 count = 1;
                             }
                             setData = process.GetListCommand("Projet_Syst2", ord.ListPlats[i],1);
-                            afficher.afficherLine(count+" Desserts de "+ ord.ListPlats[i]);
+                            afficher.afficherLine(count+" Plats de "+ ord.ListPlats[i]);
 
                             foreach (DataRow dr in setData.Tables[0].Rows)
                             {
                                 string NameTask = dr["NameTask"].ToString();
-                                int Timetask = Int32.Parse(dr["TimeStask"].ToString());
+                                int Timetask = Int32.Parse(dr["TimeTask"].ToString());
                                 int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
                                 Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 2, ord.ListPlats.Count, count, ord.ListPlats[i]);
@@ -390,13 +390,13 @@ namespace Kitchen.Controller
                                 count = 1;
                             }
                             setData = process.GetListCommand("Projet_Syst2", ord.ListEntries[i],0);
-                            afficher.afficherLine(count+" Desserts de "+ ord.ListEntries[i]);
+                            afficher.afficherLine(count+" Entrées de "+ ord.ListEntries[i]);
 
 
                             foreach (DataRow dr in setData.Tables[0].Rows)
                             {
                                 string NameTask = dr["NameTask"].ToString();
-                                int Timetask = Int32.Parse(dr["TimeStask"].ToString());
+                                int Timetask = Int32.Parse(dr["TimeTask"].ToString());
                                 int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
                                 Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 1, ord.ListEntries.Count, count, ord.ListEntries[i]);
