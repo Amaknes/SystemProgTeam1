@@ -8,7 +8,7 @@ namespace Kitchen.Controller
 {
     public class Cookers : SpecializedChefs
     {
-        public string Type()
+        public override string Type()
         {
             return "Cookers";
         }

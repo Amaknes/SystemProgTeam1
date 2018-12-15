@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Salle.Controller;
+using Salle.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,6 +16,7 @@ namespace Salle.Sockets
     {
         private Thread _thEcoute;
         private static CutleryDesk CutleryDeskInstance;
+        private Affichage afficher;
 
         private byte[] _bytes;
         public byte[] bytes
@@ -58,14 +61,15 @@ namespace Salle.Sockets
 
         private CutleryDesk()
         {
+            afficher = new Affichage();
             _thEcoute = new Thread(new ThreadStart(EcouterCutleryDesk));
+            new Pause().AddThread(_thEcoute);
             _thEcoute.Start();
             this.cutlery = 0;
         }
 
         public void EcouterCutleryDesk()
-        {
-            Console.WriteLine("Préparation à l'écoute...");
+        { 
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
             UdpClient serveur = new UdpClient(5037);
@@ -75,16 +79,19 @@ namespace Salle.Sockets
             {
                 //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
                 IPEndPoint client = null;
-                Console.WriteLine("ÉCOUTE...");
+                afficher.afficherLine("CutleryDesk's Socket Listening....");
 
                 //On écoute jusqu'à recevoir un message.
                 byte[] data = serveur.Receive(ref client);
-                Console.WriteLine("Données reçues en provenance de {0}:{1}.", client.Address, client.Port);
+                afficher.afficherLine("Cleaned cutlery received from the DishWasher");
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
+
+
+
                 ReceptMessage(message);
-                
+
             }
 
         }
@@ -96,12 +103,12 @@ namespace Salle.Sockets
 
             if (Int32.Parse(MArriver[0]) == 0)
             {
-                Console.WriteLine("CONTENU DU MESSAGE : {0} Couverts ont été rangé\n", MArriver[1]);
+                afficher.afficherLine(  MArriver[1] + " Couverts ont été rangé\n");
                 this.cutlery += Int32.Parse(IdsTables[0] + IdsTables[1]);
             }
             else
             {
-                Console.WriteLine("CONTENU DU MESSAGE : {0} Nappes ont été rangé\n", MArriver[1]);
+                afficher.afficherLine( MArriver[1] + " Nappes ont été rangé\n");
                 this.nappes += Int32.Parse(IdsTables[0] + IdsTables[1]);
             }
         }
@@ -112,27 +119,29 @@ namespace Salle.Sockets
             {
                 // Sending message 
                 //<Client Quit> is the sign for end of data 
-                string theMessageToSend = ""+data;
-                
-                Console.WriteLine("Message  {0} ", theMessageToSend);
+                string theMessageToSend = "" + data;
+
+                afficher.afficherLine(theMessageToSend + " dirty cutlery and one piece of laundry were given to the DishWasher");
 
                 byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 
                 UdpClient udpClient = new UdpClient();
                 udpClient.Send(msg, msg.Length, "127.0.0.1", 5038);
-                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5038); 
+                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5038);
                 udpClient.Close();
 
             }
             catch (Exception exc)
             {
-                Console.WriteLine(exc);
+                afficher.afficherLine(exc.ToString());
             }
         }
 
+
+
         public void getCutlery(int nbCutlery)
         {
-            if(cutlery >= nbCutlery)
+            if (cutlery >= nbCutlery)
             {
                 cutlery -= nbCutlery;
             }

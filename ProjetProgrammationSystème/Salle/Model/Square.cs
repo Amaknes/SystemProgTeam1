@@ -79,11 +79,11 @@ namespace Salle.Model
                 this.LineList.Add(new Line(2));
 
                 this.WaiterList.Add((WaiterInterface)new Waiter(1));
-                this.WaiterList.Add((WaiterInterface)new Waiter(2)); 
+                this.WaiterList.Add((WaiterInterface)new Waiter(2));
             }
             else
             {
-               this.headWaiter = MaîtreHôtel.maîtreHôtelInstance().ListHeadWaiter[1];
+                this.headWaiter = MaîtreHôtel.maîtreHôtelInstance().ListHeadWaiter[1];
 
                 this.LineList.Add(new Line(3));
                 this.LineList.Add(new Line(4));
@@ -96,7 +96,7 @@ namespace Salle.Model
         public WaiterInterface GetFreeWaiter()
         {
             WaiterInterface Waiter = null;
-            while(Waiter == null)
+            while (Waiter == null)
             {
                 if (!WaiterList[0].Busy)
                 {

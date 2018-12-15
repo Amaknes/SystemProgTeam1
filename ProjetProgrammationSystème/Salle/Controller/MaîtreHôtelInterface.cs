@@ -16,10 +16,11 @@ namespace Salle.Controller
         bool Busy { get; set; }
 
         bool AssignTable(ClientsInterface clients);
+        int VerifTables(int idSquare, int idLine, ClientsInterface groupe);
         void CallHeadWaiter(int idTable, int nbClients);
         HeadWaiterInterface GetHeadWaiterDisposable();
         void ClientsReception();
-        int VerifTables(int idSquare, int idLine, ClientsInterface groupe);
         bool GetMoney(int Bill, ClientsInterface groupe);
+        void SecondOrderFromClient(int IdTable);
     }
 }

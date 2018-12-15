@@ -35,7 +35,8 @@ namespace Salle.Model
         }
 
         private List<TableInterface> _ListTable;
-        public List<TableInterface> ListTable {
+        public List<TableInterface> ListTable
+        {
             get => this._ListTable;
             set => this._ListTable = value;
         }

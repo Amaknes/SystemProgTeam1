@@ -31,21 +31,21 @@ namespace Salle.Model
         private Hall()
         {
             List<SquareInterface> newSquareList = new List<SquareInterface>();
-            
+
 
             newSquareList.Add((SquareInterface)new Square(1));
             newSquareList.Add((SquareInterface)new Square(2));
 
             MaîtreHôtel MHotel = MaîtreHôtel.maîtreHôtelInstance();
-            SquareList  = newSquareList;
-            MHotel.ListSquare = (List < SquareInterface >) newSquareList;
+            SquareList = newSquareList;
+            MHotel.ListSquare = (List<SquareInterface>)newSquareList;
         }
 
         public static HallInterface hallInstance()
         {
-            if(HallInstance == null)
+            if (HallInstance == null)
             {
-                HallInstance = (HallInterface) new Hall();
+                HallInstance = (HallInterface)new Hall();
             }
 
             return HallInstance;
@@ -65,19 +65,21 @@ namespace Salle.Model
         public TableInterface FindTableById(int IdTable)
         {
             TableInterface res = null;
-            if(IdTable < 7)
+            if (IdTable < 7)
             {
                 res = VerifTableById(0, 0, IdTable);
-            }else if(IdTable < 17)
+            }
+            else if (IdTable < 17)
             {
                 res = VerifTableById(0, 1, IdTable);
-            }else if(IdTable < 25)
+            }
+            else if (IdTable < 25)
             {
                 res = VerifTableById(1, 0, IdTable);
             }
-            else if(IdTable < 32)
+            else if (IdTable < 32)
             {
-                res = VerifTableById(1, 1, IdTable);   
+                res = VerifTableById(1, 1, IdTable);
             }
 
             return res;

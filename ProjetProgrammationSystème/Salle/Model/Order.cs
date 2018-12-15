@@ -50,5 +50,13 @@ namespace Salle.Model
             this.ListPlats = new List<int>();
             this.ListEntries = new List<int>();
         }
+
+        public Order(List<int> ListIdEntries, List<int> ListIdPlats, List<int> ListIdDesserts)
+        {
+            this.IdTable = 0;
+            this.ListEntries = ListIdEntries;
+            this.ListPlats = ListIdPlats;
+            this.ListDesserts = ListIdDesserts;
+        }
     }
 }

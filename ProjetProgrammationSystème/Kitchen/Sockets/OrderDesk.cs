@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Kitchen.Controller;
+using Salle.View;
 
 namespace Kitchen.Sockets
 {
     class OrderDesk : InterfaceOrderDesk
     {
+        private Affichage afficher;
         private Thread _thEcoute;
         private static OrderDesk OrderDeskInstance;
 
@@ -43,7 +45,9 @@ namespace Kitchen.Sockets
 
         private OrderDesk()
         {
+            afficher = new Affichage();
             _thEcoute = new Thread(new ThreadStart(EcouterOrderDesk));
+            new Pause().AddThread(_thEcoute);
             _thEcoute.Start();
         }
 
@@ -51,8 +55,7 @@ namespace Kitchen.Sockets
 
 
         public void EcouterOrderDesk()
-        {
-            Console.WriteLine("Préparation à l'écoute...");
+        { 
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
             UdpClient serveur = new UdpClient(5036);
@@ -62,22 +65,42 @@ namespace Kitchen.Sockets
             {
                 //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
                 IPEndPoint client = null;
-                Console.WriteLine("ÉCOUTE...");
+                afficher.afficherLine("OrderDesk's Socket Listening");
 
                 //On écoute jusqu'à recevoir un message.
                 byte[] data = serveur.Receive(ref client);
-                Console.WriteLine("Données reçues en provenance de {0}:{1}.", client.Address, client.Port);
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
-                Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
+                afficher.afficherLine("The chef received the order " + message + "from the Head Waiter\n");
 
                 Chef.chefInstance().GetOrder(message);
             }
         }
 
-        public void SendDataOrderDesk()
+        public void SendDataOrderDesk(int idTable, int IdDish, int Dish, int NbDishesList)
         {
+            try
+            {
+                // Sending message 
+                //<Client Quit> is the sign for end of data 
+                string theMessageToSend = idTable + ":" + IdDish + ":" + Dish + ":" + NbDishesList;
+
+                afficher.afficherLine("\n--The Commis Chef is placing the Dish " + theMessageToSend + " on the Order Desk--\n" );
+
+                byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
+
+                UdpClient udpClient = new UdpClient();
+                udpClient.Send(msg, msg.Length, "127.0.0.1", 5035);
+                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5035); 
+                udpClient.Close();
+
+            }
+            catch (Exception exc)
+            {
+                afficher.afficherLine("" + exc);
+            }
         }
-        }
+    }
+
 }

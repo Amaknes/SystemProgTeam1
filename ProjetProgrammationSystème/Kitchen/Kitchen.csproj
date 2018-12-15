@@ -80,11 +80,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Pause.cs" />
     <Compile Include="Model\CAD.cs" />
     <Compile Include="Model\CLprocessus.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderInterface.cs" />
     <Compile Include="Model\Rqt_SQL.cs" />
+    <Compile Include="Model\Tasks.cs" />
+    <Compile Include="Model\TasksInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Controller\Chef.cs" />
     <Compile Include="Controller\ChefInterface.cs" />
@@ -103,8 +106,10 @@
     <Compile Include="Sockets\InterfaceCutleryDesk.cs" />
     <Compile Include="Sockets\InterfaceOrderDesk.cs" />
     <Compile Include="Sockets\OrderDesk.cs" />
+    <Compile Include="View\Affichage.cs" />
     <Compile Include="View\DisplayElements.cs" />
     <Compile Include="View\Elements.cs" />
+    <Compile Include="View\InterfaceAffichage.cs" />
     <Compile Include="View\Movable.cs" />
     <Compile Include="View\Window.cs" />
   </ItemGroup>

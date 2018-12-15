@@ -9,18 +9,21 @@ namespace Salle.Model
     public class Table : TableInterface
     {
         private int _IdTable;
-        public int IdTable {
+        public int IdTable
+        {
             get => this._IdTable;
             set
             {
-                if (value >= 0) {
+                if (value >= 0)
+                {
                     this._IdTable = value;
                 }
             }
         }
 
         private int _NbPlace;
-        public int NbPlace {
+        public int NbPlace
+        {
             get => this._NbPlace;
             set
             {
@@ -32,17 +35,19 @@ namespace Salle.Model
         }
 
         private ClientsInterface _Clients;
-        public ClientsInterface Clients {
+        public ClientsInterface Clients
+        {
             get => this._Clients;
             set => this._Clients = value;
         }
 
         private int _Bread;
-        public int Bread {
+        public int Bread
+        {
             get => this._Bread;
             set
             {
-                if(value >= 0 && value <= 2)
+                if (value >= 0 && value <= 2)
                 {
                     this._Bread = value;
                 }
@@ -50,7 +55,8 @@ namespace Salle.Model
         }
 
         private int _Drinks;
-        public int Drinks {
+        public int Drinks
+        {
             get => this._Drinks;
             set
             {

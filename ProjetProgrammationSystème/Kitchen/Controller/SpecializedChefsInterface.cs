@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kitchen.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +11,19 @@ namespace Kitchen.Controller
     public interface SpecializedChefsInterface
     {
 
-    List<CommisChefInterface> CommisChefsList { get; set; }
+        CommisChefInterface CommisChefs { get; set; }
+        CLprocessus process { get; set; }
 
-    int UseOven(int time);
+        void UseOven(int time);
+        void Preparation(int time);
+        void UseHotPlate(int time);
+        void UseRaper(int time);
+        void UseMixer(int time);
+        void UseBlend(int time);
+        void UseCut(int time);
 
-    int UseHotPlate(int time);
-    
-        
-    int GiveOrders(int Order, int idCommisChef);
-
-
-    int Preparation();
-
-
-
+        void GiveOrders(object t);
+        //void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable);
+        void takeOrders(Tasks newTask);
     }
 }

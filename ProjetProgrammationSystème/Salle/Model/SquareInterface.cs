@@ -15,8 +15,7 @@ namespace Salle.Model
         List<LineInterface> LineList { get; set; }
         HeadWaiterInterface headWaiter { get; set; }
         List<WaiterInterface> WaiterList { get; set; }
-
-
+        
         WaiterInterface GetFreeWaiter();
     }
 }

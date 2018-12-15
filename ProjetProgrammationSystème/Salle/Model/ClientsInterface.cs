@@ -11,11 +11,14 @@ namespace Salle.Model
     {
         int IdClients { get; set; }
         bool Order { get; set; }
+        int CurrentDishe { get; set; }
         bool Booking { get; set; }
         int ClientsNumber { get; set; }
         List<IndividualClientInterface> ClientsList { get; set; }
         int Bill { get; set; }
         int idTable { get; set; }
+        int TimeSpend { get; set; }
+        long TimeOfArrival { get; set; }
 
         bool WaitForNextDishe(int NbDishe);
         OrderInterface ChoiceOrder(bool SecondOrder);

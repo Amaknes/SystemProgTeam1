@@ -6,18 +6,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Salle.Sockets;
+using Salle.View;
 
 namespace Salle.Controller
 {
     public class HeadWaiter : HeadWaiterInterface
     {
         private Semaphore _semHW;
+        private Affichage afficher;
+
         private int _IdHeadWaiter;
-        public int IdHeadWaiter {
+        public int IdHeadWaiter
+        {
             get => this._IdHeadWaiter;
             set
             {
-                if(value > 0)
+                if (value > 0)
                 {
                     this._IdHeadWaiter = value;
                 }
@@ -25,7 +29,8 @@ namespace Salle.Controller
         }
 
         private bool _Busy;
-        public bool Busy {
+        public bool Busy
+        {
             get => this._Busy;
             set => this._Busy = value;
         }
@@ -36,13 +41,13 @@ namespace Salle.Controller
             get => this._IdSquare;
             set
             {
-                if(value > 0)
+                if (value > 0)
                 {
                     this._IdSquare = value;
                 }
             }
         }
-        
+
 
 
 
@@ -52,15 +57,17 @@ namespace Salle.Controller
             this.IdSquare = idHeadWaiter;
             this.Busy = false;
             this._semHW = new Semaphore(1, 1);
+            this.afficher = new Affichage();
         }
 
 
 
-        public void DistributeCards(int IdTable,int nbClients)
+        public void DistributeCards(int IdTable, int nbClients)
         {
             //va chercher les cartes et les donnes aux clients (VIEW)
 
             Thread threadWaitForCommand = new Thread(() => WaitOrder(IdTable, nbClients));
+            new Pause().AddThread(threadWaitForCommand);
             threadWaitForCommand.Start();
         }
 
@@ -68,10 +75,10 @@ namespace Salle.Controller
         {
             _semHW.WaitOne();
 
-            Table tb = (Table) Hall.hallInstance().FindTableById(IdTable);
+            Table tb = (Table)Hall.hallInstance().FindTableById(IdTable);
             CutleryDesk.cutleryDeskInstance().getCutlery(ClientsNumber);
             tb.Cutlery = true;
-            Console.WriteLine("--{0}---Headwaiter dressing the table---{1}--", tb.IdTable, IdTable);
+            afficher.afficherLine("--" + tb.IdTable + "---Headwaiter dressing the table---" + IdTable + "--");
 
             _semHW.Release();
         }
@@ -79,25 +86,38 @@ namespace Salle.Controller
         public void WaitOrder(int IdTable, int nbClients)
         {
             Thread.Sleep(nbClients * 300);
-            while (this.Busy) { Thread.Sleep(70);}
+            while (this.Busy) { Thread.Sleep(70); }
 
             this.Busy = true;
-            GiveOrder(getOrder(IdTable,false));
+            GiveOrder(getOrder(IdTable, false));
         }
 
         public OrderInterface getOrder(int IdTable, bool SecondOrder)
         {
-            Console.WriteLine("Headwaiter taking order");
+            afficher.afficherLine("Headwaiter taking order of table n°"+IdTable);
 
-            Table tabl1 = (Table) Hall.hallInstance().FindTableById(IdTable);
+            Table tabl1 = (Table)Hall.hallInstance().FindTableById(IdTable);
             Clients Cl1 = (Clients)tabl1.Clients;
 
-            return (Order)Cl1.ChoiceOrder(SecondOrder);
+            Order ret;
+
+            if (Cl1.OrdClient != null)
+            {
+                ret = Cl1.OrdClient;
+                ret.IdTable = Cl1.idTable;
+            }
+            else
+            {
+                ret = (Order)Cl1.ChoiceOrder(SecondOrder);
+            }
+
+            return ret;
         }
 
         public void GiveOrder(OrderInterface Order)
         {
             Thread threadWaiterServeBreadDrinks = new Thread(() => OrderWaiters(Order.IdTable));
+            new Pause().AddThread(threadWaiterServeBreadDrinks);
             threadWaiterServeBreadDrinks.Start();
 
             //HeadWaiter give Order to the CommandDesk
@@ -108,16 +128,16 @@ namespace Salle.Controller
         public void OrderWaiters(int IdTable)
         {
             bool served = false;
-            Square sqr = (Square)Hall.hallInstance().SquareList[IdSquare-1];
+            Square sqr = (Square)Hall.hallInstance().SquareList[IdSquare - 1];
 
             while (!served)
-            { 
+            {
                 if (!sqr.WaiterList[0].Busy)
                 {
                     sqr.WaiterList[0].ServeBreadDrinks(IdTable);
                     served = true;
                 }
-                else if(!sqr.WaiterList[1].Busy)
+                else if (!sqr.WaiterList[1].Busy)
                 {
                     sqr.WaiterList[1].ServeBreadDrinks(IdTable);
                     served = true;
@@ -126,10 +146,9 @@ namespace Salle.Controller
                 {
                     Thread.Sleep(70);
                 }
-                    
+
             }
         }
-
 
         public void SitClient(int IdTable, int nbClients)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,11 +9,10 @@ namespace Kitchen.Sockets
 {
     interface InterfaceOrderDesk
     {
-        /*int[,] OrderTable { get; set; }
-        int[,] FinishedOrder { get; set; }
-        void DeliverOrder(int foo, int fooo);*/
+        byte[] bytes { get; set; }
+        Socket s { get; set; }
 
-        void EcouterOrderDesk();
-        void SendDataOrderDesk();
+        void EcouterOrderDesk(); 
+        void SendDataOrderDesk(int idTable, int IdDish, int intDish, int intNbDishesList);
     }
 }

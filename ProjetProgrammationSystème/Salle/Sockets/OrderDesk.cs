@@ -1,4 +1,6 @@
-﻿using Salle.Model;
+﻿using Salle.Controller;
+using Salle.Model;
+using Salle.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Salle.Sockets
     {
         private static OrderDesk OrderDeskInstance;
         private Thread _thEcoute;
+        private Affichage afficher;
 
         private int _nbDishesWaiting;
         public int nbDishesWaiting
@@ -22,7 +25,7 @@ namespace Salle.Sockets
             get => this._nbDishesWaiting;
             set
             {
-                if(value >= 0)
+                if (value >= 0)
                 {
                     this._nbDishesWaiting = value;
                 }
@@ -61,16 +64,17 @@ namespace Salle.Sockets
 
         private OrderDesk()
         {
+            afficher = new Affichage();
             this.listOrders = new List<OrderInterface>();
             _thEcoute = new Thread(new ThreadStart(EcouterOrderDesk));
+            new Pause().AddThread(_thEcoute);
             _thEcoute.Start();
         }
 
 
 
         public void EcouterOrderDesk()
-        {
-            Console.WriteLine("Préparation à l'écoute...");
+        { 
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
             UdpClient serveur = new UdpClient(5035);
@@ -80,33 +84,35 @@ namespace Salle.Sockets
             {
                 //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
                 IPEndPoint client = null;
-                Console.WriteLine("ÉCOUTE...");
+                afficher.afficherLine("OrderDesk's Socket Listening....");
 
                 //On écoute jusqu'à recevoir un message.
                 byte[] data = serveur.Receive(ref client);
-                Console.WriteLine("Données reçues en provenance de {0}:{1}.", client.Address, client.Port);
+                //afficher.afficherLine("Données reçues en provenance de " + client.Address + ":" + client.Port + ".");
+                afficher.afficherLine("Dishes received from the Commis Chef");
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
                 //récupère une préparation avec l'id de la table : id de la préparation : id entree/plat/dessert : nb de plats actuels
-                Console.WriteLine("CONTENU DU MESSAGE : {0}\n", message);
+                afficher.afficherLine("Dish " + message + " is now waiting on the OrderDesk\n");
 
-                ReceptMessage(message);               
-                
+                ReceptMessage(message);
+
             }
 
         }
 
         public void ReceptMessage(string message)
         {
-            String[] listMessage = Regex.Split(message,":");
-
+            String[] listMessage = Regex.Split(message, ":");
             String[] IdTables = Regex.Split(listMessage[0], @"\D+");
             int idTable = Int32.Parse(IdTables[0] + IdTables[1]);
 
+            Clients leClient = (Clients)Hall.hallInstance().FindTableById(idTable).Clients;
             int i = 0;
             bool idFound = false;
-            while(i < listOrders.Count && !idFound)
+
+            while (i < listOrders.Count && !idFound)
             {
                 if (listOrders[i].IdTable == idTable)
                 {
@@ -133,13 +139,13 @@ namespace Salle.Sockets
             int EntreePlatDessert = Int32.Parse(IdEntreePlatDessert[0] + IdEntreePlatDessert[1]);
 
             String[] NbPlatsStr = Regex.Split(listMessage[3], @"\D+");
-            int NbPlats = Int32.Parse(IdEntreePlatDessert[0] + IdEntreePlatDessert[1]);
+            int NbPlats = Int32.Parse(NbPlatsStr[0] + NbPlatsStr[1]);
 
 
-            if (EntreePlatDessert == 0)
+            if (EntreePlatDessert == 1)
             {
                 listOrders[i].ListEntries.Add(Preparation);
-                if(this.nbDishesWaiting + 1 <= 15)
+                if (this.nbDishesWaiting + 1 <= 15)
                 {
                     this.nbDishesWaiting += 1;
                 }
@@ -147,15 +153,8 @@ namespace Salle.Sockets
                 {
                     throw new Exception();
                 }
-
-                if (listOrders[i].ListEntries.Count == NbPlats)
-                {
-                    //alertWaiter recup entries
-                    this.nbDishesWaiting -= listOrders[i].ListEntries.Count;
-                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,1);
-                }
             }
-            else if (EntreePlatDessert == 1)
+            else if (EntreePlatDessert == 2)
             {
                 listOrders[i].ListPlats.Add(Preparation);
                 if (this.nbDishesWaiting + 1 <= 15)
@@ -166,15 +165,8 @@ namespace Salle.Sockets
                 {
                     throw new Exception();
                 }
-
-                if (listOrders[i].ListPlats.Count == NbPlats)
-                {
-                    //alertWaiter recup plats
-                    this.nbDishesWaiting -= listOrders[i].ListPlats.Count;
-                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,2);
-                }
             }
-            else
+            else if (EntreePlatDessert == 3)
             {
 
                 listOrders[i].ListDesserts.Add(Preparation);
@@ -187,12 +179,98 @@ namespace Salle.Sockets
                     throw new Exception();
                 }
 
+            }
+
+            afficher.afficherLine("---------------");
+            afficher.afficherLine("Current number of entries available in the Client's order : " + listOrders[i].ListEntries.Count);
+            afficher.afficherLine("Current number of Main dishes available in the Client's order : " + listOrders[i].ListPlats.Count);
+            afficher.afficherLine("Current number of Desserts available in the Client's order : " + listOrders[i].ListDesserts.Count);
+            afficher.afficherLine("---------------\n");
+            //if(leClient.CurrentDishe != 0)
+            //{
+
+            if (leClient.CurrentDishe == 0)
+            {
+                if (listOrders[i].ListEntries.Count == NbPlats)
+                {
+                    //alertWaiter recup entries
+                    this.nbDishesWaiting -= listOrders[i].ListEntries.Count;
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable, 1);
+                }
+            }
+            else if (leClient.CurrentDishe == 1)
+            {
+                if (listOrders[i].ListPlats.Count == NbPlats)
+                {
+                    //alertWaiter recup plats
+                    this.nbDishesWaiting -= listOrders[i].ListPlats.Count;
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable, 2);
+                }
+            }
+            else if (leClient.CurrentDishe == 2)
+            {
                 if (listOrders[i].ListDesserts.Count == NbPlats)
                 {
                     //alertWaiter recup Desserts
                     this.nbDishesWaiting -= listOrders[i].ListDesserts.Count;
-                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable,3);
+                    Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().Serve(idTable, 3);
                 }
+            }
+
+            //}
+        }
+
+        public void verifCommands(int IdTable, Clients leClient)
+        {
+            int i = 0;
+            bool idFound = false;
+
+            while (i < listOrders.Count && !idFound)
+            {
+                if (listOrders[i].IdTable == IdTable)
+                {
+                    idFound = true;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            if (idFound)
+            {
+                if (leClient.CurrentDishe == 2)
+                {
+                    if (listOrders[i].ListDesserts.Count > 0)
+                    {
+                        //alertWaiter recup Desserts
+                        this.nbDishesWaiting -= listOrders[i].ListDesserts.Count;
+                        Hall.hallInstance().FindSquareByTableId(IdTable).GetFreeWaiter().Serve(IdTable, 3);
+                    }
+                }
+            }
+
+        }
+
+        public void throwDishes(int IdTable)
+        {
+            int i = 0;
+            bool idFound = false;
+
+            while (i < listOrders.Count && !idFound)
+            {
+                if (listOrders[i].IdTable == IdTable)
+                {
+                    idFound = true;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            if (idFound)
+            {
+                listOrders.RemoveAt(i);
             }
         }
 
@@ -204,9 +282,9 @@ namespace Salle.Sockets
                 //<Client Quit> is the sign for end of data 
                 string theMessageToSend = ord.IdTable + ":";
 
-                for(int i = 0; i < ord.ListEntries.Count;i++)
+                for (int i = 0; i < ord.ListEntries.Count; i++)
                 {
-                    if(i != 0)
+                    if (i != 0)
                     {
                         theMessageToSend += ",";
                     }
@@ -214,7 +292,7 @@ namespace Salle.Sockets
                 }
 
                 theMessageToSend += ":";
-                for (int i = 0; i < ord.ListPlats.Count;i++)
+                for (int i = 0; i < ord.ListPlats.Count; i++)
                 {
                     if (i != 0)
                     {
@@ -233,19 +311,19 @@ namespace Salle.Sockets
                     theMessageToSend += ord.ListDesserts[i];
                 }
 
-                Console.WriteLine("Message  {0} ", theMessageToSend);
+                afficher.afficherLine("The HeadWaiter gives the order " + theMessageToSend+" to the Chef\n" );
 
                 byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 
                 UdpClient udpClient = new UdpClient();
                 udpClient.Send(msg, msg.Length, "127.0.0.1", 5036);
-               // udpClient.Send(msg, msg.Length, "10.144.50.44", 5036); 
+                // udpClient.Send(msg, msg.Length, "10.144.50.44", 5036); 
                 udpClient.Close();
 
             }
             catch (Exception exc)
             {
-                Console.WriteLine(exc);
+                afficher.afficherLine(exc.ToString());
             }
 
         }
