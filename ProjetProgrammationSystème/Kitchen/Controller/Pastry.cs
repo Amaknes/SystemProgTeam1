@@ -8,11 +8,12 @@ namespace Kitchen.Controller
 {
     public class Pastry : SpecializedChefs
     {
-        public string Type()
+
+        public override string Type()
         {
             return "Pastry";
         }
 
-        
+
     }
 }

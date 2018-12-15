@@ -69,8 +69,7 @@ namespace Salle.Sockets
         }
 
         public void EcouterCutleryDesk()
-        {
-            afficher.afficherLine("Préparation à l'écoute...");
+        { 
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
             UdpClient serveur = new UdpClient(5037);
@@ -80,19 +79,19 @@ namespace Salle.Sockets
             {
                 //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
                 IPEndPoint client = null;
-                afficher.afficherLine("ÉCOUTE...");
+                afficher.afficherLine("CutleryDesk's Socket Listening....");
 
                 //On écoute jusqu'à recevoir un message.
-                byte[] data = serveur.Receive(ref client); 
-                afficher.afficherLine("Données reçues en provenance de "+ client.Address+":"+ client.Port+".");
+                byte[] data = serveur.Receive(ref client);
+                afficher.afficherLine("Cleaned cutlery received from the DishWasher");
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
 
 
-                
+
                 ReceptMessage(message);
-                
+
             }
 
         }
@@ -104,12 +103,12 @@ namespace Salle.Sockets
 
             if (Int32.Parse(MArriver[0]) == 0)
             {
-                afficher.afficherLine("CONTENU DU MESSAGE : "+ MArriver[1]+" Couverts ont été rangé\n");
+                afficher.afficherLine(  MArriver[1] + " Couverts ont été rangé\n");
                 this.cutlery += Int32.Parse(IdsTables[0] + IdsTables[1]);
             }
             else
             {
-                afficher.afficherLine("CONTENU DU MESSAGE : "+ MArriver[1]+" Nappes ont été rangé\n");
+                afficher.afficherLine( MArriver[1] + " Nappes ont été rangé\n");
                 this.nappes += Int32.Parse(IdsTables[0] + IdsTables[1]);
             }
         }
@@ -122,7 +121,7 @@ namespace Salle.Sockets
                 //<Client Quit> is the sign for end of data 
                 string theMessageToSend = "" + data;
 
-                afficher.afficherLine("Message " + theMessageToSend);
+                afficher.afficherLine(theMessageToSend + " dirty cutlery and one piece of laundry were given to the DishWasher");
 
                 byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 
@@ -134,15 +133,15 @@ namespace Salle.Sockets
             }
             catch (Exception exc)
             {
-                Console.WriteLine(exc);
+                afficher.afficherLine(exc.ToString());
             }
         }
 
-       
+
 
         public void getCutlery(int nbCutlery)
         {
-            if(cutlery >= nbCutlery)
+            if (cutlery >= nbCutlery)
             {
                 cutlery -= nbCutlery;
             }

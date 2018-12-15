@@ -13,14 +13,14 @@ namespace Kitchen.Controller
     class CommisChef : CommisChefInterface
     {
         private Affichage afficher;
- 
-        private List<int>_ingredients;
-        public List<int>ingredients { get => this._ingredients; set => this._ingredients = value; }
+
+        private List<int> _ingredients;
+        public List<int> ingredients { get => this._ingredients; set => this._ingredients = value; }
 
 
 
         public CommisChef(int id)
-        { 
+        {
             this.ingredients = new List<int>();
             this.afficher = new Affichage();
         }
@@ -40,13 +40,13 @@ namespace Kitchen.Controller
             //liste des endroits ou le commis ira chercher les ingrédients (0,1,2)
             if (TypeIngredient == 0)
             {
-                afficher.afficherLine("The Commis Chef took "+nbSameDish+" "+NameIngredient+" from the Reserve");
+                afficher.afficherLine("The Commis Chef took " + nbSameDish + " " + NameIngredient + " from the Reserve");
             }
-            else if(TypeIngredient == 1)
+            else if (TypeIngredient == 1)
             {
                 afficher.afficherLine("The Commis Chef took " + nbSameDish + " " + NameIngredient + " from the Cold Chamber");
             }
-            else if(TypeIngredient == 2)
+            else if (TypeIngredient == 2)
             {
                 afficher.afficherLine("The Commis Chef took " + nbSameDish + " " + NameIngredient + " from the Freezer");
             }

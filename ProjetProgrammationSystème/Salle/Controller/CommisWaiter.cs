@@ -16,7 +16,7 @@ namespace Salle.Controller
         public static CommisWaiter commisWaiterInstance()
         {
             if (CommisWaiterInstance == null)
-            { 
+            {
                 CommisWaiterInstance = new CommisWaiter();
             }
             return CommisWaiterInstance;
@@ -45,7 +45,7 @@ namespace Salle.Controller
                 table.Drinks = 1;
             }
         }
-    
+
         public void Update(int idTable, bool FirstTime)
         {
             ServeBreadDrinks(idTable);

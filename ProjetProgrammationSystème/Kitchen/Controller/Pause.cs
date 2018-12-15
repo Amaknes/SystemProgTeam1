@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,14 +27,18 @@ namespace Kitchen.Controller
                 {
                     if (th.IsAlive)
                     {
+                        if (!paused)
+                        {
+                            new Affichage().afficherLine("\n----------Kitchen Paused----------");
+                        }
                         paused = true;
                         th.Suspend();
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-
+                new Affichage().afficherLine(e.ToString());
             }
         }
 
@@ -48,6 +53,10 @@ namespace Kitchen.Controller
                         if (th.IsAlive)
                         {
                             th.Resume();
+                            if (paused)
+                            {
+                                new Affichage().afficherLine("\n----------Kitchen Resumed----------\n");
+                            }
                         }
                         paused = false;
                     }
@@ -55,7 +64,7 @@ namespace Kitchen.Controller
             }
             catch (Exception e)
             {
-
+                new Affichage().afficherLine(e.ToString());
             }
         }
 

@@ -62,8 +62,8 @@ namespace Salle.Controller
             this.afficher = new Affichage();
 
             List<ClientsInterface> newListClient = new List<ClientsInterface>();
-            this.ListClients = (List<ClientsInterface>) newListClient;
-            this._sem = new Semaphore(1,1);
+            this.ListClients = (List<ClientsInterface>)newListClient;
+            this._sem = new Semaphore(1, 1);
 
             List<HeadWaiterInterface> newListHeadWaiter = new List<HeadWaiterInterface>
             {
@@ -82,7 +82,7 @@ namespace Salle.Controller
             bool res = false;
             if (ListSquare[0].NbClients <= ListSquare[1].NbClients)
             {
-                if(ListSquare[0].LineList[0].NbClients <= ListSquare[0].LineList[1].NbClients)
+                if (ListSquare[0].LineList[0].NbClients <= ListSquare[0].LineList[1].NbClients)
                 {
                     idTable = VerifTables(0, 0, groupe);
                     if (idTable == -1)
@@ -151,15 +151,15 @@ namespace Salle.Controller
                 }
             }
 
-            if(idTable >= 0)
+            if (idTable >= 0)
             {
 
-                if(Hall.hallInstance().FindTableById(idTable).Cutlery == false)
+                if (Hall.hallInstance().FindTableById(idTable).Cutlery == false)
                 {
                     GetHeadWaiterDisposable().DrowUpTable(idTable, groupe.ClientsNumber);
                 }
-                afficher.afficherLine("IdTable : "+idTable+", nbClients "+groupe.ClientsNumber);
-                CallHeadWaiter(idTable,groupe.ClientsNumber);
+                afficher.afficherLine("The group " + groupe.IdClients + " sit at the table n°"+ idTable );
+                CallHeadWaiter(idTable, groupe.ClientsNumber);
                 res = true;
             }
 
@@ -196,7 +196,7 @@ namespace Salle.Controller
                         countMal = 25;
                     }
 
-                    if (res != -1 && ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace < ListSquare[idSquare].LineList[idLine].ListTable[res-countMal].NbPlace)
+                    if (res != -1 && ListSquare[idSquare].LineList[idLine].ListTable[i].NbPlace < ListSquare[idSquare].LineList[idLine].ListTable[res - countMal].NbPlace)
                     {
                         res = ListSquare[idSquare].LineList[idLine].ListTable[i].IdTable;
                     }
@@ -218,10 +218,9 @@ namespace Salle.Controller
 
         public void CallHeadWaiter(int idTable, int nbClients)
         {
-            HeadWaiter HWaiter = (HeadWaiter) GetHeadWaiterDisposable();
-            afficher.afficherLine("Headwaiter disponible : "+HWaiter.IdHeadWaiter);
+            HeadWaiter HWaiter = (HeadWaiter)GetHeadWaiterDisposable(); 
             //Hwaiter vient voir le maître d'hôtel
-            
+
             Thread threadHWaiter = new Thread(() => HWaiter.SitClient(idTable, nbClients));
             new Pause().AddThread(threadHWaiter);
             threadHWaiter.Start();
@@ -234,7 +233,8 @@ namespace Salle.Controller
             if (!ListHeadWaiter[0].Busy)
             {
                 repHeadWaiter = ListHeadWaiter[0];
-            }else if (!ListHeadWaiter[1].Busy)
+            }
+            else if (!ListHeadWaiter[1].Busy)
             {
                 repHeadWaiter = ListHeadWaiter[1];
             }
@@ -256,7 +256,7 @@ namespace Salle.Controller
                 if (this.ListClients[0] != null)
                 {
                     ClientsInterface premierGroupe = this.ListClients[0];
-                    afficher.afficherLine(""+premierGroupe.IdClients);
+                    afficher.afficherLine("\nThe Maître Hotel greets the group " + premierGroupe.IdClients);
                     if (AssignTable(premierGroupe))
                     {
                         this.ListClients.Remove(premierGroupe);
@@ -286,7 +286,7 @@ namespace Salle.Controller
         public void SecondOrderFromClient(int IdTable)
         {
             HeadWaiter HWaiter = (HeadWaiter)GetHeadWaiterDisposable();
-            HWaiter.GiveOrder(HWaiter.getOrder(IdTable,true));
+            HWaiter.GiveOrder(HWaiter.getOrder(IdTable, true));
         }
     }
 }

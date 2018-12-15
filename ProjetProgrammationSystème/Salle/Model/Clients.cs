@@ -14,6 +14,13 @@ namespace Salle.Model
     {
         private Affichage afficher;
 
+        private Order _OrdClient;
+        public Order OrdClient
+        {
+            get => this._OrdClient;
+            set => this._OrdClient = value;
+        }
+
         private int _IdClients;
         public int IdClients
         {
@@ -40,13 +47,13 @@ namespace Salle.Model
             get => this._CurrentDishe;
             set
             {
-                if(value >= 0 && value < 4)
+                if (value >= 0 && value < 4)
                 {
                     this._CurrentDishe = value;
                 }
             }
         }
-         
+
         private bool SkipEntry, SkipPlate, SkipDessert = false;
 
         private bool _Booking;
@@ -77,7 +84,8 @@ namespace Salle.Model
         }
 
         private int _Bill;
-        public int Bill {
+        public int Bill
+        {
             get => this._Bill;
             set
             {
@@ -89,19 +97,22 @@ namespace Salle.Model
         }
 
         private List<IObserver> _Observers;
-        public List<IObserver> Observers {
+        public List<IObserver> Observers
+        {
             get => this._Observers;
             set => this._Observers = value;
         }
 
         private int _StateType;
-        public int StateType {
+        public int StateType
+        {
             get => this._StateType;
             set => this._StateType = value;
         }
 
         private int _idTable;
-        public int idTable {
+        public int idTable
+        {
             get => this._idTable;
             set
             {
@@ -133,7 +144,7 @@ namespace Salle.Model
         }
 
 
-        public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber, int TimeSpend)
+        public Clients(int IdClients, bool Order, bool Booking, int ClientsNumber, int TimeSpend, Order newOrd)
         {
             this.afficher = new Affichage();
             this.IdClients = IdClients;
@@ -142,6 +153,39 @@ namespace Salle.Model
             this.ClientsNumber = ClientsNumber;
             this.CurrentDishe = 0;
             this.TimeSpend = TimeSpend;
+
+            if (newOrd != null)
+            {
+                this.OrdClient = newOrd;
+                if (newOrd.ListEntries.Count == 0)
+                {
+                    this.SkipEntry = true;
+                }
+                else
+                {
+                    this.SkipEntry = false;
+                }
+                if (newOrd.ListPlats.Count == 0)
+                {
+                    this.SkipPlate = true;
+                }
+                else
+                {
+                    this.SkipPlate = false;
+                }
+                if (newOrd.ListDesserts.Count == 0)
+                {
+                    this.SkipDessert = true;
+                }
+                else
+                {
+                    this.SkipDessert = false;
+                }
+            }
+            else
+            {
+                this.OrdClient = null;
+            }
 
             this.Observers = new List<IObserver>();
             AddObserver(CommisWaiter.commisWaiterInstance());
@@ -152,7 +196,7 @@ namespace Salle.Model
 
             for (int i = 0; i < ClientsNumber; i++)
             {
-                if(rnd.Next(2) == 0)
+                if (rnd.Next(2) == 0)
                 {
                     WaiterRequest = false;
                 }
@@ -164,8 +208,6 @@ namespace Salle.Model
                 this.ClientsList.Add(new FactoryClients().CreateIndividualClientInterface(rnd.Next(5), rnd.Next(5), WaiterRequest));
             }
         }
-
-
 
 
         public void AddObserver(IObserver Obs)
@@ -187,7 +229,7 @@ namespace Salle.Model
         }
 
 
-        
+
 
         public OrderInterface ChoiceOrder(bool SecondOrder)
         {
@@ -197,7 +239,7 @@ namespace Salle.Model
 
             int plat = -1;
 
-            
+
 
 
             foreach (IndividualClient IndCl in ClientsList)
@@ -205,38 +247,38 @@ namespace Salle.Model
                 //          int TimeSpent = 0;
                 //if (!SecondOrder)
                 //{
-                    plat = IndCl.ChooseEntry(rnd);
-                    if (plat != -1)
-                    {
-                        resOrder.ListEntries.Add(plat);
-                        plat = -1;
-                        //                      TimeSpent += 15;
-                    }
+                plat = IndCl.ChooseEntry(rnd);
+                if (plat != -1)
+                {
+                    resOrder.ListEntries.Add(plat);
+                    plat = -1;
+                    //                      TimeSpent += 15;
+                }
 
-                    plat = IndCl.ChoosePlat(rnd);
-                    if (plat != -1)
-                    {
-                        resOrder.ListPlats.Add(plat);
-                        plat = -1;
-                        //                        TimeSpent += 25;
-                    }
+                plat = IndCl.ChoosePlat(rnd);
+                if (plat != -1)
+                {
+                    resOrder.ListPlats.Add(plat);
+                    plat = -1;
+                    //                        TimeSpent += 25;
+                }
                 //}
 
                 //if (!Order || (Order && SecondOrder))
                 //{
-                    plat = IndCl.ChooseDessert(rnd);
-                    if (plat != -1)
-                    {
-                        resOrder.ListDesserts.Add(plat);
-                        plat = -1;
- //                       TimeSpent += 10;
-                    }
-                    
+                plat = IndCl.ChooseDessert(rnd);
+                if (plat != -1)
+                {
+                    resOrder.ListDesserts.Add(plat);
+                    plat = -1;
+                    //                       TimeSpent += 10;
+                }
+
                 //}
             }
 
 
-            if(resOrder.ListEntries.Count == 0)
+            if (resOrder.ListEntries.Count == 0)
             {
                 this.SkipEntry = true;
             }
@@ -267,9 +309,9 @@ namespace Salle.Model
         public void Payment()
         {
             afficher.afficherLine("Clients Pay");
-            
+
             MaîtreHôtel.maîtreHôtelInstance().GetMoney(Bill, this);
-            
+
 
         }
 
@@ -277,6 +319,7 @@ namespace Salle.Model
         {
             this.TimeOfArrival = DateTime.Now.Ticks;
             afficher.afficherLine("Clients Starts to eat");
+            afficher.afficherLine("The Clients will wait a maximum of " + TimeSpend + "min");
             bool leaving = false;
 
             if (!SkipEntry)
@@ -286,17 +329,35 @@ namespace Salle.Model
 
             if (!leaving)
             {
+                if (!SkipEntry)
+                {
+                    afficher.afficherLine("Group n°" + IdClients + " is eating an entry");
+                    Thread.Sleep(15000);
+                    afficher.afficherLine("Group n°" + IdClients + " ate an entry");
+                }
+                else
+                {
+                    afficher.afficherLine("Entry was skipped");
+                }
+
                 if (!SkipPlate)
                 {
-                    Thread.Sleep(15000);
-                    afficher.afficherLine("Client ate an entry");
                     leaving = WaitForNextDishe(1);
                 }
 
                 if (!leaving)
                 {
-                    Thread.Sleep(25000);
-                    afficher.afficherLine("Client ate a Plat");
+                    if (!SkipPlate)
+                    {
+                        afficher.afficherLine("Group n°" + IdClients + " is eating the Main Dish");
+                        Thread.Sleep(25000);
+                        afficher.afficherLine("Group n°" + IdClients + " ate the Main Dish");
+                    }
+                    else
+                    {
+                        afficher.afficherLine("Main Dish was skipped");
+                    }
+
                     //if (Order && !leaving)
                     //{
                     //    MaîtreHôtel.maîtreHôtelInstance().SecondOrderFromClient(idTable);
@@ -310,13 +371,18 @@ namespace Salle.Model
 
                         if (!leaving)
                         {
+                            afficher.afficherLine("Group n°" + IdClients+" is eating a Dessert");
                             Thread.Sleep(10000);
-                            afficher.afficherLine("Client ate a Dessert");
+                            afficher.afficherLine("Group n°" + IdClients + " ate a Dessert");
                         }
+                    }
+                    else
+                    {
+                        afficher.afficherLine("Dessert was skipped");
                     }
                 }
 
-                
+
             }
 
             if (!leaving)
@@ -341,12 +407,10 @@ namespace Salle.Model
                 }
             }
 
-            afficher.afficherLine("Request : "+request+", WaitTime : "+TimeSpend);
-            
+
             while (this.CurrentDishe == NbDishe && !leaving)
             {
-                afficher.afficherLine(""+this.CurrentDishe);
-                if ((DateTime.Now.Ticks - TimeOfArrival) >= (TimeSpend * (1000  * 10000)))
+                if ((DateTime.Now.Ticks - TimeOfArrival) >= (TimeSpend * (1000 * 10000)))
                 {
                     leaving = leave();
                 }
@@ -364,7 +428,7 @@ namespace Salle.Model
                         else if (Bread > 0)
                         {
                             Bread -= 1;
-                            afficher.afficherLine("Eats Bread at Table "+idTable+" : "+Bread);
+                            afficher.afficherLine("Groupe n°" + IdClients + " Eats Bread at Table n°" + idTable + " : There is " + Bread + " pieces of Bread on the table");
                         }
                     }
 
@@ -379,25 +443,26 @@ namespace Salle.Model
                         else if (Drinks > 0)
                         {
                             Drinks -= 1;
-                            afficher.afficherLine(".....Drinking at Table "+idTable+" : "+Drinks);
+                            afficher.afficherLine("Groupe n°" + IdClients + " Drinks at Table n°" + idTable + " : There is " + Drinks + " jugs of water on the table");
                         }
                     }
 
                     Thread.Sleep(200);
                 }
 
-                
+
             }
             return leaving;
         }
 
         public bool leave()
         {
-            afficher.afficherLine("Client is leaving");
+            afficher.afficherLine("Client leaved table " + idTable+"\n\n");
             //detruire le client
+            OrderDesk.orderDeskInstance().throwDishes(idTable);
             Hall.hallInstance().FindTableById(idTable).Clients = null;
 
-            Thread threadWaiterCleaning = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().CleanTable(this.idTable,this.ClientsNumber));
+            Thread threadWaiterCleaning = new Thread(() => Hall.hallInstance().FindSquareByTableId(idTable).GetFreeWaiter().CleanTable(this.idTable, this.ClientsNumber));
             new Pause().AddThread(threadWaiterCleaning);
             threadWaiterCleaning.Start();
 

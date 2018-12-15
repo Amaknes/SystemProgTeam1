@@ -82,11 +82,11 @@ namespace Kitchen.Controller
             string[] Lists = Regex.Split(nbCutlery, @"\D+");
             int nb = 0;
 
-            nb = Int32.Parse(Lists[0]+Lists[1]);
-            
+            nb = Int32.Parse(Lists[0] + Lists[1]);
+
 
             StockCutlery(true, nb);
-            
+
             StockLaundry(true);
         }
 
@@ -100,7 +100,7 @@ namespace Kitchen.Controller
             {
                 Thread.Sleep(1000);
                 //ranger ListDIshwasher dans le socket
-                CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(ListDishWasher,0);
+                CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(ListDishWasher, 0);
                 ListWashMachine = 0;
                 Thread.Sleep(1000);
             }
@@ -108,7 +108,7 @@ namespace Kitchen.Controller
 
         public void TimingDishWasher()
         {
-            while(Timer != 0)
+            while (Timer != 0)
             {
                 while ((DateTime.Now.Ticks - Timer) < 10000)
                 {
@@ -156,14 +156,13 @@ namespace Kitchen.Controller
 
             StockLaundry(false);
         }
-        
+
         public void StockLaundry(bool Dirty)
         {
             if (Dirty)
             {
                 ListLaundry += 1;
 
-                Console.WriteLine(ListLaundry);
                 if (ListLaundry >= 10)
                 {
                     this.ListLaundry -= 10;
@@ -178,10 +177,10 @@ namespace Kitchen.Controller
             {
                 Thread.Sleep(1000);
                 //ranger dans le socket
-                CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(this.ListWashMachine,1);
+                CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(this.ListWashMachine, 1);
                 Thread.Sleep(1000);
             }
         }
-        
+
     }
 }

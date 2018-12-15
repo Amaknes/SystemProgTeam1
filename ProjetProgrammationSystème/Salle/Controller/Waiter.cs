@@ -15,30 +15,35 @@ namespace Salle.Controller
         private Affichage afficher;
 
         private int _IdWaiter;
-        public int IdWaiter {
+        public int IdWaiter
+        {
             get => this._IdWaiter;
             set
             {
-                if(value > 0){
+                if (value > 0)
+                {
                     this._IdWaiter = value;
                 }
             }
         }
 
         private bool _Busy;
-        public bool Busy {
+        public bool Busy
+        {
             get => this._Busy;
             set => this._Busy = value;
         }
 
         private int _StateType;
-        public int StateType {
+        public int StateType
+        {
             get => this._StateType;
             set => this._StateType = value;
         }
-        
+
         private List<IObserver> _Observers;
-        public List<IObserver> Observers {
+        public List<IObserver> Observers
+        {
             get => this._Observers;
             set => this._Observers = value;
         }
@@ -50,7 +55,7 @@ namespace Salle.Controller
             this.IdWaiter = idWaiter;
             this.Busy = false;
             this.StateType = 0;
-            this.Observers =  new List<IObserver>();
+            this.Observers = new List<IObserver>();
             this.afficher = new Affichage();
         }
 
@@ -66,9 +71,9 @@ namespace Salle.Controller
             return this.Observers.Remove(Obs);
         }
 
-        public void NotifyObserver(int idTable,bool ft)
+        public void NotifyObserver(int idTable, bool ft)
         {
-            foreach(IObserver o in Observers)
+            foreach (IObserver o in Observers)
             {
                 o.Update(idTable, ft);
             }
@@ -84,7 +89,7 @@ namespace Salle.Controller
             //take cutlery to the Dishes desk
 
             CutleryDesk.cutleryDeskInstance().SendDataCutleryDesk(nbCouverts);
-            
+
 
             Busy = false;
         }
@@ -92,9 +97,19 @@ namespace Salle.Controller
         public void Serve(int idTable, int stepDishes)
         {
             Busy = true;
-            afficher.afficherLine("Waiter is serving food");
-            afficher.afficherLine(""+stepDishes);
-            Clients leClient = (Clients) Hall.hallInstance().FindTableById(idTable).Clients;
+            if(stepDishes == 1)
+            {
+                afficher.afficherLine("Waiter is serving Entries");
+            }
+            else if(stepDishes == 2)
+            {
+                afficher.afficherLine("Waiter is serving the main Dish");
+            }
+            else
+            {
+                afficher.afficherLine("Waiter is serving Dessert");
+            }
+            Clients leClient = (Clients)Hall.hallInstance().FindTableById(idTable).Clients;
             leClient.CurrentDishe = stepDishes;
 
             Busy = false;
@@ -104,14 +119,14 @@ namespace Salle.Controller
         {
             if (Busy)
             {
-                NotifyObserver(idTable,true);
+                NotifyObserver(idTable, true);
             }
             else
             {
                 Busy = true;
-                afficher.afficherLine("Waiter giving Bread and Drinks");
+                afficher.afficherLine("Waiter is serving Bread and Drinks");
                 Table table = (Table)Hall.hallInstance().FindTableById(idTable);
-                if(table.Clients.ClientsNumber > 6)
+                if (table.Clients.ClientsNumber > 6)
                 {
                     table.Bread = 2;
                     table.Drinks = 2;

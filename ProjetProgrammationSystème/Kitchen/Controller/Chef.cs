@@ -55,7 +55,7 @@ namespace Kitchen.Controller
                 SpecializedChefsList.Add((SpecializedChefsInterface)new Cookers());
             }
         }
-        
+
         public static Chef chefInstance()
         {
             if (ChefInstance == null)
@@ -97,7 +97,7 @@ namespace Kitchen.Controller
 
 
             String[] IdsTables = Regex.Split(Lists[0], @"\D+");
-            order = new Order(Int32.Parse(IdsTables[0] + IdsTables[1])); 
+            order = new Order(Int32.Parse(IdsTables[0] + IdsTables[1]));
 
 
             String[] IdsEntries = Regex.Split(Lists[1], @"\D+");
@@ -141,7 +141,7 @@ namespace Kitchen.Controller
 
             this.ListOrder.Add(order);
 
-            afficher.afficherLine("The chef took the order from the table "+order.IdTable+", "+order.ListEntries.Count+" entries, "+ order.ListPlats.Count+" Plats and "+ order.ListDesserts.Count+" desserts");
+            afficher.afficherLine("The chef took the order from the table " + order.IdTable + ", " + order.ListEntries.Count + " entries, " + order.ListPlats.Count + " Plats and " + order.ListDesserts.Count + " desserts");
             Sort();
         }
 
@@ -150,22 +150,25 @@ namespace Kitchen.Controller
         public void Sort()
         {
             bool suite = false;
-            foreach (Order ord in ListOrder)
-            {
+            int taille = ListOrder.Count;
+
+            int o = 0;
+            while (ListOrder.Count > 0 && ListOrder[o] != null) 
+            { 
                 List<int> SuiteDish = new List<int>();
 
-                if(ord.ListEntries.Count > 0)
+                if (ListOrder[o].ListEntries.Count > 0)
                 {
-                    ord.ListEntries.Sort();
-                    for (int i = 0; i < ord.ListEntries.Count - 1; i++)
+                    ListOrder[o].ListEntries.Sort();
+                    for (int i = 0; i < ListOrder[o].ListEntries.Count - 1; i++)
                     {
-                        if (!suite && ord.ListEntries[i] == ord.ListEntries[i + 1])
+                        if (!suite && ListOrder[o].ListEntries[i] == ListOrder[o].ListEntries[i + 1])
                         {
                             SuiteDish.Add(i);
                             SuiteDish.Add(i + 1);
                             suite = true;
                         }
-                        else if (suite && ord.ListEntries[i] == ord.ListEntries[i + 1])
+                        else if (suite && ListOrder[o].ListEntries[i] == ListOrder[o].ListEntries[i + 1])
                         {
                             SuiteDish.Remove(i);
                             SuiteDish.Add(i + 1);
@@ -176,42 +179,29 @@ namespace Kitchen.Controller
                             suite = false;
                         }
                     }
-                    suite = false;
-
-
-                    afficher.afficher("entries ");
-                    foreach (int test in ord.ListEntries)
-                    {
-                        afficher.afficher(""+ test);
-                    }
-                    afficher.afficherLine("\n");
-                    foreach (int test in SuiteDish)
-                    {
-                        afficher.afficher(""+test);
-                    }
-                    afficher.afficherLine("\n");
+                    suite = false; 
 
                     //dispatch
-                    Dispatch(SuiteDish, 1, ord.IdTable);
+                    Dispatch(SuiteDish, 1, ListOrder[o].IdTable);
                 }
-                
+
 
 
 
                 SuiteDish = new List<int>();
 
-                if(ord.ListPlats.Count > 0)
+                if (ListOrder[o].ListPlats.Count > 0)
                 {
-                    ord.ListPlats.Sort();
-                    for (int i = 0; i < ord.ListPlats.Count - 1; i++)
+                    ListOrder[o].ListPlats.Sort();
+                    for (int i = 0; i < ListOrder[o].ListPlats.Count - 1; i++)
                     {
-                        if (!suite && ord.ListPlats[i] == ord.ListPlats[i + 1])
+                        if (!suite && ListOrder[o].ListPlats[i] == ListOrder[o].ListPlats[i + 1])
                         {
                             SuiteDish.Add(i);
                             SuiteDish.Add(i + 1);
                             suite = true;
                         }
-                        else if (suite && ord.ListPlats[i] == ord.ListPlats[i + 1])
+                        else if (suite && ListOrder[o].ListPlats[i] == ListOrder[o].ListPlats[i + 1])
                         {
                             SuiteDish.Remove(i);
                             SuiteDish.Add(i + 1);
@@ -222,41 +212,29 @@ namespace Kitchen.Controller
                             suite = false;
                         }
                     }
-                    suite = false;
-
-                    afficher.afficher("Plats ");
-                    foreach (int test in ord.ListPlats)
-                    {
-                        afficher.afficher(""+test);
-                    }
-                    afficher.afficherLine("\n");
-                    foreach (int test in SuiteDish)
-                    {
-                        afficher.afficher(""+test);
-                    }
-                    afficher.afficherLine("\n");
+                    suite = false; 
 
 
                     //dispatch
-                    Dispatch(SuiteDish, 2, ord.IdTable);
+                    Dispatch(SuiteDish, 2, ListOrder[o].IdTable);
                 }
 
 
 
                 SuiteDish = new List<int>();
 
-                if(ord.ListDesserts.Count > 0)
+                if (ListOrder[o].ListDesserts.Count > 0)
                 {
-                    ord.ListDesserts.Sort();
-                    for (int i = 0; i < ord.ListDesserts.Count - 1; i++)
+                    ListOrder[o].ListDesserts.Sort();
+                    for (int i = 0; i < ListOrder[o].ListDesserts.Count - 1; i++)
                     {
-                        if (!suite && ord.ListDesserts[i] == ord.ListDesserts[i + 1])
+                        if (!suite && ListOrder[o].ListDesserts[i] == ListOrder[o].ListDesserts[i + 1])
                         {
                             SuiteDish.Add(i);
                             SuiteDish.Add(i + 1);
                             suite = true;
                         }
-                        else if (suite && ord.ListDesserts[i] == ord.ListDesserts[i + 1])
+                        else if (suite && ListOrder[o].ListDesserts[i] == ListOrder[o].ListDesserts[i + 1])
                         {
                             SuiteDish.Remove(i);
                             SuiteDish.Add(i + 1);
@@ -267,24 +245,13 @@ namespace Kitchen.Controller
                             suite = false;
                         }
                     }
-                    suite = false;
-
-                    afficher.afficher("Desserts ");
-                    foreach (int test in ord.ListDesserts)
-                    {
-                        afficher.afficher(""+test);
-                    }
-                    afficher.afficherLine("\n");
-                    foreach (int test in SuiteDish)
-                    {
-                        afficher.afficher(""+test);
-                    }
-                    afficher.afficherLine("\n");
-
+                    suite = false; 
                     //dispatch
-                    Dispatch(SuiteDish, 3, ord.IdTable);
+                    Dispatch(SuiteDish, 3, ListOrder[o].IdTable);
                 }
-            }
+
+                ListOrder.RemoveAt(o);
+            } 
         }
 
         public void Dispatch(List<int> Suite, int pastry, int idTable)
@@ -303,11 +270,11 @@ namespace Kitchen.Controller
                 foreach (Order ord in ListOrder)
                 {
                     int i = 0;
-                    while(i < ord.ListDesserts.Count)
+                    while (i < ord.ListDesserts.Count)
                     {
                         if (Suite.Count != 0 && Suite[0] == i)
                         {
-                            i = Suite[0+1];
+                            i = Suite[0 + 1];
                             count = 1 + Suite[1] - Suite[0];
                             Suite.RemoveAt(0);
                             Suite.RemoveAt(0);
@@ -316,8 +283,8 @@ namespace Kitchen.Controller
                         {
                             count = 1;
                         }
-                        setData = process.GetListCommand("Projet_Syst2", ord.ListDesserts[i],2);
-                        afficher.afficherLine(count+" Desserts de "+ ord.ListDesserts[i]);
+                        setData = process.GetListCommand("Projet_Syst2", ord.ListDesserts[i], 2);
+                        afficher.afficherLine("\n" + count + " instances of dessert n°" + ord.ListDesserts[i]+" needed");
 
                         foreach (DataRow dr in setData.Tables[0].Rows)
                         {
@@ -326,7 +293,6 @@ namespace Kitchen.Controller
                             int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
                             Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 3, ord.ListDesserts.Count, count, ord.ListDesserts[i], ord.IdTable);
-
                             SpecializedChefsList[0].takeOrders(currentTask);
                         }
                         i++;
@@ -354,8 +320,8 @@ namespace Kitchen.Controller
                             {
                                 count = 1;
                             }
-                            setData = process.GetListCommand("Projet_Syst2", ord.ListPlats[i],1);
-                            afficher.afficherLine(count+" Plats de "+ ord.ListPlats[i]);
+                            setData = process.GetListCommand("Projet_Syst2", ord.ListPlats[i], 1);
+                            afficher.afficherLine("\n" + count + " instances of the Main Dish n°" + ord.ListPlats[i]+" needed");
 
                             foreach (DataRow dr in setData.Tables[0].Rows)
                             {
@@ -364,14 +330,13 @@ namespace Kitchen.Controller
                                 int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
                                 Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 2, ord.ListPlats.Count, count, ord.ListPlats[i], ord.IdTable);
-
-                                SpecializedChefsList[0].takeOrders(currentTask);
+                                SpecializedChefsList[1].takeOrders(currentTask);
                             }
                             i++;
                         }
                     }
                 }
-                else if(pastry == 1)
+                else if (pastry == 1)
                 {
                     foreach (Order ord in ListOrder)
                     {
@@ -389,8 +354,8 @@ namespace Kitchen.Controller
                             {
                                 count = 1;
                             }
-                            setData = process.GetListCommand("Projet_Syst2", ord.ListEntries[i],0);
-                            afficher.afficherLine(count+" Entrées de "+ ord.ListEntries[i]);
+                            setData = process.GetListCommand("Projet_Syst2", ord.ListEntries[i], 0);
+                            afficher.afficherLine("\n"+count + " instances of entry n°" + ord.ListEntries[i]+" needed");
 
 
                             foreach (DataRow dr in setData.Tables[0].Rows)
@@ -400,8 +365,7 @@ namespace Kitchen.Controller
                                 int OrderStep = Int32.Parse(dr["OrderStep"].ToString());
 
                                 Model.Tasks currentTask = new Model.Tasks(NameTask, Timetask, OrderStep, 1, ord.ListEntries.Count, count, ord.ListEntries[i], ord.IdTable);
-
-                                SpecializedChefsList[0].takeOrders(currentTask);
+                                SpecializedChefsList[1].takeOrders(currentTask);
                             }
                             i++;
                         }

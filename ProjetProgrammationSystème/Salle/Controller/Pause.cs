@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Salle.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,10 @@ namespace Salle.Controller
                 {
                     if (th.IsAlive)
                     {
+                        if (!paused)
+                        {
+                            new Affichage().afficherLine("\n----------Salle paused----------");
+                        }
                         paused = true;
                         th.Suspend();
                     }
@@ -33,7 +38,7 @@ namespace Salle.Controller
             }
             catch (Exception e)
             {
-
+                new Affichage().afficherLine(e.ToString());
             }
         }
 
@@ -48,14 +53,18 @@ namespace Salle.Controller
                         if (th.IsAlive)
                         {
                             th.Resume();
+                            if (paused)
+                            {
+                                new Affichage().afficherLine("\n----------Salle Resumed----------\n");
+                            }
                         }
                         paused = false;
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-
+                new Affichage().afficherLine(e.ToString());
             }
         }
 

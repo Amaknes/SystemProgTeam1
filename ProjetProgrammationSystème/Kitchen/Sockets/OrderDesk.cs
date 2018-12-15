@@ -55,8 +55,7 @@ namespace Kitchen.Sockets
 
 
         public void EcouterOrderDesk()
-        {
-            afficher.afficherLine("Préparation à l'écoute...");
+        { 
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
             UdpClient serveur = new UdpClient(5036);
@@ -66,15 +65,14 @@ namespace Kitchen.Sockets
             {
                 //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
                 IPEndPoint client = null;
-                afficher.afficherLine("ÉCOUTE...");
+                afficher.afficherLine("OrderDesk's Socket Listening");
 
                 //On écoute jusqu'à recevoir un message.
                 byte[] data = serveur.Receive(ref client);
-                afficher.afficherLine("Données reçues en provenance de "+client.Address+":"+client.Port+".");
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
-                afficher.afficherLine("CONTENU DU MESSAGE : "+message+"\n");
+                afficher.afficherLine("The chef received the order " + message + "from the Head Waiter\n");
 
                 Chef.chefInstance().GetOrder(message);
             }
@@ -88,7 +86,7 @@ namespace Kitchen.Sockets
                 //<Client Quit> is the sign for end of data 
                 string theMessageToSend = idTable + ":" + IdDish + ":" + Dish + ":" + NbDishesList;
 
-                afficher.afficherLine("Message  "+theMessageToSend);
+                afficher.afficherLine("\n--The Commis Chef is placing the Dish " + theMessageToSend + " on the Order Desk--\n" );
 
                 byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 
@@ -100,9 +98,9 @@ namespace Kitchen.Sockets
             }
             catch (Exception exc)
             {
-                afficher.afficherLine(""+exc);
+                afficher.afficherLine("" + exc);
             }
         }
     }
-        
+
 }

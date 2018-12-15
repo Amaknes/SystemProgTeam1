@@ -111,7 +111,9 @@
     <Compile Include="Controller\Staff.cs" />
     <Compile Include="Controller\Waiter.cs" />
     <Compile Include="Controller\WaiterInterface.cs" />
+    <Compile Include="Model\CAD.cs" />
     <Compile Include="Model\ClientsInterface.cs" />
+    <Compile Include="Model\CLprocessus.cs" />
     <Compile Include="Model\Factory.cs" />
     <Compile Include="Model\Clients.cs" />
     <Compile Include="Model\FactoryClients.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Model\LineInterface.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderInterface.cs" />
+    <Compile Include="Model\Rqt_SQL.cs" />
     <Compile Include="Model\Square.cs" />
     <Compile Include="Model\SquareInterface.cs" />
     <Compile Include="Model\Table.cs" />

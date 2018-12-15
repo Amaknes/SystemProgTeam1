@@ -54,8 +54,7 @@ namespace Kitchen.Sockets
         }
 
         public void EcouterCutleryDesk()
-        {
-            afficher.afficherLine("Préparation à l'écoute...");
+        { 
 
             //On crée le serveur en lui spécifiant le port sur lequel il devra écouter.
             UdpClient serveur = new UdpClient(5038);
@@ -65,18 +64,18 @@ namespace Kitchen.Sockets
             {
                 //Création d'un objet IPEndPoint qui recevra les données du Socket distant.
                 IPEndPoint client = null;
-                afficher.afficherLine("ÉCOUTE...");
+                afficher.afficherLine("CutlerySocket's Socket Listening....");
 
                 //On écoute jusqu'à recevoir un message.
                 byte[] data = serveur.Receive(ref client);
-                afficher.afficherLine("Données reçues en provenance de "+client.Address+":"+client.Port+".");
+                afficher.afficherLine("Cutlery received from the Waiter");
 
                 //Décryptage et affichage du message.
                 string message = Encoding.Default.GetString(data);
-                afficher.afficherLine("CONTENU DU MESSAGE : "+message+"\n");
-                
+                afficher.afficherLine( message + " pieces of Cutlery and one piece of Laundry were given from the Waiter\n");
+
                 DWasher.GetCutlery(message);
-                
+
             }
 
         }
@@ -87,9 +86,16 @@ namespace Kitchen.Sockets
             {
                 // Sending message 
                 //<Client Quit> is the sign for end of data 
-                string theMessageToSend = type +":" + nb;
+                string theMessageToSend = type + ":" + nb;
 
-                afficher.afficherLine("Message  "+theMessageToSend);
+                if(type == 0)
+                {
+                    afficher.afficherLine("The DishWasher is placing " +nb+" clean cutlery on the Cutlery Desk");
+                }
+                else
+                {
+                    afficher.afficherLine("The DishWasher is placing " + nb + " clean laundry in the Laundry stock");
+                }
 
                 byte[] msg = Encoding.Unicode.GetBytes(theMessageToSend);
 
@@ -101,11 +107,11 @@ namespace Kitchen.Sockets
             }
             catch (Exception exc)
             {
-                Console.WriteLine(exc);
+                afficher.afficherLine(exc.ToString());
             }
         }
 
 
-        
+
     }
 }
