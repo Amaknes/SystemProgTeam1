@@ -99,8 +99,6 @@
     <Compile Include="Controller\Pastry.cs" />
     <Compile Include="Controller\SpecializedChefs.cs" />
     <Compile Include="Controller\SpecializedChefsInterface.cs" />
-    <Compile Include="Controller\Staff.cs" />
-    <Compile Include="Controller\StaffInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sockets\CutleryDesk.cs" />
     <Compile Include="Sockets\InterfaceCutleryDesk.cs" />

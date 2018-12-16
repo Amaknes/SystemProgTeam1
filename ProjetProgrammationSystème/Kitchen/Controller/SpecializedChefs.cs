@@ -91,7 +91,6 @@ namespace Kitchen.Controller
             Thread.Sleep(time * 1000);
         }
 
-
         public void Preparation(int time)
         {
             afficher.afficherLine("The " + Type() + " is preparing ingredients");
@@ -103,7 +102,6 @@ namespace Kitchen.Controller
 
 
         public void GiveOrders(object firstTask)
-        //public void GiveOrders(string NameIngredient, int TypeIngredient, Tasks firstTask, int idTable)
         {
             new Pause().AddThread(Thread.CurrentThread);
             Tasks TaskNew = (Tasks)firstTask;
@@ -208,10 +206,10 @@ namespace Kitchen.Controller
 
             //envoi l'id de la table : l'id de la préparation : si c est un entree/plat/dessert : nombre de plats de ce type dans la commande 
 
-            //     for (int o = 0; o < TaskNew.NbSameDish; o++)
-            //{
-            CommisChefs.SendDishes(TaskNew.IdTable, TaskNew.IdDish, TaskNew.Dish, TaskNew.NbDishesList);
-            //}
+            for (int o = 0; o < TaskNew.NbSameDish; o++)
+            {
+                CommisChefs.SendDishes(TaskNew.IdTable, TaskNew.IdDish, TaskNew.Dish, TaskNew.NbDishesList);
+            }
         }
 
 
@@ -238,13 +236,8 @@ namespace Kitchen.Controller
                 }
 
 
-                /*Thread threadSpeChefOrder = new Thread(() => GiveOrders(NameIngredient, TypeIngredient, newTask, idTable));
-                new Pause().AddThread(threadSpeChefOrder);
-                threadSpeChefOrder.Start();*/
-                for (int o = 0; o < newTask.NbSameDish; o++)
-                {
-                    ThreadPool.QueueUserWorkItem(GiveOrders, newTask);
-                }
+                ThreadPool.QueueUserWorkItem(GiveOrders, newTask);
+
             }
         }
     }

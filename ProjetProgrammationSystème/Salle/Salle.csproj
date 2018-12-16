@@ -101,14 +101,12 @@
     <Compile Include="Controller\CommisWaiterInterface.cs" />
     <Compile Include="Controller\HeadWaiterInterface.cs" />
     <Compile Include="Controller\Pause.cs" />
-    <Compile Include="Controller\StaffInterface.cs" />
     <Compile Include="Controller\IObservable.cs" />
     <Compile Include="Controller\IObserver.cs" />
     <Compile Include="Controller\MaîtreHôtel.cs" />
     <Compile Include="Controller\CommisWaiter.cs" />
     <Compile Include="Controller\HeadWaiter.cs" />
     <Compile Include="Controller\MaîtreHôtelInterface.cs" />
-    <Compile Include="Controller\Staff.cs" />
     <Compile Include="Controller\Waiter.cs" />
     <Compile Include="Controller\WaiterInterface.cs" />
     <Compile Include="Model\CAD.cs" />
